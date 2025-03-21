@@ -1,0 +1,34 @@
+<a href="vacante/{{item.idVacante}}" class="block transition-transform transform hover:scale-102 h-full ">
+    <div class=" rounded-sm shadow-sm border p-6 flex flex-col justify-between h-full"
+        [ngClass]="item.destacado ? 'bg-lime-50 border-lime-500' : 'bg-white border-gray-200 '">
+
+        <!-- Top: Fecha y Destacado -->
+
+        <div class="flex justify-between items-start mb-4">
+            <span class="text-sm text-gray-500">{{item.fecha }}</span>
+            <!-- Categoría -->
+            <p class="text-center text-sm text-gray-600 mb-3">
+                <span
+                    class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm  border border-blue-400">{{item.categoria.nombre}}</span>
+            </p>
+        </div>
+
+        <!-- Nombre -->
+        <h3 class="text-lg font-semibold mb-0 text-gray-800">{{item.nombre}}</h3>
+
+        <!-- Empresa -->
+        <p class=" text-sm text-blue-500 mb-4 hover:underline">
+            <a href="#"><span class="font-medium">{{item.empresa.nombreEmpresa}}</span></a>
+        </p>
+
+
+
+        <!-- Descripción -->
+        <div class="text-sm text-gray-600  mb-4">
+            {{item.descripcion}}
+        </div>
+
+
+
+    </div>
+</a>
