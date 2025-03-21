@@ -1,0 +1,97 @@
+<nav class="bg-white border-gray-200 border-1">
+    <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+        <a href="https://flowbite.com/" class="flex items-center space-x-3 rtl:space-x-reverse">
+            <div>
+                <svg viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+                    preserveAspectRatio="xMidYMid">
+                    <defs>
+                        <linearGradient id="a" x1="45.082%" x2="55.522%" y1="-1.343%" y2="97.61%">
+                            <stop offset="0%" stop-color="#FCF84A" />
+                            <stop offset="32%" stop-color="#ABE682" />
+                            <stop offset="79%" stop-color="#36CDD2" />
+                            <stop offset="100%" stop-color="#07C3F2" />
+                        </linearGradient>
+                        <linearGradient id="b" x1="-2.942%" x2="100.445%" y1="38.992%" y2="62.105%">
+                            <stop offset="0%" stop-color="#3BEA62" />
+                            <stop offset="100%" stop-color="#087CFA" />
+                        </linearGradient>
+                        <linearGradient id="c" x1="-3.308%" x2="111.745%" y1="71.807%" y2="15.462%">
+                            <stop offset="0%" stop-color="#009AE5" />
+                            <stop offset="18%" stop-color="#0490DD" />
+                            <stop offset="49%" stop-color="#1073C6" />
+                            <stop offset="89%" stop-color="#2346A1" />
+                            <stop offset="100%" stop-color="#293896" />
+                        </linearGradient>
+                    </defs>
+                    <path fill="url(#a)"
+                        d="M46.36 255.991c91.075-7.978 170.982-63.92 209.64-146.768C208.12 40.799 129.873.033 46.36 0c-7.44 0-14.915.33-22.424.99C-14.676 83.893-6.128 181.099 46.36 255.99Z" />
+                    <path fill="url(#b)"
+                        d="M24.209 1.024a301.387 301.387 0 0 1 134.685 108.199H256C208.263 40.76 130.062-.03 46.6 0c-7.441 0-14.905.341-22.391 1.024Z" />
+                    <path fill="url(#c)"
+                        d="M158.894 109.223C147.187 186.6 46.258 255.99 46.258 255.99c91.781-8.67 172.23-63.622 209.742-146.768h-97.106Z" />
+                </svg>
+            </div>
+            <span class="self-center text-2xl font-semibold whitespace-nowrap ">Dev Empleo</span>
+        </a>
+        <div class="flex ">
+            <button type="button" data-collapse-toggle="navbar-search" aria-controls="navbar-search"
+                aria-expanded="false"
+                class="md:hidden text-gray-500  hover:bg-gray-100  focus:outline-none focus:ring-4 focus:ring-gray-200  rounded-lg text-sm p-2.5 me-1">
+                <span class="sr-only">Search</span>
+            </button>
+            <div class="relative hidden md:block">
+                <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                    <svg class="w-4 h-4 text-gray-500 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                        fill="none" viewBox="0 0 20 20">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                    </svg>
+                    <span class="sr-only">Search icon</span>
+                </div>
+                <input type="text" id="search-navbar"
+                    class="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 "
+                    placeholder="Buscar vacante">
+            </div>
+            <button class="md:hidden mr-5 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Login</button>
+
+            <button (click)="toggleMenu()" data-collapse-toggle="navbar-search" type="button"
+                class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 d"
+                aria-controls="navbar-search" aria-expanded="false">
+                <span class="sr-only">Open main menu</span>
+                <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                    viewBox="0 0 17 14">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M1 1h15M1 7h15M1 13h15" />
+                </svg>
+            </button>
+        </div>
+        <div [ngClass]="{'hidden': !isMenuOpen, 'block': isMenuOpen}"
+            class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-search">
+            <div class="relative mt-3 md:hidden">
+                <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                    <svg class="w-4 h-4 text-gray-500 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                        fill="none" viewBox="0 0 20 20">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                    </svg>
+                </div>
+                <input type="text" id="search-navbar"
+                    class="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 "
+                    placeholder="Search...">
+            </div>
+            <ul
+                class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white items-center">
+                <li>
+                    <a href="#"
+                        class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 ">Empleos</a>
+                </li>
+                <li>
+                    <a href="#"
+                        class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 ">Empresas</a>
+                </li>
+
+                <button class="hidden md:block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Login</button>
+            </ul>
+        </div>
+    </div>
+</nav>
