@@ -15,4 +15,8 @@ export class CardVacanteComponent {
   formatearFecha(fecha: string | Date): string {
     return this.fechaService.formatearFecha(fecha);
   }
+
+  imagenError(event: any) {
+    event.target.src = 'http://localhost:9001/uploads/sin_imagen.png';
+  }
 }

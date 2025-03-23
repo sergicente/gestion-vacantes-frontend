@@ -1,34 +1,39 @@
-<a href="vacante/{{item.idVacante}}" class="block transition-transform transform hover:scale-102 h-full ">
-    <div class=" rounded-sm shadow-sm border p-6 flex flex-col justify-between h-full"
-        [ngClass]="item.destacado ? 'bg-lime-50 border-lime-500' : 'bg-white border-gray-200 '">
+<a href="vacante/{{item.idVacante}}" class="block transition-transform transform hover:scale-105 h-full">
+    <div 
+      class="rounded-sm shadow-sm border p-4 flex flex-col sm:flex-row gap-4 md:items-center"
+      [ngClass]="item.destacado ? 'bg-lime-50 border-lime-500' : 'bg-white border-gray-200'">
 
-        <!-- Top: Fecha y Destacado -->
+        <!-- Imagen -->
+        <div class="flex-shrink-0 flex justify-center md:justify-start">
+            <img 
+              [src]="'http://localhost:9001/uploads/' + item.imagen" 
+              [alt]="item.nombre"
+              class="w-32 h-32 object-cover rounded"
+              (error)="imagenError($event)" />
+        </div>
 
-        <div class="flex justify-between items-start mb-4">
-            <span class="text-sm text-gray-500">{{formatearFecha(item.fecha) }}</span>
-            <!-- Categoría -->
-            <p class="text-center text-sm text-gray-600 mb-3">
-                <span
-                    class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm  border border-blue-400">{{item.categoria.nombre}}</span>
+        <!-- Contenido -->
+        <div class="flex flex-col justify-between flex-grow">
+            <div class="flex justify-between items-start mb-2">
+                <span class="text-sm text-gray-500">{{ formatearFecha(item.fecha) }}</span>
+                <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-sm border border-blue-400">
+                    {{ item.categoria.nombre }}
+                </span>
+            </div>
+
+            <!-- Nombre -->
+            <h3 class="text-lg font-semibold mb-1 text-gray-800">{{ item.nombre }}</h3>
+
+            <!-- Empresa -->
+            <a href="empresa/{{item.empresa.idEmpresa}}" class="text-sm text-blue-500 mb-2 hover:underline">
+                <span class="font-medium">{{ item.empresa.nombreEmpresa }}</span>
+            </a>
+
+            <!-- Descripción -->
+            <p class="text-sm text-gray-600 mb-2 line-clamp-2">
+                {{ item.descripcion }}
             </p>
         </div>
-
-        <!-- Nombre -->
-        <h3 class="text-lg font-semibold mb-0 text-gray-800">{{item.nombre}}</h3>
-
-        <!-- Empresa -->
-        <p class=" text-sm text-blue-500 mb-4 hover:underline">
-            <a href="#"><span class="font-medium">{{item.empresa.nombreEmpresa}}</span></a>
-        </p>
-
-
-
-        <!-- Descripción -->
-        <div class="text-sm text-gray-600  mb-4">
-            {{item.descripcion}}
-        </div>
-
-
 
     </div>
 </a>
