@@ -1,5 +1,6 @@
 import { NgClass } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
+import { FechaService } from '../../services/fecha.service';
 
 @Component({
   selector: 'app-card-vacante',
@@ -9,4 +10,9 @@ import { Component, Input } from '@angular/core';
 })
 export class CardVacanteComponent {
   @Input() item!: any;
+  fechaService = inject(FechaService);
+
+  formatearFecha(fecha: string | Date): string {
+    return this.fechaService.formatearFecha(fecha);
+  }
 }

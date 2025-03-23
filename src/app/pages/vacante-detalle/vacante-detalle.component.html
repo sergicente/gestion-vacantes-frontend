@@ -1,0 +1,81 @@
+@if(vacante){
+<section>
+    <a href="/" class="mb-5 flex text-blue-500">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-left">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <path d="M15 6l-6 6l6 6" />
+        </svg>
+        Volver a la página principal
+    </a>
+    <div class="rounded-sm shadow-sm border border-gray-200 bg-white p-10 mb-5 relative">
+        @if(vacante.destacado){
+            <div class="absolute top-5 right-5 flex items-center gap-2 bg-lime-50 border-lime-500 text-lime-700 border text-sm font-semibold px-5 py-3 rounded-xl">
+                <svg  xmlns="http://www.w3.org/2000/svg"  width="16"  height="16"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2.5"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-star"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" /></svg>
+                Vacante destacada
+            </div>
+        }
+        <!-- Nombre Vacante -->
+        <h1 class="text-4xl mb-2">{{ vacante.nombre }}</h1>
+
+        <!-- Nombre Empresa -->
+        <h3 class="text-lg text-gray-500 mb-4">{{ vacante.empresa.nombreEmpresa }}</h3>
+
+        <!-- Grid con info -->
+        <div class="grid grid-cols-2 gap-4 mb-6">
+            <div>
+                <p class="mb-2"><strong>Categoría:</strong> <span
+                        class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm border border-blue-400 ms-2">{{vacante.categoria.nombre}}</span>
+                </p>
+                <p class="mb-2"><strong>Salario:</strong> {{ vacante.salario}} €</p>
+                <p class="mb-2">
+                    <strong>Estado:</strong>
+                    <span [ngClass]="{
+                'text-green-600 font-bold text-sm ': vacante.estatus === 'CREADA',
+                'text-red-500 font-bold text-sm': vacante.estatus === 'CUBIERTA',
+                'text-gray-400-600 font-bold text-sm': vacante.estatus === 'CANCELADA'
+              }">
+                        {{ vacante.estatus}}
+                    </span>
+                </p>
+            </div>
+            <div>
+                <p class="mb-2"><strong>Lugar:</strong> {{ vacante.empresa.direccionFiscal }}</p>
+                <p class="mb-2"><strong>País:</strong> {{ vacante.empresa.pais }}</p>
+                <p class="mb-2"><strong>Publicada en:</strong> {{ formatearFecha(vacante.fecha) }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="rounded-sm shadow-sm border border-gray-200 bg-white p-10">
+
+        <!-- Descripción -->
+        <div class="mb-6">
+            <h4 class="text-2xl font-semibold mb-2">Detalles del puesto</h4>
+            <p class="text-gray-700">{{ vacante.descripcion }}</p>
+            <p class="mt-2 text-gray-700">{{ vacante.detalles }}</p>
+        </div>
+
+        <!-- Botones -->
+        <div class="flex justify-center mt-8">
+            <button type="button"
+                class="bg-orange-400 hover:bg-orange-600 text-white font-semibold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out">
+                Aplicar a este empleo
+            </button>
+        </div>
+
+        
+    </div>
+    <div class="flex justify-between mt-10">
+        <a [routerLink]="['/vacante/modificar', vacante.idVacante]">
+            <button type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                Modificar
+            </button>
+        </a>
+        <button (click)="borrarvacante()" type="button"
+            class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+            Eliminar
+        </button>
+    </div>
+</section>
+}
