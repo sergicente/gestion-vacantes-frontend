@@ -1,0 +1,15 @@
+<section class="max-w-7xl mx-auto">
+    <!-- Contador de vacantes -->
+    <div class="flex justify-between items-center mb-6">
+        <h2 class="text-xl font-semibold text-gray-800">
+            {{array.length}} Empresas disponibles
+        </h2>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5 mt-5">
+        @for(item of array; track item.idEmpresa){
+        <app-card-empresa [item]="item" ></app-card-empresa>
+        }
+        
+    </div>
+</section>

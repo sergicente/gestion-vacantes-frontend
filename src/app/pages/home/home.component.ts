@@ -20,7 +20,6 @@ export class HomeComponent {
   ngOnInit(): void {
     this.service.getAll().subscribe((response) => {
       console.log(response);
-      console.log('hola!')
       this.array = response;
     });
   }
