@@ -39,11 +39,11 @@
                 </div>
     
                 <!-- Información -->
-                <div class="flex flex-col justify-between flex-grow ">
+                <div class=" justify-between flex-grow ">
                     <!-- Nombre -->
                     <h1 class="text-2xl md:text-4xl mb-2">{{ vacante.nombre }}</h1>
                     <!-- Empresa -->
-                    <h3 class="text-base md:text-lg text-gray-500 mb-4">{{ vacante.empresa.nombreEmpresa }}</h3>
+                    <a href="/empresa/ {{vacante.empresa.idEmpresa}}"><h3 class="inline text-base md:text-lg text-blue-500 hover:underline mb-4">{{ vacante.empresa.nombreEmpresa }}</h3></a>
     
                     <!-- Info adicional -->
                     <div class="flex flex-col lg:flex-row gap-0 ">
