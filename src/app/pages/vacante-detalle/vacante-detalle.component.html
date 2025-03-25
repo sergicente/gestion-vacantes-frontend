@@ -39,19 +39,19 @@
                 </div>
     
                 <!-- Información -->
-                <div class="flex flex-col justify-between flex-grow ">
+                <div class=" justify-between flex-grow ">
                     <!-- Nombre -->
                     <h1 class="text-2xl md:text-4xl mb-2">{{ vacante.nombre }}</h1>
                     <!-- Empresa -->
-                    <h3 class="text-base md:text-lg text-gray-500 mb-4">{{ vacante.empresa.nombreEmpresa }}</h3>
+                    <a href="/empresa/ {{vacante.empresa.idEmpresa}}"><h3 class="inline text-base md:text-lg text-blue-500 hover:underline mb-4">{{ vacante.empresa.nombreEmpresa }}</h3></a>
     
                     <!-- Info adicional -->
                     <div class="flex flex-col lg:flex-row gap-0 ">
                         <div class="flex-1 space-y-2">
                             <p class="mb-2"><strong>Categoría:</strong> 
-                                <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-sm border border-blue-400 ml-2">
+                                <a href="/categoria/{{vacante.empresa.idEmpresa}}"><span class="bg-blue-100 hover:bg-blue-200 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-sm border border-blue-400 ml-2">
                                     {{ vacante.categoria.nombre }}
-                                </span>
+                                </span></a>
                             </p>
                             <p class="mb-2"><strong>Salario:</strong> {{ vacante.salario }} €</p>
                             <p class="mb-2">

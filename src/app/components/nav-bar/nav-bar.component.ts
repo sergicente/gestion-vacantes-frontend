@@ -1,5 +1,6 @@
 import { NgClass } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { CategoriaService } from '../../services/categoria.service';
 
 @Component({
   selector: 'app-nav-bar',
@@ -9,8 +10,17 @@ import { Component } from '@angular/core';
 })
 export class NavBarComponent {
   isMenuOpen = false;
+  serviceCategoria = inject(CategoriaService);
+  arrayCategorias!: any[];
 
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
   }
+
+  ngOnInit(): void {
+    this.serviceCategoria.getAll().subscribe((response) => {
+      this.arrayCategorias = response;
+    });
+  }
+
 }

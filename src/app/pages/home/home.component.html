@@ -2,12 +2,18 @@
     <!-- Contador de vacantes -->
     <div class="flex justify-between items-center mb-6">
         <h2 class="text-xl font-semibold text-gray-800">
-            {{array.length}} ofertas disponibles
+            {{arrayVacantes.length}} ofertas disponibles
         </h2>
     </div>
 
+    <div class="flex gap-2 mb-8">
+        @for(item of arrayCategorias; track item.idCategoria){
+            <a href="/categoria/{{item.idCategoria}}"><div class="bg-blue-100 hover:bg-blue-200 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-sm border border-blue-400">{{item.nombre}}</div></a>
+            }
+    </div>
+
     <div class="grid md:grid-cols-1 lg:grid-cols-2 gap-5 mt-5">
-        @for(item of array; track item.idVacante){
+        @for(item of arrayVacantes; track item.idVacante){
         <app-card-vacante [item]="item"></app-card-vacante>
         }
     </div>

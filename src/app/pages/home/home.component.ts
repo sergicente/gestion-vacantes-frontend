@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { VacanteService } from '../../services/vacante.service';
 import { CardVacanteComponent } from "../../components/card-vacante/card-vacante.component";
+import { CategoriaService } from '../../services/categoria.service';
 
 @Component({
   selector: 'app-home',
@@ -9,18 +10,25 @@ import { CardVacanteComponent } from "../../components/card-vacante/card-vacante
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
-  service = inject(VacanteService);
+  serviceVacante = inject(VacanteService);
+  serviceCategoria = inject(CategoriaService);
 
-  array: any[];
+  arrayVacantes: any[];
+  arrayCategorias!: any[];
+
 
   constructor() {
-    this.array = [];
+    this.arrayVacantes = [];
   };
 
   ngOnInit(): void {
-    this.service.getAll().subscribe((response) => {
+    this.serviceVacante.getAll().subscribe((response) => {
       console.log(response);
-      this.array = response;
+      this.arrayVacantes = response;
+    });
+    this.serviceCategoria.getAll().subscribe((response) => {
+      console.log(response);
+      this.arrayCategorias = response;
     });
   }
 
