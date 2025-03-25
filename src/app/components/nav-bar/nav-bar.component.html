@@ -49,10 +49,11 @@
                     <span class="sr-only">Search icon</span>
                 </div>
                 <input type="text" id="search-navbar"
-                class="block w-48 md:w-64 lg:w-100 xl:w-120 p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 "
-                placeholder="Buscar vacante">
+                    class="block w-48 md:w-64 lg:w-100 xl:w-120 p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 "
+                    placeholder="Buscar vacante">
             </div>
-            <button class="md:hidden mr-5 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Login</button>
+            <button
+                class="md:hidden mr-5 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Login</button>
 
             <button (click)="toggleMenu()" data-collapse-toggle="navbar-search" type="button"
                 class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 d"
@@ -81,16 +82,28 @@
             </div>
             <ul
                 class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white items-center">
-                <li>
-                    <a href="/"
-                        class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 ">Empleos</a>
+                <li class="relative group">
+                    <a href="#"
+                       class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">
+                       Empleos
+                    </a>
+                    <div id="dropdownNavbar"
+                         class="absolute z-10 hidden group-hover:block font-normal bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 ">
+                        <ul class="py-2 text-sm text-gray-700 ">
+                            @for(item of arrayCategorias; track item.idCategoria){
+
+                            <li><a href="/categoria/{{item.idCategoria}}" class="block px-4 py-2 hover:bg-gray-100 hover:text-blue-500 font-medium">{{item.nombre}}</a></li>
+                            }
+                        </ul>
+                    </div>
                 </li>
                 <li>
                     <a href="empresas"
                         class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 ">Empresas</a>
                 </li>
 
-                <button class="hidden md:block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Login</button>
+                <button
+                    class="hidden md:block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Login</button>
             </ul>
         </div>
     </div>
