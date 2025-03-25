@@ -1,0 +1,28 @@
+<section class="max-w-7xl mx-auto">
+
+        <!-- Volver -->
+        <a href="/" class="mb-5 flex text-blue-500 items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-left">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M15 6l-6 6l6 6" />
+            </svg>
+            Volver a la página principal
+        </a>
+
+
+    <div class="flex justify-between items-center mb-6">
+        <h2 class="text-xl font-semibold text-gray-800">
+            {{array.length}} ofertas disponibles para {{categoria.nombre}}
+        </h2>
+    </div>
+
+    <div class="grid md:grid-cols-1 lg:grid-cols-2 gap-5 mt-5">
+        @for(item of array; track item.idVacante){
+            @if(item.categoria.nombre == categoria.nombre){
+                <app-card-vacante [item]="item"></app-card-vacante>
+            }
+        }
+    </div>
+</section>
