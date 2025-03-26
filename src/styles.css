@@ -1,1 +1,16 @@
 @import "tailwindcss";
+
+.ngx-pagination .current,
+.btn-info {
+    background: #dbeafe !important;
+    border: 1px solid #51a2ff !important;
+    color: #266bbb !important;
+    border-radius: 6px;
+    transform: scale(1.1)
+}
+
+.ngx-pagination a:hover{
+    background: #dbeafe89 !important;
+    border-radius: 6px;
+}
+

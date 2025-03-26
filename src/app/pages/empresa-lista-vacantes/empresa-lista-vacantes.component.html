@@ -33,8 +33,18 @@
     </div>
 
     <div class="grid md:grid-cols-1 lg:grid-cols-2 gap-5 mt-5">
-        @for(item of array; track item.idVacante){
+        @for(item of array | paginate: { itemsPerPage: itemsPorPagina, currentPage: paginaActual }; track
+        item.idVacante){
         <app-card-vacante [item]="item"></app-card-vacante>
         }
     </div>
+
+    @if(totalPaginas > 1){
+    <div class="mt-10 m-auto">
+        <pagination-controls class="flex justify-center mt-6 text-sm text-gray-700" (pageChange)="paginaActual = $event"
+            previousLabel="Anterior" nextLabel="Siguiente" screenReaderPaginationLabel="Paginación"
+            screenReaderPageLabel="página" screenReaderCurrentLabel="Página actual">
+        </pagination-controls>
+    </div>
+    }
 </section>
