@@ -88,10 +88,9 @@
                        Empleos
                     </a>
                     <div id="dropdownNavbar"
-                         class="absolute z-10 hidden group-hover:block font-normal bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 ">
+                         class="absolute z-10 hidden group-hover:block border border-gray-300 font-normal bg-white divide-y divide-gray-100 rounded-sm shadow-sm w-44 ">
                         <ul class="py-2 text-sm text-gray-700 ">
                             @for(item of arrayCategorias; track item.idCategoria){
-
                             <li><a href="/categoria/{{item.idCategoria}}" class="block px-4 py-2 hover:bg-gray-100 hover:text-blue-500 font-medium">{{item.nombre}}</a></li>
                             }
                         </ul>
@@ -102,13 +101,8 @@
                         class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 ">Empresas</a>
                 </li>
 
-<<<<<<< HEAD
                 <a href="login"
                  class="hidden md:block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Login</a>
-=======
-                <button
-                    class="hidden md:block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Login</button>
->>>>>>> origin/main
             </ul>
         </div>
     </div>
