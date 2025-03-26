@@ -8,13 +8,27 @@
 
     <div class="flex gap-2 mb-8">
         @for(item of arrayCategorias; track item.idCategoria){
-            <a href="/categoria/{{item.idCategoria}}"><div class="bg-blue-100 hover:bg-blue-200 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-sm border border-blue-400">{{item.nombre}}</div></a>
-            }
+        <a href="/categoria/{{item.idCategoria}}">
+            <div
+                class="bg-blue-100 hover:bg-blue-200 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-sm border border-blue-400">
+                {{item.nombre}}</div>
+        </a>
+        }
     </div>
 
     <div class="grid md:grid-cols-1 lg:grid-cols-2 gap-5 mt-5">
-        @for(item of arrayVacantes; track item.idVacante){
+        @for(item of arrayVacantes| paginate: { itemsPerPage: itemsPorPagina, currentPage: paginaActual }; track
+        item.idVacante){
         <app-card-vacante [item]="item"></app-card-vacante>
         }
     </div>
+
+    @if(totalPaginas > 1){
+    <div class="mt-10 m-auto">
+        <pagination-controls class="flex justify-center mt-6 text-sm text-gray-700" (pageChange)="paginaActual = $event"
+            previousLabel="Anterior" nextLabel="Siguiente" screenReaderPaginationLabel="Paginación"
+            screenReaderPageLabel="página" screenReaderCurrentLabel="Página actual">
+        </pagination-controls>
+    </div>
+    }
 </section>
