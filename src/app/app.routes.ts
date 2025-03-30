@@ -5,8 +5,8 @@ import { Pagina404Component } from './pages/pagina404/pagina404.component';
 import { EmpresaListaComponent } from './pages/empresa-lista/empresa-lista.component';
 import { EmpresaListaVacantesComponent } from './pages/empresa-lista-vacantes/empresa-lista-vacantes.component';
 import { FormLoginComponent } from './pages/form-login/form-login.component';
-
 import { CategoriaListaVacantesComponent } from './pages/categoria-lista-vacantes/categoria-lista-vacantes.component';
+import { FormComponent } from './pages/form/form.component';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
@@ -16,5 +16,13 @@ export const routes: Routes = [
   { path: 'empresa/:id', component: EmpresaListaVacantesComponent },
   { path: 'login', component: FormLoginComponent },
   { path: 'categoria/:id', component: CategoriaListaVacantesComponent },
+  { path: 'vacante/modificar/:id', component: FormComponent },
+  { path: 'formulario', component: FormComponent },
+  { path: 'actualizarOferta', component: FormComponent },
   { path: '**', component: Pagina404Component },
+  { path: "**", redirectTo: "home" }
+
+  // {path:"vacante/:id", component: ViewComponent},
+  // {path:"actualizar/:id", component: },
+
 ];

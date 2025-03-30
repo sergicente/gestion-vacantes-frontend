@@ -3,10 +3,11 @@ import { VacanteService } from '../../services/vacante.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FechaService } from '../../services/fecha.service';
 import { NgClass } from '@angular/common';
+import { ButtonComponent } from '../../components/button/button.component';
 
 @Component({
   selector: 'app-vacante-detalle',
-  imports: [RouterLink, NgClass],
+  imports: [RouterLink, NgClass, ButtonComponent],
   templateUrl: './vacante-detalle.component.html',
   styleUrl: './vacante-detalle.component.css'
 })

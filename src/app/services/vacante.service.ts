@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { catchError, Observable, throwError } from 'rxjs';
+import { catchError, lastValueFrom, Observable, throwError } from 'rxjs';
+import { Ivacante } from '../interfaces/ivacante';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +10,7 @@ export class VacanteService {
 
   http = inject(HttpClient);
   private baseUrl: string = 'http://localhost:9001/api/vacantes'
+  
 
   constructor() { };
 
@@ -16,7 +18,7 @@ export class VacanteService {
     return this.http.get<any[]>(this.baseUrl);
   }
 
-  getById(id: String): Observable<any> {
+  getById(id: String): Observable<Ivacante> {
     return this.http.get<any>(this.baseUrl + '/' + id);
   }
 
@@ -51,5 +53,23 @@ export class VacanteService {
         return throwError(error);
       })
     );
+  }
+
+
+  getAllVacante(page: number, itemPerPage: number): Observable<Ivacante[]> {
+    console.log(this.baseUrl + "?page=" + page + "&size=" + itemPerPage);
+    return this.http.get<Ivacante[]>(this.baseUrl + "?page=" + page + "&size=" + itemPerPage);
+  }
+
+  insertVacante(vacante: Ivacante): Promise<Ivacante> {
+    return lastValueFrom(this.http.post<Ivacante>(this.baseUrl, vacante));
+  }
+
+  updateVacante(vacante: Ivacante): Promise<Ivacante> {
+    return lastValueFrom(this.http.put<Ivacante>(`${this.baseUrl}/${vacante.idVacante}`, vacante));
+  }
+
+  deleteById(idVacante: string): Promise<Ivacante> {
+    return lastValueFrom(this.http.delete<Ivacante>(`${this.baseUrl}/${idVacante}`));
   }
 }
