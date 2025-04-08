@@ -7,6 +7,7 @@ import { EmpresaListaVacantesComponent } from './pages/empresa-lista-vacantes/em
 import { FormLoginComponent } from './pages/form-login/form-login.component';
 import { CategoriaListaVacantesComponent } from './pages/categoria-lista-vacantes/categoria-lista-vacantes.component';
 import { FormComponent } from './pages/form/form.component';
+import { FormRegisterComponent } from './pages/form-register/form-register.component';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
@@ -15,6 +16,7 @@ export const routes: Routes = [
   { path: 'empresas', component: EmpresaListaComponent },
   { path: 'empresa/:id', component: EmpresaListaVacantesComponent },
   { path: 'login', component: FormLoginComponent },
+  { path: 'register', component: FormRegisterComponent },
   { path: 'categoria/:id', component: CategoriaListaVacantesComponent },
   { path: 'vacante/modificar/:id', component: FormComponent },
   { path: 'formulario', component: FormComponent },
