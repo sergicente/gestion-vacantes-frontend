@@ -1,0 +1,34 @@
+<section class="max-w-7xl mx-auto">
+
+  <!-- Bienvenida -->
+  <div class="bg-white rounded-sm shadow-sm p-12 border border-gray-200 mb-10">
+    <h1 class="text-2xl font-bold text-gray-800">Bienvenido, {{usuario}} </h1>
+    <p class="text-gray-600">Aquí puedes gestionar todo lo relacionado con tu perfil y actividad.</p>
+  </div>
+
+  @if (rol === 'CLIENTE') {
+    <div class="grid gap-12 md:grid-cols-2 xl:grid-cols-3">
+      <a routerLink="/solicitudes" class="text-center bg-white rounded-sm shadow-sm p-12 border border-gray-200">📄 Mis Solicitudes</a>
+      <a routerLink="/perfil" class="text-center bg-white rounded-sm shadow-sm p-12 border border-gray-200">🙋‍♂️ Editar Perfil</a>
+      <a (click)="logout()" class="cursor-pointer bg-red-500 text-center text-white rounded-sm shadow-sm p-12 border border-red-600">⏻ Cerrar Sesión</a>
+    </div>
+  }
+  @else if (rol === 'EMPRESA') {
+    <div class="grid gap-12 md:grid-cols-2 xl:grid-cols-3">
+      <a routerLink="/vacantes/nueva" class="text-center bg-white rounded-sm shadow-sm p-12 border border-gray-200">➕ Publicar Vacante</a>
+      <a routerLink="/vacantes" class="text-center bg-white rounded-sm shadow-sm p-12 border border-gray-200">📋 Mis Vacantes</a>
+      <a routerLink="/solicitudes" class="text-center bg-white rounded-sm shadow-sm p-12 border border-gray-200">📥 Solicitudes Recibidas</a>
+      <a routerLink="/perfil" class="text-center bg-white rounded-sm shadow-sm p-12 border border-gray-200">🏢 Editar Perfil Empresa</a>
+      <a (click)="logout()" class="cursor-pointer bg-red-500 text-center text-white rounded-sm shadow-sm p-12 border border-red-600">⏻ Cerrar Sesión</a>
+    </div>
+  }
+  @else if (rol === 'ADMON') {
+    <div class="grid gap-12 md:grid-cols-2 xl:grid-cols-3">
+      <a routerLink="/empresas" class="text-center bg-white rounded-sm shadow-sm p-12 border border-gray-200">🏢 Empresas</a>
+      <a routerLink="/categorias" class="text-center bg-white rounded-sm shadow-sm p-12 border border-gray-200">📂 Categorías</a>
+      <a routerLink="/usuarios" class="text-center bg-white rounded-sm shadow-sm p-12 border border-gray-200">👥 Usuarios</a>
+      <a routerLink="/administradores" class="text-center bg-white rounded-sm shadow-sm p-12 border border-gray-200">🛠️ Administradores</a>
+      <a (click)="logout()" class="cursor-pointer bg-red-500 border-red-600 text-center text-white rounded-sm shadow-sm p-12 border">⏻ Cerrar Sesión</a>
+    </div>
+  }
+</section>

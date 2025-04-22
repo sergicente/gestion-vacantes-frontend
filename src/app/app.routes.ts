@@ -8,6 +8,7 @@ import { FormLoginComponent } from './pages/form-login/form-login.component';
 import { CategoriaListaVacantesComponent } from './pages/categoria-lista-vacantes/categoria-lista-vacantes.component';
 import { FormComponent } from './pages/form/form.component';
 import { FormRegisterComponent } from './pages/form-register/form-register.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
@@ -21,6 +22,8 @@ export const routes: Routes = [
   { path: 'vacante/modificar/:id', component: FormComponent },
   { path: 'formulario', component: FormComponent },
   { path: 'actualizarOferta', component: FormComponent },
+  { path: 'dashboard', component: DashboardComponent },
+
   { path: '**', component: Pagina404Component },
   { path: "**", redirectTo: "home" }
 
