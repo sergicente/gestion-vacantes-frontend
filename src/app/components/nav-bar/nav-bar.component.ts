@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { CategoriaService } from '../../services/categoria.service';
-import { NgClass, NgFor } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-nav-bar',
@@ -10,9 +10,16 @@ import { RouterLink } from '@angular/router';
   styleUrl: './nav-bar.component.css'
 })
 export class NavBarComponent {
+
   isMenuOpen = false;
   serviceCategoria = inject(CategoriaService);
   arrayCategorias!: any[];
+  router = inject(Router);
+
+
+  estaLogeado(): boolean {
+    return localStorage.getItem('usuario') !== null;
+  }
 
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
@@ -23,4 +30,11 @@ export class NavBarComponent {
       this.arrayCategorias = response;
     });
   }
+
+  logout() {
+    localStorage.removeItem('usuario');
+    this.router.navigate(['/login']);
+  }
+
+
 }
