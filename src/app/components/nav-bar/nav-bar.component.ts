@@ -1,12 +1,12 @@
 import { Component, inject } from '@angular/core';
 import { CategoriaService } from '../../services/categoria.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { NgClass } from '@angular/common';
 
 
 @Component({
   selector: 'app-nav-bar',
-  imports: [NgClass],
+  imports: [RouterLink, NgClass],
   templateUrl: './nav-bar.component.html',
   styleUrl: './nav-bar.component.css'
 })
@@ -16,6 +16,10 @@ export class NavBarComponent {
   serviceCategoria = inject(CategoriaService);
   arrayCategorias!: any[];
   router = inject(Router);
+  rol: string = '';
+  usuario: string = '';
+
+
 
 
   estaLogeado(): boolean {
@@ -30,6 +34,12 @@ export class NavBarComponent {
     this.serviceCategoria.getAll().subscribe((response) => {
       this.arrayCategorias = response;
     });
+    const usuarioJson = localStorage.getItem('usuario');
+    if (usuarioJson) {
+      const usuario = JSON.parse(usuarioJson);
+      this.rol = usuario.rol;
+      this.usuario = usuario.nombre;
+    }
   }
 
   logout() {
