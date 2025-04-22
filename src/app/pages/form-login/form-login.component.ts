@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { UsuarioService } from '../../services/usuario.service';
 import { IUsuario } from '../../interfaces/iusuario';
 
+
 @Component({
   selector: 'app-form-login',
   imports: [FormsModule],
@@ -11,6 +12,8 @@ import { IUsuario } from '../../interfaces/iusuario';
   styleUrls: ['./form-login.component.css']
 })
 export class FormLoginComponent {
+  credentials = { email: '', password: '' };
+  loggedInMessage = false;
 
   usuarioService = inject(UsuarioService);
   router = inject(Router);
@@ -36,3 +39,4 @@ export class FormLoginComponent {
     }
   }
 }
+

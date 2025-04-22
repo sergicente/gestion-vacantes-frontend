@@ -1,0 +1,19 @@
+.no-style-btn {
+    background-color: transparent; /* Fondo transparente */
+    border: none; /* Elimina el borde */
+    color: inherit; /* Hereda el color del texto del contenedor */
+    padding: 0; /* Elimina el padding para que el botón se ajuste al ícono */
+    font-size: 0.7rem; /* Tamaño de fuente normal para el texto */
+    text-align: center; /* Asegura que el texto esté centrado */
+    margin-right: 10px; /* Espacio entre los botones */
+  }
+ 
+  .no-style-btn i {
+    font-size: 2rem; /* Tamaño del ícono */
+  }
+  
+  .no-style-btn span {
+    font-size: 0.8rem; /* Tamaño pequeño para el texto */
+    margin-top: 5px; /* Separación entre el ícono y el texto */
+  }
+  
