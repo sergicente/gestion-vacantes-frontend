@@ -12,6 +12,9 @@ import { IUsuario } from '../../interfaces/iusuario';
   styleUrls: ['./form-login.component.css']
 })
 export class FormLoginComponent {
+updateField(arg0: string,$event: Event) {
+throw new Error('Method not implemented.');
+}
   credentials = { email: '', password: '' };
   loggedInMessage = false;
 

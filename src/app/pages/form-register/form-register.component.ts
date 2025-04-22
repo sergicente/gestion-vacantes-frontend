@@ -2,9 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-form-register',
+  imports: [CommonModule, FormsModule],
   templateUrl: './form-register.component.html',
   styleUrls: ['./form-register.component.css']
 })
