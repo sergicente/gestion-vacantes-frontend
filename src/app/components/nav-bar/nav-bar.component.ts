@@ -11,35 +11,31 @@ import { NgClass } from '@angular/common';
   styleUrl: './nav-bar.component.css'
 })
 export class NavBarComponent {
-
   isMenuOpen = false;
+  arrayCategorias: any[] = [];
+
+  // servicios
   serviceCategoria = inject(CategoriaService);
-  arrayCategorias!: any[];
-  router = inject(Router);
-  rol: string = '';
-  usuario: string = '';
+  router           = inject(Router);
 
+  //  helpers sencillos 
+  get rol(): string {
+    const raw = localStorage.getItem('usuario');
+    return raw ? JSON.parse(raw).rol : '';
+  }
 
-
+  get usuario(): string {
+    const raw = localStorage.getItem('usuario');
+    return raw ? JSON.parse(raw).nombre : '';
+  }
 
   estaLogeado(): boolean {
-    return localStorage.getItem('usuario') !== null;
+    return !!localStorage.getItem('usuario');
   }
 
+  // interacción UI
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
-  }
-
-  ngOnInit(): void {
-    this.serviceCategoria.getAll().subscribe((response) => {
-      this.arrayCategorias = response;
-    });
-    const usuarioJson = localStorage.getItem('usuario');
-    if (usuarioJson) {
-      const usuario = JSON.parse(usuarioJson);
-      this.rol = usuario.rol;
-      this.usuario = usuario.nombre;
-    }
   }
 
   logout() {
@@ -47,5 +43,8 @@ export class NavBarComponent {
     this.router.navigate(['/login']);
   }
 
-
+  //  cargar categorías
+  ngOnInit(): void {
+    this.serviceCategoria.getAll().subscribe(res => (this.arrayCategorias = res));
+  }
 }
