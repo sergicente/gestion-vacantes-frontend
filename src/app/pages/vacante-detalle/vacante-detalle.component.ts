@@ -12,6 +12,8 @@ import { ButtonComponent } from '../../components/button/button.component';
   styleUrl: './vacante-detalle.component.css'
 })
 export class VacanteDetalleComponent {
+  rol: string = '';
+  usuario: string = '';
   vacante!: any;
   vacanteServicio = inject(VacanteService);
   activatedRoute = inject(ActivatedRoute);
@@ -20,6 +22,13 @@ export class VacanteDetalleComponent {
   fechaFormateada!: string;
 
   ngOnInit() {
+    const usuarioJson = localStorage.getItem('usuario');
+    if (usuarioJson) {
+      const usuario = JSON.parse(usuarioJson);
+      this.rol = usuario.rol;
+      this.usuario = usuario.nombre;
+    }
+
     this.activatedRoute.params.subscribe((params: any) => {
       const id: string = params.id;
       this.vacanteServicio.getById(id).subscribe((peticion) => {

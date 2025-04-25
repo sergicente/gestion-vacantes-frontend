@@ -9,6 +9,8 @@ import { CategoriaListaVacantesComponent } from './pages/categoria-lista-vacante
 import { FormComponent } from './pages/form/form.component';
 import { FormRegisterComponent } from './pages/form-register/form-register.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { FormAplicarVacanteComponent } from './pages/form-aplicar-vacante/form-aplicar-vacante.component';
+import { MisSolicitudesComponent } from './pages/mis-solicitudes/mis-solicitudes.component';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
@@ -23,6 +25,9 @@ export const routes: Routes = [
   { path: 'formulario', component: FormComponent },
   { path: 'actualizarOferta', component: FormComponent },
   { path: 'dashboard', component: DashboardComponent },
+  {path: 'aplicar/:id', component:FormAplicarVacanteComponent},
+  {path: 'solicitudes', component:MisSolicitudesComponent},
+  {path: 'perfil', component:FormRegisterComponent},
 
   { path: '**', component: Pagina404Component },
   { path: "**", redirectTo: "home" }
