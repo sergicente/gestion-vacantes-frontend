@@ -7,7 +7,7 @@ import { ButtonComponent } from '../../components/button/button.component';
 
 @Component({
   selector: 'app-vacante-detalle',
-  imports: [RouterLink, NgClass, ButtonComponent],
+  imports: [RouterLink, NgClass],
   templateUrl: './vacante-detalle.component.html',
   styleUrl: './vacante-detalle.component.css'
 })

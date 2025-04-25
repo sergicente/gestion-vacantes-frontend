@@ -8,7 +8,7 @@ import { Ivacante } from '../../interfaces/ivacante';
 
 @Component({
   selector: 'app-home',
-  imports: [CardVacanteComponent, RouterLink, NgxPaginationModule],
+  imports: [CardVacanteComponent, NgxPaginationModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
