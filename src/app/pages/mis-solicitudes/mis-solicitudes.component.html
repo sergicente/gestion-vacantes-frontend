@@ -1,0 +1,60 @@
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-2xl font-semibold mb-6 text-center">Mis Solicitudes</h1>
+  
+    @if (solicitudes.length === 0) {
+      <div class="text-center text-gray-500">
+        Aún no has enviado ninguna solicitud.
+      </div>
+    } @else {
+      <div class="overflow-x-auto">
+        <table class="min-w-full bg-white shadow-md border border-gray-300">
+          <thead class="bg-gray-100">
+            <tr>
+              <th class="py-3 px-4 text-left text-sm font-medium text-gray-700">Fecha</th>
+              <th class="py-3 px-4 text-left text-sm font-medium text-gray-700">Vacante</th>
+              <th class="py-3 px-4 text-left text-sm font-medium text-gray-700">Estado</th>
+              <th class="py-3 px-4 text-left text-sm font-medium text-gray-700">Comentarios</th>
+              <th class="py-3 px-4 text-left text-sm font-medium text-gray-700">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (solicitud of solicitudes; track solicitud.idSolicitud) {
+              <tr class="border-t">
+                <td class="py-3 px-4 text-sm text-gray-800">{{ solicitud.fecha }}</td>
+                <td class="py-3 px-4 text-sm text-gray-800">
+                    <a 
+                      [routerLink]="['/vacante', solicitud.idVacante]"
+                      class="text-blue-600 hover:underline"
+                    >
+                      {{ solicitud.nombreVacante }}
+                    </a>
+                  </td>
+                <td class="py-3 px-4 text-sm text-gray-800">
+                  <span [ngClass]="{
+                    'text-green-600': solicitud.estado === 1,
+                    'text-red-600': solicitud.estado === 2,
+                    'text-gray-500': solicitud.estado === 0
+                  }">
+                    {{ obtenerTextoEstado(solicitud.estado) }}
+                  </span>
+                </td>
+                <td class="py-3 px-4 text-sm text-gray-800">{{ solicitud.comentarios || '—' }}</td>
+                <td class="py-3 px-4 text-sm text-gray-800">
+                  <button 
+                    class="bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded text-sm disabled:opacity-50"
+                    (click)="cancelarSolicitud(solicitud.idSolicitud)"
+                    [disabled]="solicitud.estado !== 0"
+                  >
+                    Cancelar
+                  </button>
+                  <a [href]="'http://localhost:9001/api/solicitudes/archivo/' + solicitud.archivo" target="_blank">
+                    Ver PDF
+                  </a>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </div>
