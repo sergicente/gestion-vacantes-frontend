@@ -1,0 +1,58 @@
+<div class="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md">
+  <h2 class="text-2xl font-bold mb-6">Formulario de Empresa</h2>
+  
+  <form (ngSubmit)="submitForm()" class="space-y-4">
+    <!-- Datos de la Empresa -->
+    <div class="space-y-4">
+      <h3 class="text-lg font-semibold">Datos de la Empresa</h3>
+      
+      <div>
+        <label for="cif" class="block text-sm font-medium text-gray-700">CIF</label>
+        <input type="text" id="cif" name="cif" [(ngModel)]="empresa.cif" 
+               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" required>
+      </div>
+
+      <div>
+        <label for="nombreEmpresa" class="block text-sm font-medium text-gray-700">Nombre de la Empresa</label>
+        <input type="text" id="nombreEmpresa" name="nombreEmpresa" [(ngModel)]="empresa.nombreEmpresa"
+               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" required>
+      </div>
+
+      <div>
+        <label for="pais" class="block text-sm font-medium text-gray-700">País</label>
+        <input type="text" id="pais" name="pais" [(ngModel)]="empresa.pais"
+               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" required>
+      </div>
+
+      <div>
+        <label for="emailEmpresa" class="block text-sm font-medium text-gray-700">Email de la Empresa</label>
+        <input type="email" id="emailEmpresa" name="emailEmpresa" [(ngModel)]="empresa.email"
+               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" required>
+      </div>
+    </div>
+
+    <!-- Datos del Usuario -->
+    <div class="space-y-4">
+      <h3 class="text-lg font-semibold">Datos del Usuario</h3>
+      
+      <div>
+        <label for="emailUsuario" class="block text-sm font-medium text-gray-700">Email del Usuario</label>
+        <input type="email" id="emailUsuario" name="emailUsuario" [(ngModel)]="usuario.email"
+               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" required>
+      </div>
+
+      <div>
+        <label for="password" class="block text-sm font-medium text-gray-700">Contraseña</label>
+        <input type="password" id="password" name="password" [(ngModel)]="usuario.password"
+               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" required>
+      </div>
+    </div>
+
+    <div class="flex justify-end">
+      <button type="submit" 
+              class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+        Guardar
+      </button>
+    </div>
+  </form>
+</div> 

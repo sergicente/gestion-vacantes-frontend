@@ -3,12 +3,11 @@ import { VacanteService } from '../../services/vacante.service';
 import { CardVacanteComponent } from "../../components/card-vacante/card-vacante.component";
 import { NgxPaginationModule} from 'ngx-pagination'; 
 import { CategoriaService } from '../../services/categoria.service';
-import { RouterLink } from '@angular/router';
 import { Ivacante } from '../../interfaces/ivacante';
 
 @Component({
   selector: 'app-home',
-  imports: [CardVacanteComponent, RouterLink, NgxPaginationModule],
+  imports: [CardVacanteComponent, NgxPaginationModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
