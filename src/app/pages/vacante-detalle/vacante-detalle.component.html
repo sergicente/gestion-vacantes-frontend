@@ -84,6 +84,8 @@
                 <p class="mt-2 text-gray-700">{{ vacante.detalles }}</p>
             </div>
     
+            @if(rol=='CLIENTE'){
+                
             <!-- Botón Aplicar -->
             <div class="flex justify-center mt-8">
                 <a [routerLink]="['/aplicar', vacante.idVacante]"><button type="button"
@@ -91,22 +93,34 @@
                     Aplicar a este empleo
                 </button></a>
             </div>
+
+        }@else {
+                        <!-- Botón Aplicar -->
+                        <div class="flex justify-center mt-8">
+                            <a href="login"><button type="button"
+                                class="bg-orange-400 hover:bg-orange-600 text-white font-semibold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out cursor-pointer">
+                                Aplicar a este empleo
+                            </button></a>
+                        </div>
+        }
         </div>
     
         <!-- Botones Modificar / Eliminar -->
-        
-        <div class="flex flex-col md:flex-row justify-between mt-10 gap-4">
-             <a [routerLink]="['/vacante/modificar', vacante.idVacante]">
-                <button type="button" class="w-full md:w-auto bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    Modificar
-                </button>
-            </a>
-            <button (click)="borrarvacante()" type="button"
-                class="w-full md:w-auto bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-                Eliminar
-            </button>
-             
-            <!-- <app-button [parent]="'view'" [id]="vacante.idVacante"></app-button> -->
-        </div>
+        @if(rol=='ADMON'){
+            <div class="flex flex-col md:flex-row justify-between mt-10 gap-4">
+                <a [routerLink]="['/vacante/modificar', vacante.idVacante]">
+                   <button type="button" class="w-full md:w-auto bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                       Modificar
+                   </button>
+               </a>
+               <button (click)="borrarvacante()" type="button"
+                   class="w-full md:w-auto bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                   Eliminar
+               </button>
+                
+               <!-- <app-button [parent]="'view'" [id]="vacante.idVacante"></app-button> -->
+           </div>
+        }
+
     </section>
     }
