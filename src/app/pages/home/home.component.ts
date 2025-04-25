@@ -14,7 +14,7 @@ import { Ivacante } from '../../interfaces/ivacante';
 export class HomeComponent {
   serviceVacante = inject(VacanteService);
   serviceCategoria = inject(CategoriaService);
-  itemsPorPagina: number = 5;
+  itemsPorPagina: number = 6;
   paginaActual!: number;
   totalPaginas!: number;
   arrayVacantes: Ivacante[];

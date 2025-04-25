@@ -1,29 +1,32 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { catchError, firstValueFrom, lastValueFrom, Observable, throwError } from 'rxjs';
-import { IUsuario } from '../interfaces/iusuario';
+import { catchError, lastValueFrom, Observable, throwError } from 'rxjs';
+import { Ivacante } from '../interfaces/ivacante';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UsuarioService {
+export class SolicitudService {
 
   http = inject(HttpClient);
-  private baseUrl: string = 'http://localhost:9001/api'
+  private baseUrl: string = 'http://localhost:9001/api/solicitudes'
+  
 
   constructor() { };
-
-  login(usuario: IUsuario) {
-    return firstValueFrom(
-      this.http.post<IUsuario>(`${this.baseUrl}/login`, usuario, { withCredentials: true })
-    );
-  }
 
   getAll(): Observable<any[]> {
     return this.http.get<any[]>(this.baseUrl);
   }
 
-  getById(id: String): Observable<any> {
+  getByEmail(email: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/usuario/${email}`);
+  }
+
+  cancelarSolicitud(idSolicitud: number): Observable<void> {
+    return this.http.put<void>(`${this.baseUrl}/${idSolicitud}/cancelar`, {});
+  }
+
+  getById(id: String): Observable<Ivacante> {
     return this.http.get<any>(this.baseUrl + '/' + id);
   }
 
@@ -48,16 +51,15 @@ export class UsuarioService {
   }
 
   nuevo(datos: any) {
-    return this.http.post<any>(`${this.baseUrl}/usuarios`, datos).pipe(
+    return this.http.post<any>(this.baseUrl + '/enviarSolicitud', datos).pipe(
       catchError((error) => {
         if (error.status === 409) {
-          alert('Ya existe un usuario con este email');
+          alert('Ya existe con este nombre');
         } else {
           alert('Error al insertar.');
         }
         return throwError(error);
       })
     );
-    
   }
 }
