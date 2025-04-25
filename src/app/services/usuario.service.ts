@@ -48,15 +48,16 @@ export class UsuarioService {
   }
 
   nuevo(datos: any) {
-    return this.http.post<any>(this.baseUrl + '/insertar', datos).pipe(
+    return this.http.post<any>(`${this.baseUrl}/usuarios`, datos).pipe(
       catchError((error) => {
         if (error.status === 409) {
-          alert('Ya existe con este nombre');
+          alert('Ya existe un usuario con este email');
         } else {
           alert('Error al insertar.');
         }
         return throwError(error);
       })
     );
+    
   }
 }
