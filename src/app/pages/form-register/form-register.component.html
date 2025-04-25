@@ -1,51 +1,62 @@
 <section class="max-w-7xl mx-auto px-4 mt-24 relative flex justify-center">
+  <!-- Tarjeta de registro -->
+  <div class="w-full max-w-md bg-white rounded-sm shadow-sm border border-gray-200 p-12 space-y-6">
+    <h2 class="text-3xl font-bold text-center text-gray-800">Nuevo Usuario</h2>
 
-    <!-- Tarjeta de registro -->
-    <div class="w-full max-w-md bg-white rounded-sm shadow-sm border border-gray-200 p-12 space-y-6">
-      <h2 class="text-3xl font-bold text-center text-gray-800">Nuevo Usuario</h2>
+    <form #form="ngForm" (ngSubmit)="onRegister(form)" class="space-y-5">
+      <div>
+        <label for="email" class="block text-sm font-medium mb-1">Correo electrónico</label>
+        <input type="email" id="email" name="email" required email [(ngModel)]="user.email"
+          class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
+          [ngClass]="{'border-red-500': email.invalid && email.touched}" #email="ngModel" />
+        @if (email.errors?.['required'] && email.touched) {
+          <div class="text-red-500 text-sm">El correo es obligatorio.</div>
+        } @else if (email.errors?.['email'] && email.touched) {
+          <div class="text-red-500 text-sm">Introduce un correo electrónico válido.</div>
+        }
+      </div>
 
-      <form #form="ngForm" (ngSubmit)="onRegister(form)" class="space-y-5">
-        <div>
-          <label for="email" class="block text-sm font-medium  mb-1">Correo electrónico</label>
-          <input type="email" id="email" name="email" required [(ngModel)]="user.email"
-            class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
-            [ngClass]="{'border-red-500': email.invalid && email.touched}" #email="ngModel" />
-          <div *ngIf="email.invalid && email.touched" class="text-red-500 text-sm">Introduce un correo válido.</div>
-        </div>
+      <div>
+        <label for="nombre" class="block text-sm font-medium mb-1">Nombre</label>
+        <input type="text" id="nombre" name="nombre" required [(ngModel)]="user.nombre"
+          class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
+          [ngClass]="{'border-red-500': nombre.invalid && nombre.touched}" #nombre="ngModel" />
+        @if (nombre.invalid && nombre.touched) {
+          <div class="text-red-500 text-sm">El nombre es obligatorio.</div>
+        }
+      </div>
 
-        <div>
-          <label for="nombre" class="block text-sm font-medium  mb-1">Nombre</label>
-          <input type="text" id="nombre" name="nombre" required [(ngModel)]="user.nombre"
-            class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
-            [ngClass]="{'border-red-500': nombre.invalid && nombre.touched}" #nombre="ngModel" />
-          <div *ngIf="nombre.invalid && nombre.touched" class="text-red-500 text-sm">El nombre es obligatorio.</div>
-        </div>
+      <div>
+        <label for="apellidos" class="block text-sm font-medium mb-1">Apellidos</label>
+        <input type="text" id="apellidos" name="apellidos" required [(ngModel)]="user.apellidos"
+          class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
+          [ngClass]="{'border-red-500': apellidos.invalid && apellidos.touched}" #apellidos="ngModel" />
+        @if (apellidos.invalid && apellidos.touched) {
+          <div class="text-red-500 text-sm">Los apellidos son obligatorios.</div>
+        }
+      </div>
 
-        <div>
-          <label for="apellidos" class="block text-sm font-medium mb-1">Apellidos</label>
-          <input type="text" id="apellidos" name="apellidos" required [(ngModel)]="user.apellidos"
-            class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
-            [ngClass]="{'border-red-500': apellidos.invalid && apellidos.touched}" #apellidos="ngModel" />
-          <div *ngIf="apellidos.invalid && apellidos.touched" class="text-red-500 text-sm">Los apellidos son obligatorios.</div>
-        </div>
+      <div>
+        <label for="password" class="block text-sm font-medium mb-1">Contraseña</label>
+        <input type="password" id="password" name="password" required minlength="5" [(ngModel)]="user.password"
+          class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
+          [ngClass]="{'border-red-500': password.invalid && password.touched}" #password="ngModel" />
+        @if (password.errors?.['required'] && password.touched) {
+          <div class="text-red-500 text-sm">La contraseña es obligatoria.</div>
+        } @else if (password.errors?.['minlength'] && password.touched) {
+          <div class="text-red-500 text-sm">La contraseña debe tener al menos 5 caracteres.</div>
+        }
+      </div>
 
-        <div>
-          <label for="password" class="block text-sm font-medium  mb-1">Contraseña</label>
-          <input type="password" id="password" name="password" required minlength="5" [(ngModel)]="user.password"
-            class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
-            [ngClass]="{'border-red-500': password.invalid && password.touched}" #password="ngModel" />
-          <div *ngIf="password.invalid && password.touched" class="text-red-500 text-sm">Debe tener al menos 6 carácteres.</div>
-        </div>
+      <button type="submit"
+        class="w-full bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-sm transition duration-300">
+        Registrarse
+      </button>
+    </form>
 
-        <button type="submit"
-          class="w-full bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-sm transition duration-300">
-          Registrarse
-        </button>
-      </form>
-
-      <p class="text-sm text-center">
-        ¿Ya tienes cuenta?
-        <a href="/login" class="text-blue-600 hover:underline">Inicia sesión</a>
-      </p>
-    </div>
+    <p class="text-sm text-center">
+      ¿Ya tienes cuenta?
+      <a href="/login" class="text-blue-600 hover:underline">Inicia sesión</a>
+    </p>
+  </div>
 </section>
