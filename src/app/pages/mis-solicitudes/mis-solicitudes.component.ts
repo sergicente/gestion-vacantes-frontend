@@ -3,6 +3,7 @@ import { SolicitudService } from '../../services/solicitud.service';
 import { NgClass } from '@angular/common';
 import { VacanteService } from '../../services/vacante.service';
 import { RouterLink } from '@angular/router';
+import { FechaService } from '../../services/fecha.service';
 
 @Component({
   selector: 'app-mis-solicitudes',
@@ -14,7 +15,12 @@ export class MisSolicitudesComponent {
   solicitudes: any[] = [];
   service = inject(SolicitudService);
   serviceVacantes = inject(VacanteService);
+  fechaService = inject(FechaService);
+  fechaFormateada!: string;
 
+  formatearFecha(fecha: string | Date): string {
+    return this.fechaService.formatearFecha(fecha);
+  }
 
   ngOnInit(): void {
     let email = '';
