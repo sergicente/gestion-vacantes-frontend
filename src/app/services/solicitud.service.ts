@@ -1,12 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { catchError, lastValueFrom, Observable, throwError } from 'rxjs';
+import { catchError, lastValueFrom, map, Observable, throwError } from 'rxjs';
 import { Ivacante } from '../interfaces/ivacante';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SolicitudService {
+
 
   http = inject(HttpClient);
   private baseUrl: string = 'http://localhost:9001/api/solicitudes'
@@ -28,6 +29,10 @@ export class SolicitudService {
 
   getById(id: String): Observable<Ivacante> {
     return this.http.get<any>(this.baseUrl + '/' + id);
+  }
+
+  verificarAplicacion(idUsuario: string, idVacante: number) {
+    return this.http.get<boolean>(`${this.baseUrl}/verificar/${idUsuario}/${idVacante}`);
   }
 
   modificar(id: string, item: any): Observable<any> {
@@ -56,7 +61,7 @@ export class SolicitudService {
         if (error.status === 409) {
           alert('Ya existe con este nombre');
         } else {
-          alert('Error al insertar.');
+          
         }
         return throwError(error);
       })
