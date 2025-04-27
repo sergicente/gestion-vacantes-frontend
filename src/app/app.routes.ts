@@ -17,6 +17,7 @@ import { CategoriaListaComponent } from './pages/categoria-lista/categoria-lista
 import { UsuariosListComponent } from './pages/usuarios-list/usuarios-list.component';
 import { AdministradoresListComponent } from './pages/administradores-list/administradores-list.component';
 import { AdministradorDetalleComponent } from './pages/administrador-detalle/administrador-detalle.component';
+import { AltaEmpresaComponent } from './pages/alta-empresa/alta-empresa.component';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
@@ -40,6 +41,7 @@ export const routes: Routes = [
   { path: 'usuarios', component: UsuariosListComponent },
   { path: 'administradores', component: AdministradoresListComponent },
   { path: 'administrador/:email', component: AdministradorDetalleComponent },
+  { path:'empresas/nueva', component: AltaEmpresaComponent},
   { path: '**', component: Pagina404Component },
   { path: "**", redirectTo: "home" }
 
