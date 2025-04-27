@@ -27,7 +27,7 @@ export class HomeComponent {
   };
 
   ngOnInit(): void {
-    this.serviceVacante.getAll().subscribe((response) => {
+    this.serviceVacante.getAllCreadas().subscribe((response) => {
       console.log(response);
       this.arrayVacantes = response;
       this.totalPaginas = Math.ceil(this.arrayVacantes.length / this.itemsPorPagina);
