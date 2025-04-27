@@ -62,4 +62,7 @@ export class EmpresaService {
       })
     );
   }
+  crearEmpresaConUsuario(empresa: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/crear-con-usuario`, empresa);
+  }
 }
