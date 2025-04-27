@@ -16,6 +16,8 @@ import { DashboardCategoriasComponent } from './pages/dashboard-categorias/dashb
 import { CategoriaListaComponent } from './pages/categoria-lista/categoria-lista.component';
 import { authGuard } from './guards/auth.guard';
 import { UsuariosListComponent } from './pages/usuarios-list/usuarios-list.component';
+import { AdministradoresListComponent } from './pages/administradores-list/administradores-list.component';
+import { AdministradorDetalleComponent } from './pages/administrador-detalle/administrador-detalle.component';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
@@ -37,6 +39,8 @@ export const routes: Routes = [
   { path: 'dashboard-categorias', component: DashboardCategoriasComponent, canActivate: [authGuard] },
   { path: 'categorias', component: CategoriaListaComponent, canActivate: [authGuard] },
   { path: 'usuarios', component: UsuariosListComponent, canActivate: [authGuard] },
+  { path: 'administradores', component: AdministradoresListComponent, canActivate: [authGuard] },
+  { path: 'administrador/:email', component: AdministradorDetalleComponent, canActivate: [authGuard] },
   { path: '**', component: Pagina404Component },
   { path: "**", redirectTo: "home" }
 
