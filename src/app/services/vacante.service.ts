@@ -18,6 +18,10 @@ export class VacanteService {
     return this.http.get<any[]>(this.baseUrl);
   }
 
+  getAllCreadas(): Observable<any[]> {
+    return this.http.get<any[]>(this.baseUrl+ '/creadas');
+  }
+
   getById(id: String): Observable<Ivacante> {
     return this.http.get<any>(this.baseUrl + '/' + id);
   }
