@@ -11,6 +11,13 @@ import { FormRegisterComponent } from './pages/form-register/form-register.compo
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { FormAplicarVacanteComponent } from './pages/form-aplicar-vacante/form-aplicar-vacante.component';
 import { MisSolicitudesComponent } from './pages/mis-solicitudes/mis-solicitudes.component';
+import { EditarEmpresaComponent } from './pages/editar-empresa/editar-empresa.component';
+import { DashboardCategoriasComponent } from './pages/dashboard-categorias/dashboard-categorias.component';
+import { CategoriaListaComponent } from './pages/categoria-lista/categoria-lista.component';
+import { authGuard } from './guards/auth.guard';
+import { UsuariosListComponent } from './pages/usuarios-list/usuarios-list.component';
+import { AdministradoresListComponent } from './pages/administradores-list/administradores-list.component';
+import { AdministradorDetalleComponent } from './pages/administrador-detalle/administrador-detalle.component';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
@@ -18,6 +25,7 @@ export const routes: Routes = [
   { path: 'vacante/:id', component: VacanteDetalleComponent },
   { path: 'empresas', component: EmpresaListaComponent },
   { path: 'empresa/:id', component: EmpresaListaVacantesComponent },
+  { path: 'empresas/:id/editar', component: EditarEmpresaComponent },
   { path: 'login', component: FormLoginComponent },
   { path: 'register', component: FormRegisterComponent },
   { path: 'categoria/:id', component: CategoriaListaVacantesComponent },
@@ -25,10 +33,14 @@ export const routes: Routes = [
   { path: 'formulario', component: FormComponent },
   { path: 'actualizarOferta', component: FormComponent },
   { path: 'dashboard', component: DashboardComponent },
-  {path: 'aplicar/:id', component:FormAplicarVacanteComponent},
-  {path: 'solicitudes', component:MisSolicitudesComponent},
-  {path: 'perfil', component:FormRegisterComponent},
-
+  { path: 'aplicar/:id', component: FormAplicarVacanteComponent },
+  { path: 'solicitudes', component: MisSolicitudesComponent },
+  { path: 'perfil', component: FormRegisterComponent },
+  { path: 'dashboard-categorias', component: DashboardCategoriasComponent, canActivate: [authGuard] },
+  { path: 'categorias', component: CategoriaListaComponent, canActivate: [authGuard] },
+  { path: 'usuarios', component: UsuariosListComponent, canActivate: [authGuard] },
+  { path: 'administradores', component: AdministradoresListComponent, canActivate: [authGuard] },
+  { path: 'administrador/:email', component: AdministradorDetalleComponent, canActivate: [authGuard] },
   { path: '**', component: Pagina404Component },
   { path: "**", redirectTo: "home" }
 

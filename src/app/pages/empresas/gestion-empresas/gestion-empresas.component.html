@@ -1,0 +1,42 @@
+<div class="container mx-auto px-4 py-8">
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold text-gray-800">Listado de Empresas</h1>
+    @if (rol === 'ADMON') {
+      <a routerLink="/empresas/nueva" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg">
+        Nueva Empresa
+      </a>
+    }
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    @for (empresa of arrayEmpresas; track empresa.id) {
+      <div class="bg-white rounded-lg shadow-md p-6">
+        <h2 class="text-xl font-semibold text-gray-800 mb-2">{{ empresa.nombre }}</h2>
+        <p class="text-gray-600 mb-2">{{ empresa.email }}</p>
+        <p class="text-gray-600 mb-4">{{ empresa.telefono }}</p>
+        
+        <div class="flex flex-col space-y-2">
+          @if (rol === 'ADMON') {
+            <a [routerLink]="['/empresas', empresa.id]" class="text-indigo-600 hover:text-indigo-900 mr-4">Ver</a>
+            <a [routerLink]="['/empresas', empresa.id, 'editar']" class="text-yellow-600 hover:text-yellow-900 mr-4">Editar</a>
+            <button (click)="borrarEmpresa(empresa.id)" class="text-red-600 hover:text-red-900">Eliminar</button>
+          }
+          @else if (rol === 'CLIENTE') {
+            <button (click)="enviarCV(empresa.id)" 
+                    class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg">
+              Enviar CV
+            </button>
+            <button (click)="verEstadoSolicitud(empresa.id)"
+                    class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg">
+              Ver Estado de Solicitud
+            </button>
+            <button (click)="cancelarSolicitud(empresa.id)"
+                    class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg">
+              Cancelar Solicitud
+            </button>
+          }
+        </div>
+      </div>
+    }
+  </div>
+</div> 

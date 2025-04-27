@@ -3,7 +3,7 @@ import { VacanteService } from '../../services/vacante.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FechaService } from '../../services/fecha.service';
 import { NgClass } from '@angular/common';
-import { SolicitudService } from '../../services/solicitud.service';
+import { ButtonComponent } from '../../components/button/button.component';
 
 @Component({
   selector: 'app-vacante-detalle',
