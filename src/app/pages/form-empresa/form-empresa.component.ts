@@ -15,6 +15,7 @@ export class FormEmpresaComponent {
     idEmpresa: 0,
     cif: '',
     nombreEmpresa: '',
+    direccionFiscal: '',
     pais: '',
     email: ''
   };

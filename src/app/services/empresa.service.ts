@@ -31,7 +31,7 @@ export class EmpresaService {
   }
 
   modificar(id: string, item: Iempresa): Observable<Iempresa> {
-    return this.http.put<Iempresa>(`${this.baseUrl}/modificar/${id}`, item).pipe(
+    return this.http.put<Iempresa>(`${this.baseUrl}/${id}`, item).pipe(
       catchError((error) => {
         if (error.status === 400) {
           alert('Error: El ID en la URL y en el body no coinciden.');
@@ -47,7 +47,18 @@ export class EmpresaService {
 
   borrar(id: string): Observable<any> {
     console.log('Se esta borrando el item con id ' + id);
-    return this.http.delete<any>(this.baseUrl + '/borrar/' + id);
+    return this.http.delete<any>(`${this.baseUrl}/${id}`).pipe(
+      catchError((error) => {
+        if (error.status === 404) {
+          alert('La empresa no existe o ya ha sido eliminada');
+        } else if (error.status === 409) {
+          alert('No se puede eliminar la empresa porque tiene vacantes asociadas');
+        } else {
+          alert('Error al eliminar la empresa. Por favor, inténtelo de nuevo.');
+        }
+        return throwError(error);
+      })
+    );
   }
 
   nuevo(data: { empresa: Iempresa, usuario: IUsuario }): Observable<any> {
