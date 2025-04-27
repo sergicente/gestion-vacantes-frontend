@@ -9,7 +9,7 @@ import { IUsuario } from '../interfaces/iusuario';
 export class UsuarioService {
 
   http = inject(HttpClient);
-  private baseUrl: string = 'http://localhost:9001/api'
+  private baseUrl: string = 'http://localhost:9001/api/usuarios';
 
   constructor() { };
 
@@ -59,5 +59,31 @@ export class UsuarioService {
       })
     );
     
+  }
+
+  deshabilitarUsuario(usuario: any): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/deshabilitar/${usuario.email}`, {}).pipe(
+      catchError((error) => {
+        if (error.status === 404) {
+          alert('El usuario no existe');
+        } else {
+          alert('Error al deshabilitar el usuario');
+        }
+        return throwError(error);
+      })
+    );
+  }
+
+  habilitarUsuario(usuario: any): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/deshabilitar/${usuario.email}`, {}).pipe(
+      catchError((error) => {
+        if (error.status === 404) {
+          alert('El usuario no existe');
+        } else {
+          alert('Error al habilitar el usuario');
+        }
+        return throwError(error);
+      })
+    );
   }
 }

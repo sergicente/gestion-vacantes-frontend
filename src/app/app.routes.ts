@@ -15,6 +15,7 @@ import { EditarEmpresaComponent } from './pages/editar-empresa/editar-empresa.co
 import { DashboardCategoriasComponent } from './pages/dashboard-categorias/dashboard-categorias.component';
 import { CategoriaListaComponent } from './pages/categoria-lista/categoria-lista.component';
 import { authGuard } from './guards/auth.guard';
+import { UsuariosListComponent } from './pages/usuarios-list/usuarios-list.component';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
@@ -35,6 +36,7 @@ export const routes: Routes = [
   { path: 'perfil', component: FormRegisterComponent },
   { path: 'dashboard-categorias', component: DashboardCategoriasComponent, canActivate: [authGuard] },
   { path: 'categorias', component: CategoriaListaComponent, canActivate: [authGuard] },
+  { path: 'usuarios', component: UsuariosListComponent, canActivate: [authGuard] },
   { path: '**', component: Pagina404Component },
   { path: "**", redirectTo: "home" }
 
