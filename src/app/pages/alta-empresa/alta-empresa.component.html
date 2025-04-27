@@ -1,0 +1,56 @@
+<form (ngSubmit)="onSubmit()" class="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md space-y-6">
+    <h2 class="text-2xl font-bold text-gray-800 mb-4">Alta de Empresa</h2>
+  
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div>
+        <label for="companyName" class="block text-sm font-medium text-gray-700">Nombre de la Empresa</label>
+        <input id="companyName" [(ngModel)]="empresa.nombre" name="companyName" required
+          class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" />
+      </div>
+  
+      <div>
+        <label for="companyAddress" class="block text-sm font-medium text-gray-700">Dirección</label>
+        <input id="companyAddress" [(ngModel)]="empresa.direccion" name="companyAddress" required
+          class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" />
+      </div>
+  
+      <div>
+        <label for="companyEmail" class="block text-sm font-medium text-gray-700">Email de la Empresa</label>
+        <input id="companyEmail" type="email" [(ngModel)]="empresa.email" name="companyEmail" required
+          class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" />
+      </div>
+  
+      <div>
+        <label for="companyPhone" class="block text-sm font-medium text-gray-700">Teléfono</label>
+        <input id="companyPhone" [(ngModel)]="empresa.telefono" name="companyPhone" required
+          class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" />
+      </div>
+    </div>
+  
+    <div class="border-t border-gray-200 pt-6">
+      <h3 class="text-xl font-semibold text-gray-800 mb-4">Datos del Usuario (Contacto de la Empresa)</h3>
+  
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label for="userName" class="block text-sm font-medium text-gray-700">Nombre del Usuario</label>
+          <input id="userName" [(ngModel)]="usuario.nombre" name="userName" required
+            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" />
+        </div>
+  
+        <div>
+          <label for="userEmail" class="block text-sm font-medium text-gray-700">Email del Usuario</label>
+          <input id="userEmail" type="email" [(ngModel)]="usuario.email" name="userEmail" required
+            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" />
+        </div>
+      </div>
+    </div>
+  
+    <div class="pt-4">
+      <button type="submit"
+        class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded shadow">
+        Registrar Empresa
+      </button>
+    </div>
+  </form>
+  
+  
