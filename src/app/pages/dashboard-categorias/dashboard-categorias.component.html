@@ -1,0 +1,47 @@
+<div class="container mx-auto px-4 py-8">
+  <div class="max-w-4xl mx-auto">
+    <h1 class="text-3xl font-bold mb-8">Gestión de Categorías</h1>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Ver todas las categorías -->
+      <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+        <h2 class="text-xl font-semibold mb-4">Ver todas las categorías</h2>
+        <p class="text-gray-600 mb-4">Consulta y gestiona todas las categorías disponibles en el sistema.</p>
+        <a [routerLink]="['/categorias']" 
+           class="inline-block px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+          Ver categorías
+        </a>
+      </div>
+
+      <!-- Alta de categoría -->
+      <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+        <h2 class="text-xl font-semibold mb-4">Alta de categoría</h2>
+        <p class="text-gray-600 mb-4">Añade una nueva categoría al sistema.</p>
+        <a [routerLink]="['/categorias/nueva']" 
+           class="inline-block px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">
+          Crear categoría
+        </a>
+      </div>
+
+      <!-- Editar categoría -->
+      <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+        <h2 class="text-xl font-semibold mb-4">Editar categoría</h2>
+        <p class="text-gray-600 mb-4">Modifica los datos de una categoría existente.</p>
+        <a [routerLink]="['/categorias']" 
+           class="inline-block px-4 py-2 bg-yellow-600 text-white rounded-md hover:bg-yellow-700">
+          Editar categorías
+        </a>
+      </div>
+
+      <!-- Eliminar categoría -->
+      <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+        <h2 class="text-xl font-semibold mb-4">Eliminar categoría</h2>
+        <p class="text-gray-600 mb-4">Elimina una categoría del sistema.</p>
+        <a [routerLink]="['/categorias']" 
+           class="inline-block px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700">
+          Eliminar categorías
+        </a>
+      </div>
+    </div>
+  </div>
+</div> 

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
+import { Icategoria } from '../interfaces/icategoria';
 
 @Injectable({
     providedIn: 'root'
@@ -12,41 +13,49 @@ export class CategoriaService {
 
     constructor() { };
 
-    getAll(): Observable<any[]> {
-        return this.http.get<any[]>(this.baseUrl);
+    getAll(): Observable<Icategoria[]> {
+        return this.http.get<Icategoria[]>(this.baseUrl);
     }
 
-    getById(id: String): Observable<any> {
-        return this.http.get<any>(this.baseUrl + '/' + id);
+    getById(id: string): Observable<Icategoria> {
+        return this.http.get<Icategoria>(`${this.baseUrl}/${id}`);
     }
 
-    modificar(id: string, item: any): Observable<any> {
-        return this.http.put<any>(`${this.baseUrl}/modificar/${id}`, item).pipe(
+    crear(categoria: Icategoria): Observable<Icategoria> {
+        return this.http.post<Icategoria>(this.baseUrl, categoria).pipe(
             catchError((error) => {
-                if (error.status === 400) {
-                    alert('Error: El ID en la URL y en el body no coinciden.');
-                } else if (error.status === 404) {
-                    alert('Error: No existe.');
+                if (error.status === 409) {
+                    alert('Ya existe una categoría con este nombre');
                 } else {
-                    alert('Error inesperado al modificar.');
+                    alert('Error al crear la categoría');
                 }
                 return throwError(error);
             })
         );
     }
 
-    borrar(id: String): Observable<any> {
-        console.log('Se esta borrando el item con id ' + id);
-        return this.http.delete<any>(this.baseUrl + '/borrar/' + id);
+    modificar(id: string, categoria: Icategoria): Observable<Icategoria> {
+        return this.http.put<Icategoria>(`${this.baseUrl}/${id}`, categoria).pipe(
+            catchError((error) => {
+                if (error.status === 404) {
+                    alert('La categoría no existe');
+                } else {
+                    alert('Error al modificar la categoría');
+                }
+                return throwError(error);
+            })
+        );
     }
 
-    nuevo(datos: any) {
-        return this.http.post<any>(this.baseUrl + '/insertar', datos).pipe(
+    borrar(id: string): Observable<any> {
+        return this.http.delete<any>(`${this.baseUrl}/${id}`).pipe(
             catchError((error) => {
-                if (error.status === 409) {
-                    alert('Ya existe con este nombre');
+                if (error.status === 404) {
+                    alert('La categoría no existe o ya ha sido eliminada');
+                } else if (error.status === 409) {
+                    alert('No se puede eliminar la categoría porque tiene vacantes asociadas');
                 } else {
-                    alert('Error al insertar.');
+                    alert('Error al eliminar la categoría');
                 }
                 return throwError(error);
             })

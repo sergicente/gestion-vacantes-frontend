@@ -47,18 +47,26 @@ export class EmpresaListaComponent {
   }
 
   editarEmpresa(empresa: Iempresa) {
-    this.empresaSeleccionada = empresa;
-    this.showForm = true;
+    this.router.navigate(['/empresas', empresa.idEmpresa, 'editar']);
   }
 
   eliminarEmpresa(id: number) {
-    if (confirm('¿Estás seguro de que deseas eliminar esta empresa?')) {
+    if (confirm('¿Estás seguro de que deseas eliminar esta empresa? Esta acción no se puede deshacer.')) {
       this.service.borrar(id.toString()).subscribe({
         next: () => {
-          this.loadEmpresas();
+          this.array = this.array.filter(empresa => empresa.idEmpresa !== id);
+          console.log('Empresa eliminada correctamente');
+          alert('Empresa eliminada correctamente');
         },
         error: (error) => {
           console.error('Error al eliminar la empresa:', error);
+          if (error.status === 404) {
+            alert('La empresa no existe o ya ha sido eliminada');
+          } else if (error.status === 409) {
+            alert('No se puede eliminar la empresa porque tiene vacantes asociadas');
+          } else {
+            alert('Error al eliminar la empresa. Por favor, inténtelo de nuevo.');
+          }
         }
       });
     }
@@ -92,23 +100,30 @@ export class EmpresaListaComponent {
     if (this.empresaSeleccionada) {
       // Modificar empresa existente
       this.service.modificar(this.empresaSeleccionada.idEmpresa.toString(), data.empresa).subscribe({
-        next: () => {
-          this.loadEmpresas();
+        next: (response) => {
+          const index = this.array.findIndex(e => e.idEmpresa === this.empresaSeleccionada?.idEmpresa);
+          if (index !== -1) {
+            this.array[index] = { ...this.array[index], ...data.empresa };
+          }
           this.toggleForm();
+          console.log('Empresa actualizada correctamente');
         },
         error: (error) => {
           console.error('Error al modificar la empresa:', error);
+          alert('Error al modificar la empresa. Por favor, inténtelo de nuevo.');
         }
       });
     } else {
       // Crear nueva empresa
       this.service.nuevo(data).subscribe({
-        next: () => {
-          this.loadEmpresas();
+        next: (response) => {
+          this.array.push(response);
           this.toggleForm();
+          console.log('Empresa creada correctamente');
         },
         error: (error) => {
           console.error('Error al crear la empresa:', error);
+          alert('Error al crear la empresa. Por favor, inténtelo de nuevo.');
         }
       });
     }
