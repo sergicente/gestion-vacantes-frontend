@@ -12,6 +12,9 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { FormAplicarVacanteComponent } from './pages/form-aplicar-vacante/form-aplicar-vacante.component';
 import { MisSolicitudesComponent } from './pages/mis-solicitudes/mis-solicitudes.component';
 import { EditarEmpresaComponent } from './pages/editar-empresa/editar-empresa.component';
+import { DashboardCategoriasComponent } from './pages/dashboard-categorias/dashboard-categorias.component';
+import { CategoriaListaComponent } from './pages/categoria-lista/categoria-lista.component';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
@@ -30,6 +33,8 @@ export const routes: Routes = [
   { path: 'aplicar/:id', component: FormAplicarVacanteComponent },
   { path: 'solicitudes', component: MisSolicitudesComponent },
   { path: 'perfil', component: FormRegisterComponent },
+  { path: 'dashboard-categorias', component: DashboardCategoriasComponent, canActivate: [authGuard] },
+  { path: 'categorias', component: CategoriaListaComponent, canActivate: [authGuard] },
   { path: '**', component: Pagina404Component },
   { path: "**", redirectTo: "home" }
 
