@@ -3,7 +3,7 @@ import { VacanteService } from '../../services/vacante.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FechaService } from '../../services/fecha.service';
 import { NgClass } from '@angular/common';
-import { ButtonComponent } from '../../components/button/button.component';
+import { SolicitudService } from '../../services/solicitud.service';
 
 @Component({
   selector: 'app-vacante-detalle',
@@ -17,23 +17,28 @@ export class VacanteDetalleComponent {
   vacante!: any;
   vacanteServicio = inject(VacanteService);
   activatedRoute = inject(ActivatedRoute);
+  servicioSolicitud = inject(SolicitudService);
   fechaService = inject(FechaService);
   router = inject(Router);
   fechaFormateada!: string;
+  yaHaAplicado: boolean = false;
 
   ngOnInit() {
     const usuarioJson = localStorage.getItem('usuario');
     if (usuarioJson) {
       const usuario = JSON.parse(usuarioJson);
       this.rol = usuario.rol;
-      this.usuario = usuario.nombre;
+      this.usuario = usuario.email;
     }
 
     this.activatedRoute.params.subscribe((params: any) => {
       const id: string = params.id;
       this.vacanteServicio.getById(id).subscribe((peticion) => {
         this.vacante = peticion;
-        console.log(this.vacante);
+
+        this.servicioSolicitud.verificarAplicacion(this.usuario, this.vacante.idVacante).subscribe((aplicado) => {
+          this.yaHaAplicado = aplicado;
+        });
       });
     });
   }

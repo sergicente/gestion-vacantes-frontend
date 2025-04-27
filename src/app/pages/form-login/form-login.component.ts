@@ -3,7 +3,7 @@ import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { UsuarioService } from '../../services/usuario.service';
 import { IUsuario } from '../../interfaces/iusuario';
-
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-form-login',
@@ -12,9 +12,9 @@ import { IUsuario } from '../../interfaces/iusuario';
   styleUrls: ['./form-login.component.css']
 })
 export class FormLoginComponent {
-updateField(arg0: string,$event: Event) {
-throw new Error('Method not implemented.');
-}
+  updateField(arg0: string, $event: Event) {
+    throw new Error('Method not implemented.');
+  }
   credentials = { email: '', password: '' };
   loggedInMessage = false;
 
@@ -25,7 +25,21 @@ throw new Error('Method not implemented.');
     if (localStorage.getItem('usuario')) {
       this.router.navigate(['/dashboard']);
     }
+
+
   }
+
+  toast = Swal.mixin({
+    toast: true,
+    position: "top-end",
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.onmouseenter = Swal.stopTimer;
+      toast.onmouseleave = Swal.resumeTimer;
+    }
+  });
 
   async login(loginForm: NgForm) {
     const datosUsuario: IUsuario = loginForm.value as IUsuario;
@@ -37,8 +51,18 @@ throw new Error('Method not implemented.');
       localStorage.setItem('usuario', JSON.stringify(usuario));
       loginForm.reset();
       this.router.navigate(['/dashboard']);
+
+      // Toast de éxito
+      this.toast.fire({
+        icon: 'success',
+        title: 'Has iniciado sesión'
+      });
     } catch (error) {
-      alert('Email o contraseña incorrectos');
+      // Toast de error
+      this.toast.fire({
+        icon: 'error',
+        title: 'Email o contraseña incorrectos'
+      });
     }
   }
 }

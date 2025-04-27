@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { CategoriaService } from '../../services/categoria.service';
 import { Router, RouterLink } from '@angular/router';
 import { NgClass } from '@angular/common';
+import Swal from 'sweetalert2'
 
 
 @Component({
@@ -17,6 +18,18 @@ export class NavBarComponent {
   // servicios
   serviceCategoria = inject(CategoriaService);
   router           = inject(Router);
+
+  toast = Swal.mixin({
+    toast: true,
+    position: "top-end",
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.onmouseenter = Swal.stopTimer;
+      toast.onmouseleave = Swal.resumeTimer;
+    }
+  });
 
   //  helpers sencillos 
   get rol(): string {
@@ -39,6 +52,11 @@ export class NavBarComponent {
   }
 
   logout() {
+        // Toast de éxito
+        this.toast.fire({
+          icon: 'success',
+          title: 'Se ha cerrado la sesión'
+        });
     localStorage.removeItem('usuario');
     this.router.navigate(['/login']);
   }
