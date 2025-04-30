@@ -45,14 +45,11 @@ export class AdministradoresListComponent implements OnInit {
         // Habilitar administradores deshabilitados
         this.administradores.forEach(admin => {
           if (!admin.enabled) {
-            this.usuarioService.habilitarUsuario(admin).subscribe({
-              next: () => {
-                admin.enabled = true;
-                console.log(`Administrador ${admin.email} habilitado`);
-              },
-              error: (error) => {
-                console.error(`Error al habilitar administrador ${admin.email}:`, error);
-              }
+            this.usuarioService.habilitarUsuario(admin).then(() => {
+              admin.enabled = true;
+              console.log(`Administrador ${admin.email} habilitado`);
+            }).catch((error) => {
+              console.error(`Error al habilitar administrador ${admin.email}:`, error);
             });
           }
         });

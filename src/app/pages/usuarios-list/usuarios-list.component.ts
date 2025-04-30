@@ -22,6 +22,7 @@ export class UsuariosListComponent implements OnInit {
     }
   }
 
+  // Método para cargar los usuarios
   loadUsuarios() {
     this.usuarioService.getAll().subscribe({
       next: (response) => {
@@ -33,26 +34,30 @@ export class UsuariosListComponent implements OnInit {
     });
   }
 
-  toggleEstadoUsuario(usuario: any) {
+  // Método para habilitar o deshabilitar usuario con promesas
+  async toggleEstadoUsuario(usuario: any) {
     const confirmMessage = usuario.enabled ? 
       '¿Estás seguro de que deseas deshabilitar este usuario?' : 
       '¿Estás seguro de que deseas habilitar este usuario?';
 
     if (confirm(confirmMessage)) {
-      const action = usuario.enabled ? 
-        this.usuarioService.deshabilitarUsuario(usuario) : 
-        this.usuarioService.habilitarUsuario(usuario);
+      try {
+        const action = usuario.enabled ? 
+          this.usuarioService.deshabilitarUsuario(usuario.email) : 
+          this.usuarioService.habilitarUsuario(usuario.email);
+        
+        // Esperar a que la promesa se resuelva
+        await action;
+        
+        // Alternar el estado del usuario
+        usuario.enabled = !usuario.enabled;
 
-      action.subscribe({
-        next: () => {
-          usuario.enabled = !usuario.enabled;
-          const estado = usuario.enabled ? 'habilitado' : 'deshabilitado';
-          alert(`Usuario ${estado} correctamente`);
-        },
-        error: (error) => {
-          console.error('Error al cambiar estado del usuario:', error);
-        }
-      });
+        const estado = usuario.enabled ? 'habilitado' : 'deshabilitado';
+        alert(`Usuario ${estado} correctamente`);
+      } catch (error) {
+        console.error('Error al cambiar estado del usuario:', error);
+        alert('Hubo un error al cambiar el estado del usuario.');
+      }
     }
   }
-} 
+}

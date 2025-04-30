@@ -69,29 +69,27 @@ export class UsuarioService {
     );
   }
 
-  deshabilitarUsuario(usuario: any): Observable<any> {
-    return this.http.put<any>(`${this.baseUrl}/deshabilitar/${usuario.email}`, {}).pipe(
-      catchError((error) => {
-        if (error.status === 404) {
-          alert('El usuario no existe');
-        } else {
-          alert('Error al deshabilitar el usuario');
-        }
-        return throwError(error);
-      })
-    );
+  async deshabilitarUsuario(email: string): Promise<any> {
+    try {
+      console.log("Correo enviado para deshabilitar: ", email);
+      const response = await firstValueFrom(this.http.put(`${this.baseUrl}/deshabilitar/${email}`, {}, { responseType: 'text' }));
+      return response; // La respuesta será un texto plano
+    } catch (error) {
+      console.error("Error al deshabilitar usuario", error);
+      alert('Error al deshabilitar el usuario');
+      throw error; // Lanza el error para manejarlo más arriba
+    }
   }
-
-  habilitarUsuario(usuario: any): Observable<any> {
-    return this.http.put<any>(`${this.baseUrl}/deshabilitar/${usuario.email}`, {}).pipe(
-      catchError((error) => {
-        if (error.status === 404) {
-          alert('El usuario no existe');
-        } else {
-          alert('Error al habilitar el usuario');
-        }
-        return throwError(error);
-      })
-    );
+  
+  // Habilitar usuario como promesa
+  async habilitarUsuario(email: string): Promise<any> {
+    try {
+      const response = await firstValueFrom(this.http.put(`${this.baseUrl}/habilitar/${encodeURIComponent(email)}`, {}, { responseType: 'text' }));
+      return response; // La respuesta será un texto plano, por ejemplo "Usuario habilitado correctamente"
+    } catch (error) {
+      console.error("Error al habilitar usuario:", error);
+      alert('Error al habilitar el usuario');
+      throw error;
+    }
   }
 }
