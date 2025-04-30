@@ -73,4 +73,16 @@ export class EmpresaService {
       })
     );
   }
+  crearEmpresaConUsuario(empresa: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/empresaUsuario`, empresa).pipe(
+      catchError((error) => {
+        if (error.status === 409) {
+          alert('Ya existe una empresa con este nombre o CIF');
+        } else {
+          alert('Error al insertar la empresa.');
+        }
+        return throwError(() => error);
+      })
+    );
+  }
 }

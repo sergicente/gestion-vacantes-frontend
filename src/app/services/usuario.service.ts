@@ -9,7 +9,7 @@ import { IUsuario } from '../interfaces/iusuario';
 export class UsuarioService {
 
   http = inject(HttpClient);
-  private baseUrl: string = 'http://localhost:9001/api/usuarios';
+  private baseUrl: string = 'http://localhost:9001/api';
 
   constructor() { };
 
