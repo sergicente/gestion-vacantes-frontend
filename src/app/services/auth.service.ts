@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
+// auth.service.ts
 export class AuthService {
   private user: { email: string, rol?: string } | null = null;
 

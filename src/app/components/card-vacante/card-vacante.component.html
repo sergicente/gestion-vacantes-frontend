@@ -1,4 +1,4 @@
-<a href="vacante/{{item.idVacante}}" class=" ">
+<a [routerLink]="['/vacante', item.idVacante]" class="block">
     <div 
       class="rounded-sm shadow-sm border p-4 flex flex-col sm:flex-row gap-4 md:items-center transition-transform transform hover:scale-102 h-full hover:shadow-md"
       [ngClass]="item.destacado ? 'bg-lime-50 border-lime-500' : 'bg-white border-gray-200'">
@@ -14,6 +14,11 @@
 
         <!-- Contenido -->
         <div class="flex flex-col justify-between flex-grow">
+            <div class="flex gap-2 mt-2">
+                <button (click)="editar(item.idVacante)" class="text-blue-600 hover:underline text-sm">Editar</button>
+                <button (click)="eliminar(item.idVacante)" class="text-red-600 hover:underline text-sm">Eliminar</button>
+              </div>
+              
             <div class="flex justify-between items-start mb-2">
                 <span class="text-sm text-gray-500">{{ formatearFecha(item.fecha) }}</span>
                 <a href="/categoria/{{item.categoria.idCategoria}}"><span class="bg-blue-100 hover:bg-blue-200 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-sm border border-blue-400">

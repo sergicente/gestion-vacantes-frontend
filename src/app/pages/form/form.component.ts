@@ -77,7 +77,7 @@ export class FormComponent {
             estado: new FormControl(vacanteResponse.estado, [Validators.required]),
             destacado: new FormControl(vacanteResponse.destacado, [Validators.required]),
             detalles: new FormControl(vacanteResponse.detalles, [Validators.required, Validators.minLength(3), Validators.maxLength(130)]),
-            imagen: new FormControl(vacanteResponse.imagen, [Validators.required, Validators.pattern(/(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z]{2,}(\.[a-zA-Z]{2,})(\.[a-zA-Z]{2,})?\/[a-zA-Z0-9]{2,}|((https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z]{2,}(\.[a-zA-Z]{2,})(\.[a-zA-Z]{2,})?)|(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}(\.[a-zA-Z0-9]{2,})?/)]),
+            // imagen: new FormControl(vacanteResponse.imagen, [Validators.required, Validators.pattern(/(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z]{2,}(\.[a-zA-Z]{2,})(\.[a-zA-Z]{2,})?\/[a-zA-Z0-9]{2,}|((https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z]{2,}(\.[a-zA-Z]{2,})(\.[a-zA-Z]{2,})?)|(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}(\.[a-zA-Z0-9]{2,})?/)]),
             idCategoria: new FormControl(vacanteResponse.idCategoria, [Validators.required]),
             idEmpresa: new FormControl(vacanteResponse.idEmpresa, [Validators.required])
           }, {});
@@ -89,33 +89,37 @@ export class FormComponent {
   submitVacante() {
     let vacante: Ivacante = this.form.value;
     console.log('Formulario antes de la actualización:', vacante);
-
-    console.log(this.form.valid);
+  
     if (this.form.valid) {
       if (this.tipo === "Actualizar") {
-        console.log('Actualizando');
-        this.vacanteService.updateVacante(vacante)
-          .then((_response: any): void => {
-            alert(`La vacante ${_response.idVacante} ha sido actualizada`);
+        this.vacanteService.updateVacante(vacante).subscribe({
+          next: (response: Ivacante) => {
+            alert(`La vacante ${response.idVacante} ha sido actualizada`);
             this.router.navigate(['/home']);
-          })
-          .catch((error: any): void => {
-            alert(`Error updating the user`);
-          });
+          },
+          error: (err: any) => {
+            alert('Error actualizando la vacante');
+            console.error(err);
+          }
+        });
       } else {
-        console.log('Insertando');
-        this.vacanteService.insertVacante(vacante)
-          .then((_response: any): void => {
-            alert(`La vacante ${_response.idVacante} ha sido añadida`);
+        this.vacanteService.insertVacante(vacante).subscribe({
+          next: (response: Ivacante) => {
+            alert(`La vacante ${response.idVacante} ha sido añadida`);
             this.router.navigate(['/home']);
-          })
-          .catch((error: any): void => {
-            alert(`Error procesando la vacante: ${error}`);
-          });
+          },
+          error: (err: any) => {
+            alert('Error insertando la vacante');
+            console.error(err);
+          }
+        });
       }
     }
   }
+  
 
+      
+      
   checkControl(FormControlName: string, validators: string): boolean | undefined {
     return this.form.get(FormControlName)?.hasError(validators) && this.form.get(FormControlName)?.touched;
   }

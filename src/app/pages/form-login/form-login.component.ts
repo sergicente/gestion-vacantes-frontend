@@ -1,12 +1,13 @@
-import { FormsModule, NgForm } from '@angular/forms';
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { FormsModule, NgForm } from '@angular/forms';
 import { UsuarioService } from '../../services/usuario.service';
 import { IUsuario } from '../../interfaces/iusuario';
 import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-form-login',
+  standalone: true,
   imports: [FormsModule],
   templateUrl: './form-login.component.html',
   styleUrls: ['./form-login.component.css']
@@ -18,11 +19,12 @@ export class FormLoginComponent {
   credentials = { email: '', password: '' };
   loggedInMessage = false;
 
-  usuarioService = inject(UsuarioService);
-  router = inject(Router);
+  private usuarioService = inject(UsuarioService);
+  private router = inject(Router);
 
   ngOnInit(): void {
-    if (localStorage.getItem('usuario')) {
+    const usuarioGuardado = localStorage.getItem('usuario');
+    if (usuarioGuardado) {
       this.router.navigate(['/dashboard']);
     }
 
@@ -42,7 +44,10 @@ export class FormLoginComponent {
   });
 
   async login(loginForm: NgForm) {
-    const datosUsuario: IUsuario = loginForm.value as IUsuario;
+    if (loginForm.invalid) {
+      alert('⚠️ Por favor, rellena todos los campos.');
+      return;
+    }
 
     try {
       const usuario = await this.usuarioService.login(datosUsuario);
@@ -66,4 +71,3 @@ export class FormLoginComponent {
     }
   }
 }
-

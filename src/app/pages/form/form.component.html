@@ -1,141 +1,127 @@
-<section>
-    <h3>{{tipo}} vacante</h3>
-    <hr>
-    <form class="card shadow p-4" [formGroup]="form" (ngSubmit)="submitVacante()">
-
-        <!-- no se ve el ID, esta oculto  ya que la base de datos lo da-->
-        <div class="mt-3" style="display: none;">
-            <label for="idVacante" class="form-label">ID:</label>
-            <input type="text" id="idVacante" class="form-control" formControlName="idVacante">
-            <!-- @if(checkControl('idVacante', 'required')) {
-                <p class="error">Campo requerido</p>
-            }
-            @if(checkControl('idVacante', 'minlength')) {
-                <p class="error">Al menos debe tener 3 caracteres</p>
-            } -->
-        </div>
-
-        <div class="mt-3">
-            <label for="nombre" class="form-label">Nombre:</label>
-            <input type="text" id="nombre" class="form-control" formControlName="nombre">
-            @if(checkControl('nombre', 'required')) {
-                <p class="error">Campo requerido</p>
-            }
-            @if(checkControl('nombre', 'minlength')) {
-                <p class="error">Al menos debe tener 3 caracteres</p>
-            }
-        </div>
-
-        <div class="mt-3">
-            <label for="descripcion" class="form-label">Descripción:</label>
-            <input type="text" id="descripcion" class="form-control" formControlName="descripcion">
-            @if(checkControl('descripcion', 'required')) {
-                <p class="error">Campo requerido</p>
-            }
-            @if(checkControl('descripcion', 'minlength')) {
-                <p class="error">Al menos debe tener 3 caracteres</p>
-            }
-        </div>
-
-        <div class="mt-3">
-            <label for="fecha" class="form-label">Fecha:</label>
-            <input type="date" id="fecha" class="form-control" formControlName="fecha">
-            @if(checkControl('fecha', 'required')) {
-                <p class="error">Campo requerido</p>
-            }
-            @if(checkControl('fecha', 'minlength')) {
-                <p class="error">Indica una fecha correcta</p>
-            }
-        </div>
-
-        <div class="mt-3">
-            <label for="salario" class="form-label">Salario:</label>
-            <input type="text" id="salario" class="form-control" formControlName="salario">
-            @if(checkControl('salario', 'required')) {
-                <p class="error">Campo requerido</p>
-            }
-            @if(checkControl('salario', 'pattern')) {
-                <p class="error">Salario incorrecto</p>
-            }
-        </div>
-
-        <!-- <div class="mt-3">
-            <label for="estado" class="form-label">Estado:</label>
-            <select id="estado" class="form-control" formControlName="estado">
-                <option value="activo">Creada</option>
-                <option value="noActivo">Cubierta</option>
-                <option value="noActivo">Cancelada</option>
-            </select>
-            @if(checkControl('estado', 'required')) {
-                <p class="error">Campo requerido</p>
-            }
-            @if(checkControl('estado', 'pattern')) {
-                <p class="error">Estado incorrecto</p>
-            }
-        </div> -->
-
-        <div class="mt-3">
-            <label for="detalles" class="form-label">Detalles:</label>
-            <input type="text" id="detalles" class="form-control" formControlName="detalles">
-            @if(checkControl('detalles', 'required')) {
-                <p class="error">Campo requerido</p>
-            }
-            @if(checkControl('detalles', 'pattern')) {
-                <p class="error">Salario incorrecto</p>
-            }
-        </div>
-
-
-        <div class="mt-3">
-            <label for="destacado" class="form-label">Destacado:</label>
-            <input type="text" id="destacado" class="form-control" formControlName="destacado">
-            @if(checkControl('destacado', 'required')) {
-                <p class="error">Campo requerido</p>
-            }
-            @if(checkControl('destacado', 'minlength')) {
-                <p class="error">Indica un destacado</p>
-            }
-        </div>
-
-
-        <div class="mt-3">
-            <label for="categoria" class="form-label">Categoría:</label>
-            <select id="idCategoria" class="form-control" formControlName="idCategoria">
-                <option value="">Seleccione una categoría</option>
-                <option *ngFor="let cat of arrCategorias" [value]="cat.idCategoria">{{ cat.nombre }}</option>
-            </select>
-            @if(checkControl('categoria', 'required')) {
-                <p class="error">Campo requerido</p>
-            }
-            @if(checkControl('categoria', 'minlength')) {
-                <p class="error">Indica un destacado</p>
-            }
-        </div>
-        
-        <div class="mt-3">
-            <label for="empresa" class="form-label">Empresa:</label>
-            <select id="idEmpresa" class="form-control" formControlName="idEmpresa">
-                <option value="">Seleccione una empresa</option>
-                <option *ngFor="let emp of arrEmpresa" [value]="emp.idEmpresa">{{ emp.nombreEmpresa}}</option>
-            </select>
-            @if(checkControl('empresa', 'required')) {
-                <p class="error">Campo requerido</p>
-            }
-            @if(checkControl('empresa', 'minlength')) {
-                <p class="error">Indica un destacado</p>
-            }
-        </div>
-
-        <div class="mt-3">
-            <label for="imagen" class="form-label">Imagen:</label>
-            <input type="file" id="imagen" class="form-control" formControlName="imagen" accept="imagen/*">
-            @if(checkControl('imagen', 'required')) {
-                <p class="error">Imagen requerida</p>
-            }
-        </div> 
-
-        <div class="d-flex gap-2 mt-4">
-            <input type="submit" value="{{tipo}}" class="btn bg-danger" [disabled]="!form.valid">
-        </div>
+<section class="max-w-3xl mx-auto p-4">
+    <h3 class="text-2xl font-bold mb-4">{{ tipo }} vacante</h3>
+    <hr class="mb-6" />
+  
+    <form
+      class="bg-white shadow-md rounded-lg p-6 space-y-4"
+      [formGroup]="form"
+      (ngSubmit)="submitVacante()"
+    >
+      <!-- Campo oculto ID -->
+      <div class="hidden">
+        <label for="idVacante" class="block text-sm font-medium text-gray-700">ID:</label>
+        <input
+          type="text"
+          id="idVacante"
+          class="w-full rounded-md border-gray-300 shadow-sm focus:ring focus:ring-blue-200"
+          formControlName="idVacante"
+        />
+      </div>
+  
+      <div>
+        <label for="nombre" class="block text-sm font-medium text-gray-700">Nombre:</label>
+        <input
+          type="text"
+          id="nombre"
+          class="w-full rounded-md border-gray-300 shadow-sm focus:ring focus:ring-blue-200"
+          formControlName="nombre"
+        />
+      </div>
+  
+      <div>
+        <label for="descripcion" class="block text-sm font-medium text-gray-700">Descripción:</label>
+        <input
+          type="text"
+          id="descripcion"
+          class="w-full rounded-md border-gray-300 shadow-sm focus:ring focus:ring-blue-200"
+          formControlName="descripcion"
+        />
+      </div>
+  
+      <div>
+        <label for="fecha" class="block text-sm font-medium text-gray-700">Fecha:</label>
+        <input
+          type="date"
+          id="fecha"
+          class="w-full rounded-md border-gray-300 shadow-sm focus:ring focus:ring-blue-200"
+          formControlName="fecha"
+        />
+      </div>
+  
+      <div>
+        <label for="salario" class="block text-sm font-medium text-gray-700">Salario:</label>
+        <input
+          type="text"
+          id="salario"
+          class="w-full rounded-md border-gray-300 shadow-sm focus:ring focus:ring-blue-200"
+          formControlName="salario"
+        />
+      </div>
+  
+      <div>
+        <label for="detalles" class="block text-sm font-medium text-gray-700">Detalles:</label>
+        <input
+          type="text"
+          id="detalles"
+          class="w-full rounded-md border-gray-300 shadow-sm focus:ring focus:ring-blue-200"
+          formControlName="detalles"
+        />
+      </div>
+  
+      <div>
+        <label for="destacado" class="block text-sm font-medium text-gray-700">Destacado:</label>
+        <input
+          type="text"
+          id="destacado"
+          class="w-full rounded-md border-gray-300 shadow-sm focus:ring focus:ring-blue-200"
+          formControlName="destacado"
+        />
+      </div>
+  
+      <div>
+        <label for="idCategoria" class="block text-sm font-medium text-gray-700">Categoría:</label>
+        <select
+          id="idCategoria"
+          class="w-full rounded-md border-gray-300 shadow-sm focus:ring focus:ring-blue-200"
+          formControlName="idCategoria"
+        >
+          <option value="">Seleccione una categoría</option>
+          <option *ngFor="let cat of arrCategorias" [value]="cat.idCategoria">{{ cat.nombre }}</option>
+        </select>
+      </div>
+  
+      <div>
+        <label for="idEmpresa" class="block text-sm font-medium text-gray-700">Empresa:</label>
+        <select
+          id="idEmpresa"
+          class="w-full rounded-md border-gray-300 shadow-sm focus:ring focus:ring-blue-200"
+          formControlName="idEmpresa"
+        >
+          <option value="">Seleccione una empresa</option>
+          <option *ngFor="let emp of arrEmpresa" [value]="emp.idEmpresa">{{ emp.nombreEmpresa }}</option>
+        </select>
+      </div>
+  
+      <div>
+        <label for="imagen" class="block text-sm font-medium text-gray-700">Imagen:</label>
+        <input
+          type="file"
+          id="imagen"
+          class="w-full rounded-md border-gray-300 shadow-sm focus:ring focus:ring-blue-200"
+          formControlName="imagen"
+          accept="image/*"
+        />
+      </div>
+  
+      <div class="flex justify-end">
+        <button
+          type="submit"
+          class="bg-red-600 hover:bg-red-700 text-white font-semibold px-6 py-2 rounded-md transition"
+          [disabled]="!form.valid"
+        >
+          {{ tipo }}
+        </button>
+      </div>
     </form>
-</section>
+  </section>
+  

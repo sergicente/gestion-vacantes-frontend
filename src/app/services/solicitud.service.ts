@@ -67,4 +67,8 @@ export class SolicitudService {
       })
     );
   }
+  getSolicitudesPorEmpresa(idEmpresa: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/empresa/${idEmpresa}`);
+  }
+}
 }

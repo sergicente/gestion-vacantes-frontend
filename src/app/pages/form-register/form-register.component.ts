@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, NgForm } from '@angular/forms';
 import { UsuarioService } from '../../services/usuario.service';
 import Swal from 'sweetalert2'
 
@@ -20,25 +20,13 @@ export class FormRegisterComponent {
     password: ''
   };
 
-  registeredMessage = false;
-  servicio = inject(UsuarioService);
-  router = inject(Router);
+  private usuarioService = inject(UsuarioService);
+  private router = inject(Router);
 
-  toast = Swal.mixin({
-    toast: true,
-    position: "top-end",
-    showConfirmButton: false,
-    timer: 3000,
-    timerProgressBar: true,
-    didOpen: (toast) => {
-      toast.onmouseenter = Swal.stopTimer;
-      toast.onmouseleave = Swal.resumeTimer;
-    }
-  });
-
-  onRegister(form: any) {
-    if (form.invalid) {
-      form.control.markAllAsTouched();
+  onRegister(registerForm: NgForm) {
+    if (registerForm.invalid) {
+      alert('⚠️ Por favor, completa correctamente todos los campos.');
+      registerForm.control.markAllAsTouched();
       return;
     }
 
@@ -48,23 +36,17 @@ export class FormRegisterComponent {
       rol: 'CLIENTE',
       fechaRegistro: new Date().toISOString().slice(0, 10)
     };
-    this.servicio.nuevo(usuarioCompleto).subscribe(
-      res => {
-        // Toast de éxito
-        this.toast.fire({
-          icon: 'success',
-          title: 'Cuenta registrada satisfactoriamente'
-        });
+
+    this.usuarioService.nuevo(usuarioCompleto).subscribe({
+      next: res => {
+        console.log('✅ Usuario registrado:', res);
+        alert('Usuario registrado con éxito 🎉');
         this.router.navigate(['/login']);
       },
-      err => {
-        // Toast de error
-        this.toast.fire({
-          icon: 'error',
-          title: 'Error en el registro'
-        });
-        console.error('Error en el registro:', err);
+      error: err => {
+        console.error('❌ Error en el registro:', err);
+        alert('Error al registrar usuario.');
       }
-    );
+    });
   }
 }

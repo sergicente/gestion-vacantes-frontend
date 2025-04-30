@@ -53,13 +53,21 @@ export class VacanteDetalleComponent {
   }
 
   borrarvacante() {
-    this.vacanteServicio.borrar(this.vacante.id).subscribe({
+    const id = this.vacante?.idVacante;
+    if (!id) {
+      console.warn('No hay idVacante definido');
+      return;
+    }
+
+    this.vacanteServicio.borrar(id).subscribe({
       next: () => {
-        console.log('vacante eliminada correctamente');
-        this.router.navigate(['/']);
+        console.log('✅ Vacante eliminada correctamente');
+        this.router.navigate(['/home']).then(() => {
+          window.location.reload(); // 🔄 fuerza recarga para que se vean los cambios
+        });
       },
       error: (err) => {
-        console.error('Error al eliminar la vacante:', err);
+        console.error('❌ Error al eliminar la vacante:', err);
       }
     });
   }
