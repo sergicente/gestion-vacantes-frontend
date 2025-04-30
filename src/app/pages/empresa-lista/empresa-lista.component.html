@@ -1,15 +1,81 @@
-<section class="max-w-7xl mx-auto">
-    <!-- Contador de vacantes -->
+<div class="container mx-auto px-4 py-8">
     <div class="flex justify-between items-center mb-6">
-        <h2 class="text-xl font-semibold text-gray-800">
-            {{array.length}} Empresas disponibles
-        </h2>
-    </div>
+    <h1 class="text-3xl font-bold">Listado de Empresas</h1>
+    @if (rol === 'ADMON') {
+      <button [routerLink]="['/empresas/nueva']"
+      class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+{{ showForm ? 'Cancelar' : 'Nueva Empresa' }}
+</button>
+    }
+  </div>
 
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5 mt-5">
-        @for(item of array; track item.idEmpresa){
-        <app-card-empresa [item]="item"></app-card-empresa>
+  <!-- Formulario de Empresa -->
+  @if (showForm && rol === 'ADMON') {
+    <div class="mb-8">
+      <app-form-empresa 
+        [empresa]="empresaSeleccionada || {
+          idEmpresa: 0,
+          cif: '',
+          nombreEmpresa: '',
+          pais: '',
+          email: '',
+          direccionFiscal: ''
+        }"
+        (onSubmit)="handleSubmit($event)">
+      </app-form-empresa>
+    </div>
+  }
+
+  <!-- Lista de Empresas -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    @for (empresa of array; track empresa.idEmpresa) {
+      <div class="bg-white rounded-lg shadow-md p-6">
+        <h2 class="text-xl font-semibold mb-2">{{ empresa.nombreEmpresa }}</h2>
+        <p class="text-gray-600 mb-2">CIF: {{ empresa.cif }}</p>
+        <p class="text-gray-600 mb-2">País: {{ empresa.pais }}</p>
+        <p class="text-gray-600 mb-4">Email: {{ empresa.email }}</p>
+        
+        <div class="flex space-x-2">
+          @if (rol === 'ADMON') {
+            <button (click)="verDetalles(empresa.idEmpresa)"
+                    class="px-3 py-1 bg-blue-100 text-blue-700 rounded-md hover:bg-blue-200">
+              Ver Detalles
+            </button>
+            <button (click)="editarEmpresa(empresa)"
+                    class="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-md hover:bg-yellow-200">
+              Editar
+            </button>
+            <button (click)="eliminarEmpresa(empresa.idEmpresa)"
+                    class="px-3 py-1 bg-red-100 text-red-700 rounded-md hover:bg-red-200">
+              Eliminar
+            </button>
+          }
+          @else if (rol === 'CLIENTE') {
+            <button (click)="enviarCV(empresa.idEmpresa)"
+                    class="px-3 py-1 bg-blue-100 text-blue-700 rounded-md hover:bg-blue-200">
+              Enviar CV
+            </button>
+            <button (click)="verEstadoSolicitud(empresa.idEmpresa)"
+                    class="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-md hover:bg-yellow-200">
+              Ver Estado de Solicitud
+            </button>
+            <button (click)="cancelarSolicitud(empresa.idEmpresa)"
+                    class="px-3 py-1 bg-red-100 text-red-700 rounded-md hover:bg-red-200">
+              Cancelar Solicitud
+            </button>
+          }
+          @else if (rol === 'EMPRESA') {
+            <button (click)="verDetalles(empresa.idEmpresa)"
+                    class="px-3 py-1 bg-blue-100 text-blue-700 rounded-md hover:bg-blue-200">
+              Ver Detalles
+            </button>
+            <button (click)="modificarDatos(empresa.idEmpresa)"
+                    class="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-md hover:bg-yellow-200">
+              Modificar Datos
+            </button>
         }
-
+        </div>
+      </div>
+    }
+  </div>
     </div>
-</section>

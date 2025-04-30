@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
+import { Iempresa } from '../interfaces/iempresa';
+import { IUsuario } from '../interfaces/iusuario';
 
 @Injectable({
   providedIn: 'root'
@@ -12,24 +14,24 @@ export class EmpresaService {
 
   constructor() { };
 
-  getAll(): Observable<any[]> {
-    return this.http.get<any[]>(this.baseUrl);
+  getAll(): Observable<Iempresa[]> {
+    return this.http.get<Iempresa[]>(this.baseUrl);
   }
 
-  getAllVacantes(): Observable<any[]> {
-    return this.http.get<any[]>(this.baseUrl + '/con-vacantes');
+  getAllVacantes(): Observable<Iempresa[]> {
+    return this.http.get<Iempresa[]>(this.baseUrl + '/con-vacantes');
   }
 
-  getAllConVacantes(id:string): Observable<any[]> {
-    return this.http.get<any[]>(this.baseUrl + '/' + id +'/vacantes');
+  getAllConVacantes(id:string): Observable<Iempresa[]> {
+    return this.http.get<Iempresa[]>(this.baseUrl + '/' + id +'/vacantes');
   }
 
-  getById(id: String): Observable<any> {
-    return this.http.get<any>(this.baseUrl + '/' + id);
+  getById(id: string): Observable<Iempresa> {
+    return this.http.get<Iempresa>(this.baseUrl + '/' + id);
   }
 
-  modificar(id: string, item: any): Observable<any> {
-    return this.http.put<any>(`${this.baseUrl}/modificar/${id}`, item).pipe(
+  modificar(id: string, item: Iempresa): Observable<Iempresa> {
+    return this.http.put<Iempresa>(`${this.baseUrl}/${id}`, item).pipe(
       catchError((error) => {
         if (error.status === 400) {
           alert('Error: El ID en la URL y en el body no coinciden.');
@@ -43,20 +45,43 @@ export class EmpresaService {
     );
   }
 
-  borrar(id: String): Observable<any> {
+  borrar(id: string): Observable<any> {
     console.log('Se esta borrando el item con id ' + id);
-    return this.http.delete<any>(this.baseUrl + '/borrar/' + id);
-  }
-
-  nuevo(datos: any) {
-    return this.http.post<any>(this.baseUrl + '/insertar', datos).pipe(
+    return this.http.delete<any>(`${this.baseUrl}/${id}`).pipe(
       catchError((error) => {
-        if (error.status === 409) {
-          alert('Ya existe con este nombre');
+        if (error.status === 404) {
+          alert('La empresa no existe o ya ha sido eliminada');
+        } else if (error.status === 409) {
+          alert('No se puede eliminar la empresa porque tiene vacantes asociadas');
         } else {
-          alert('Error al insertar.');
+          alert('Error al eliminar la empresa. Por favor, inténtelo de nuevo.');
         }
         return throwError(error);
+      })
+    );
+  }
+
+  nuevo(data: { empresa: Iempresa, usuario: IUsuario }): Observable<any> {
+    return this.http.post<any>(this.baseUrl + '/insertar', data).pipe(
+      catchError((error) => {
+        if (error.status === 409) {
+          alert('Ya existe una empresa con este nombre o CIF');
+        } else {
+          alert('Error al insertar la empresa.');
+        }
+        return throwError(error);
+      })
+    );
+  }
+  crearEmpresaConUsuario(empresa: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/empresaUsuario`, empresa).pipe(
+      catchError((error) => {
+        if (error.status === 409) {
+          alert('Ya existe una empresa con este nombre o CIF');
+        } else {
+          alert('Error al insertar la empresa.');
+        }
+        return throwError(() => error);
       })
     );
   }

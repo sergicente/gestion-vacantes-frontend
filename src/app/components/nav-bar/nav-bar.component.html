@@ -121,9 +121,15 @@
                     </div>
                 </li>
                 <li>
-                    <a href="empresas"
+                    <a href="/empresas"
                         class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 ">Empresas</a>
                 </li>
+             <!--    @if (rol === 'ADMON') {
+                <li>
+                    <a href="/categorias"
+                        class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 ">Categorías</a>
+                </li>
+                }  -->
 
                 
 
@@ -162,11 +168,11 @@
 
                             <!-- ADMON -->
                             @else if (rol === 'ADMON') {
-                            <li><a routerLink="/empresas"
-                                    class="cursor-pointer hover:text-blue-500 block px-4 py-2 hover:bg-gray-100">🏢 Empresas</a>
-                            </li>
                             <li><a routerLink="/categorias"
                                     class="cursor-pointer hover:text-blue-500 block px-4 py-2 hover:bg-gray-100">📂 Categorías</a>
+                            </li>
+                            <li><a routerLink="/empresas"
+                                    class="cursor-pointer hover:text-blue-500 block px-4 py-2 hover:bg-gray-100">🏢 Gestión Empresas</a>
                             </li>
                             <li><a routerLink="/usuarios"
                                     class="cursor-pointer hover:text-blue-500 block px-4 py-2 hover:bg-gray-100">👥 Usuarios</a>
