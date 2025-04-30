@@ -3,7 +3,7 @@
   <div class="w-full max-w-md bg-white rounded-sm shadow-sm border border-gray-200 p-12 space-y-6">
     <h2 class="text-3xl font-bold text-center text-gray-800">Nuevo Usuario</h2>
 
-    <form #form="ngForm" (ngSubmit)="onRegister(form)" class="space-y-5">
+    <form #registerForm="ngForm" (ngSubmit)="onRegister(registerForm)" class="space-y-5">
       <div>
         <label for="email" class="block text-sm font-medium mb-1">Correo electrónico</label>
         <input type="email" id="email" name="email" required email [(ngModel)]="user.email"

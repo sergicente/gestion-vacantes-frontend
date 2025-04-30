@@ -24,12 +24,12 @@ export class EmpresaService {
     return this.http.get<any[]>(this.baseUrl + '/' + id +'/vacantes');
   }
 
-  getById(id: String): Observable<any> {
-    return this.http.get<any>(this.baseUrl + '/' + id);
+  getById(id: string): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/${id}`);
   }
 
   modificar(id: string, item: any): Observable<any> {
-    return this.http.put<any>(`${this.baseUrl}/modificar/${id}`, item).pipe(
+    return this.http.put<any>(`${this.baseUrl}/${id}`, item).pipe(
       catchError((error) => {
         if (error.status === 400) {
           alert('Error: El ID en la URL y en el body no coinciden.');

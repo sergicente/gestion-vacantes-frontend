@@ -1,45 +1,58 @@
-import { FormsModule, NgForm } from '@angular/forms';
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { FormsModule, NgForm } from '@angular/forms';
 import { UsuarioService } from '../../services/usuario.service';
 import { IUsuario } from '../../interfaces/iusuario';
 
-
 @Component({
   selector: 'app-form-login',
+  standalone: true,
   imports: [FormsModule],
   templateUrl: './form-login.component.html',
   styleUrls: ['./form-login.component.css']
 })
 export class FormLoginComponent {
-updateField(arg0: string,$event: Event) {
-throw new Error('Method not implemented.');
-}
-  credentials = { email: '', password: '' };
-  loggedInMessage = false;
+  credentials: IUsuario = { email: '', password: '' } as IUsuario;
 
-  usuarioService = inject(UsuarioService);
-  router = inject(Router);
+  private usuarioService = inject(UsuarioService);
+  private router = inject(Router);
 
   ngOnInit(): void {
-    if (localStorage.getItem('usuario')) {
+    const usuarioGuardado = localStorage.getItem('usuario');
+    if (usuarioGuardado) {
       this.router.navigate(['/dashboard']);
     }
   }
 
   async login(loginForm: NgForm) {
-    const datosUsuario: IUsuario = loginForm.value as IUsuario;
+    if (loginForm.invalid) {
+      alert('⚠️ Por favor, rellena todos los campos.');
+      return;
+    }
 
     try {
-      const usuario = await this.usuarioService.login(datosUsuario);
+      const usuario = await this.usuarioService.login(this.credentials).toPromise();
+      
+      console.log("🔐 Usuario logueado:", usuario);
 
-      // Guardamos el usuario en localStorage
-      localStorage.setItem('usuario', JSON.stringify(usuario));
-      loginForm.reset();
-      this.router.navigate(['/dashboard']);
+      if (usuario) {
+        localStorage.setItem('usuario', JSON.stringify(usuario));
+
+        if (usuario.rol === 'EMPRESA' && usuario.idEmpresa) {
+          localStorage.setItem('empresaId', usuario.idEmpresa.toString());
+        } else {
+          localStorage.removeItem('empresaId');
+        }
+
+        loginForm.reset();
+        this.router.navigate(['/dashboard']);
+      } else {
+        alert('❌ Error inesperado: respuesta vacía.');
+      }
+
     } catch (error) {
-      alert('Email o contraseña incorrectos');
+      console.error('Error en login:', error);
+      alert('❌ Email o contraseña incorrectos.');
     }
   }
 }
-
