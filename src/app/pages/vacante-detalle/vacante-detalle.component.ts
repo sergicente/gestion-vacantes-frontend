@@ -4,6 +4,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FechaService } from '../../services/fecha.service';
 import { NgClass } from '@angular/common';
 import { ButtonComponent } from '../../components/button/button.component';
+import { SolicitudService } from '../../services/solicitud.service';
 
 @Component({
   selector: 'app-vacante-detalle',
