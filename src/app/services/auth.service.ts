@@ -3,19 +3,22 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
+// auth.service.ts
 export class AuthService {
-  private user: { email: string } | null = null;
+  private usuario: { email: string, idEmpresa?: number } | null = null;
 
-  setUser(user: { email: string }) {
-    this.user = user; // Guarda el usuario
+  setUser(usuario: { email: string, idEmpresa?: number }) {
+    this.usuario = usuario;
   }
 
   getUser() {
-    return this.user; // Retorna el usuario actual o null
-  }
+      const usuario = localStorage.getItem('usuario');
+      return usuario ? JSON.parse(usuario) : null;
+    }
+    
 
-  logout() {
-    this.user = null; // Limpia el estado
+  clearUser() {
+    this.usuario = null;
   }
 }
 

@@ -1,0 +1,45 @@
+<div class="max-w-xl mx-auto mt-10 bg-white p-6 rounded-2xl shadow-md">
+  <h2 class="text-2xl font-semibold text-center text-gray-800 mb-6">Editar Perfil de Empresa</h2>
+
+  <form (ngSubmit)="guardarCambios()" class="space-y-4">
+
+    <div>
+      <label class="block text-sm font-medium text-gray-700">CIF</label>
+      <input [(ngModel)]="empresa.cif" name="cif" type="text"
+        class="mt-1 block w-full rounded-xl border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500"
+        required>
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium text-gray-700">Nombre de la Empresa</label>
+      <input [(ngModel)]="empresa.nombreEmpresa" name="nombreEmpresa" type="text"
+        class="mt-1 block w-full rounded-xl border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500"
+        required>
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium text-gray-700">Dirección Fiscal</label>
+      <input [(ngModel)]="empresa.direccionFiscal" name="direccionFiscal" type="text"
+        class="mt-1 block w-full rounded-xl border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500">
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium text-gray-700">País</label>
+      <input [(ngModel)]="empresa.pais" name="pais" type="text"
+        class="mt-1 block w-full rounded-xl border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500">
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium text-gray-700">Email</label>
+      <input [(ngModel)]="empresa.email" name="email" type="email"
+        class="mt-1 block w-full rounded-xl border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500">
+    </div>
+
+    <div class="text-center">
+      <button type="submit"
+        class="px-6 py-2 rounded-xl bg-blue-600 text-white font-semibold hover:bg-blue-700 transition">
+        Guardar Cambios
+      </button>
+    </div>
+  </form>
+</div>

@@ -22,6 +22,11 @@ export class VacanteService {
     return this.http.get<any>(this.baseUrl + '/' + id);
   }
 
+  getVacantesPorEmpresa(idEmpresa: number): Observable<Ivacante[]> {
+    return this.http.get<Ivacante[]>(`${this.baseUrl}/empresa/${idEmpresa}`);
+  }
+  
+
   modificar(id: string, item: any): Observable<any> {
     return this.http.put<any>(`${this.baseUrl}/modificar/${id}`, item).pipe(
       catchError((error) => {
@@ -37,10 +42,12 @@ export class VacanteService {
     );
   }
 
-  borrar(id: String): Observable<any> {
-    console.log('Se esta borrando el item con id ' + id);
-    return this.http.delete<any>(this.baseUrl + '/borrar/' + id);
+  borrar(id: number): Observable<any> {
+    console.log('Se está borrando el item con id', id);
+    return this.http.delete(`${this.baseUrl}/borrar/${id}`); // <- como lo tiene tu backend
   }
+  
+  
 
   nuevo(datos: any) {
     return this.http.post<any>(this.baseUrl + '/insertar', datos).pipe(
@@ -61,15 +68,12 @@ export class VacanteService {
     return this.http.get<Ivacante[]>(this.baseUrl + "?page=" + page + "&size=" + itemPerPage);
   }
 
-  insertVacante(vacante: Ivacante): Promise<Ivacante> {
-    return lastValueFrom(this.http.post<Ivacante>(this.baseUrl, vacante));
+  insertVacante(vacante: Ivacante): Observable<Ivacante> {
+    return this.http.post<Ivacante>(this.baseUrl, vacante);
   }
 
-  updateVacante(vacante: Ivacante): Promise<Ivacante> {
-    return lastValueFrom(this.http.put<Ivacante>(`${this.baseUrl}/${vacante.idVacante}`, vacante));
+  updateVacante(vacante: Ivacante): Observable<Ivacante> {
+    return this.http.put<Ivacante>(`${this.baseUrl}/${vacante.idVacante}`, vacante);
   }
 
-  deleteById(idVacante: string): Promise<Ivacante> {
-    return lastValueFrom(this.http.delete<Ivacante>(`${this.baseUrl}/${idVacante}`));
-  }
 }
