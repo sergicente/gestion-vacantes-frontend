@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { EmpresaService } from '../../services/empresa.service';
 import { FormEmpresaComponent } from '../form-empresa/form-empresa.component';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { Iempresa } from '../../interfaces/iempresa';
 import { IUsuario } from '../../interfaces/iusuario';
 import { CommonModule } from '@angular/common';
@@ -10,7 +10,7 @@ import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'app-empresa-lista',
   standalone: true,
-  imports: [CommonModule, FormEmpresaComponent],
+  imports: [CommonModule, FormEmpresaComponent, RouterLink],
   templateUrl: './empresa-lista.component.html',
   styleUrl: './empresa-lista.component.css'
 })

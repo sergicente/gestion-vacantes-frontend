@@ -11,6 +11,7 @@ import { Iempresa } from '../../interfaces/iempresa';
   styleUrl: './alta-empresa.component.css'
 })
 export class AltaEmpresaComponent {
+[x: string]: any;
   empresa = {
     cif: '',
     nombreEmpresa: '',

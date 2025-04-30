@@ -1,37 +1,38 @@
-<!-- crear-empresa.component.html -->
-<div class="container">
-    <h2>Registrar Empresa</h2>
-  
-    <!-- Formulario para ingresar datos de la empresa -->
-    <form (ngSubmit)="onSubmit()" #empresaForm="ngForm">
-      <div class="form-group">
-        <label for="cif">CIF</label>
-        <input type="text" id="cif" class="form-control" [(ngModel)]="empresa.cif" name="cif" required />
-      </div>
-      <div class="form-group">
-        <label for="nombreEmpresa">Nombre de la Empresa</label>
-        <input type="text" id="nombreEmpresa" class="form-control" [(ngModel)]="empresa.nombreEmpresa" name="nombreEmpresa" required />
-      </div>
-      <div class="form-group">
-        <label for="direccionFiscal">Dirección Fiscal</label>
-        <input type="text" id="direccionFiscal" class="form-control" [(ngModel)]="empresa.direccionFiscal" name="direccionFiscal" required />
-      </div>
-      <div class="form-group">
-        <label for="pais">País</label>
-        <input type="text" id="pais" class="form-control" [(ngModel)]="empresa.pais" name="pais" required />
-      </div>
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" id="email" class="form-control" [(ngModel)]="empresa.email" name="email" required />
-      </div>
-  
-      <button type="submit" class="btn btn-primary">Crear Empresa</button>
-    </form>
-  
-    <div [@if]="passwordGenerada">
-        <h3>La contraseña generada es: {{ passwordGenerada }}</h3>
-      </div>
+<div class="max-w-lg mx-auto p-6 bg-white shadow-md rounded-md">
+  <h2 class="text-2xl font-bold mb-4">Registrar Empresa</h2>
+
+  <form (ngSubmit)="onSubmit()" #empresaForm="ngForm" class="space-y-4">
+    <div>
+      <label for="cif" class="block font-medium mb-1">CIF</label>
+      <input type="text" id="cif" [(ngModel)]="empresa.cif" name="cif" required class="w-full border px-3 py-2 rounded" />
     </div>
+    <div>
+      <label for="nombreEmpresa" class="block font-medium mb-1">Nombre de la Empresa</label>
+      <input type="text" id="nombreEmpresa" [(ngModel)]="empresa.nombreEmpresa" name="nombreEmpresa" required class="w-full border px-3 py-2 rounded" />
+    </div>
+    <div>
+      <label for="direccionFiscal" class="block font-medium mb-1">Dirección Fiscal</label>
+      <input type="text" id="direccionFiscal" [(ngModel)]="empresa.direccionFiscal" name="direccionFiscal" required class="w-full border px-3 py-2 rounded" />
+    </div>
+    <div>
+      <label for="pais" class="block font-medium mb-1">País</label>
+      <input type="text" id="pais" [(ngModel)]="empresa.pais" name="pais" required class="w-full border px-3 py-2 rounded" />
+    </div>
+    <div>
+      <label for="email" class="block font-medium mb-1">Email</label>
+      <input type="email" id="email" [(ngModel)]="empresa.email" name="email" required class="w-full border px-3 py-2 rounded" />
+    </div>
+
+    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+      Crear Empresa
+    </button>
+  </form>
+   @if(passwordGenerada){
+  <div  class="mt-4 text-green-600 font-semibold">
+    <h3>La contraseña generada es: {{ passwordGenerada }}</h3>
+  </div>
+}
+</div>
 
   
   
