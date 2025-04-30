@@ -13,6 +13,11 @@ import { FormAplicarVacanteComponent } from './pages/form-aplicar-vacante/form-a
 import { MisSolicitudesComponent } from './pages/mis-solicitudes/mis-solicitudes.component';
 import { EditarEmpresaComponent } from './pages/editar-empresa/editar-empresa.component';
 import { AltaEmpresaComponent } from './pages/alta-empresa/alta-empresa.component';
+import { DashboardCategoriasComponent } from './pages/dashboard-categorias/dashboard-categorias.component';
+import { CategoriaListaComponent } from './pages/categoria-lista/categoria-lista.component';
+import { UsuariosListComponent } from './pages/usuarios-list/usuarios-list.component';
+import { AdministradoresListComponent } from './pages/administradores-list/administradores-list.component';
+import { AdministradorDetalleComponent } from './pages/administrador-detalle/administrador-detalle.component';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
@@ -32,6 +37,11 @@ export const routes: Routes = [
   { path: 'solicitudes', component: MisSolicitudesComponent },
   { path: 'perfil', component: FormRegisterComponent },
   { path: 'empresas/nueva', component: AltaEmpresaComponent},
+  { path: 'dashboard-categorias', component: DashboardCategoriasComponent },
+  { path: 'categorias', component: CategoriaListaComponent },
+  { path: 'usuarios', component: UsuariosListComponent },
+  { path: 'administradores', component: AdministradoresListComponent },
+  { path: 'administrador/:email', component: AdministradorDetalleComponent },
   { path: '**', component: Pagina404Component },
   { path: "**", redirectTo: "home" }
 
