@@ -71,4 +71,3 @@ export class SolicitudService {
     return this.http.get<any[]>(`${this.baseUrl}/empresa/${idEmpresa}`);
   }
 }
-}

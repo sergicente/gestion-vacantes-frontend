@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Observable, catchError, throwError } from 'rxjs';
+import { Observable, catchError, firstValueFrom, throwError } from 'rxjs';
 import { IUsuario } from '../interfaces/iusuario';
 
 @Injectable({
@@ -66,7 +66,30 @@ export class UsuarioService {
     return this.http.post<any>(`${this.baseUrl}/usuarios`, datos);
   }
 
-}
+  async deshabilitarUsuario(email: string): Promise<any> {
+        try {
+          console.log("Correo enviado para deshabilitar: ", email);
+          const response = await firstValueFrom(this.http.put(`${this.baseUrl}/deshabilitar/${email}`, {}, { responseType: 'text' }));
+          return response; // La respuesta será un texto plano
+        } catch (error) {
+          console.error("Error al deshabilitar usuario", error);
+          alert('Error al deshabilitar el usuario');
+          throw error; // Lanza el error para manejarlo más arriba
+        }
+      }
+      
+      // Habilitar usuario como promesa
+      async habilitarUsuario(email: string): Promise<any> {
+        try {
+          const response = await firstValueFrom(this.http.put(`${this.baseUrl}/habilitar/${encodeURIComponent(email)}`, {}, { responseType: 'text' }));
+          return response; // La respuesta será un texto plano, por ejemplo "Usuario habilitado correctamente"
+        } catch (error) {
+          console.error("Error al habilitar usuario:", error);
+          alert('Error al habilitar el usuario');
+          throw error;
+        }
+      }
+    }
 
 
 // import { HttpClient } from '@angular/common/http';
