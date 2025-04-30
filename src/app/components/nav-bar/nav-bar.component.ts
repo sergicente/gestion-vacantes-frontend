@@ -3,17 +3,22 @@ import { CategoriaService } from '../../services/categoria.service';
 import { Router, RouterLink } from '@angular/router';
 import { NgClass } from '@angular/common';
 import Swal from 'sweetalert2'
+import { FormsModule, NgModel } from '@angular/forms';
+import { VacanteService } from '../../services/vacante.service';
 
 
 @Component({
   selector: 'app-nav-bar',
-  imports: [RouterLink, NgClass],
+  imports: [RouterLink, NgClass, FormsModule],
   templateUrl: './nav-bar.component.html',
   styleUrl: './nav-bar.component.css'
 })
 export class NavBarComponent {
+
   isMenuOpen = false;
   arrayCategorias: any[] = [];
+  busqueda: string = '';
+  servicioVacantes= inject(VacanteService);
 
   // servicios
   serviceCategoria = inject(CategoriaService);
@@ -40,6 +45,13 @@ export class NavBarComponent {
   get usuario(): string {
     const raw = localStorage.getItem('usuario');
     return raw ? JSON.parse(raw).nombre : '';
+  }
+
+  enviarBusqueda() {
+    const termino = this.busqueda.trim();
+    if (!termino) return;
+  
+    this.router.navigate(['/home'], { queryParams: { busqueda: termino } });
   }
 
   estaLogeado(): boolean {
