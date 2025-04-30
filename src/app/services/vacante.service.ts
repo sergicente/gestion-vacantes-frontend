@@ -18,6 +18,10 @@ export class VacanteService {
     return this.http.get<any[]>(this.baseUrl);
   }
 
+  buscarVacantes(termino: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/buscar?termino=${termino}`);
+  }
+
   getAllCreadas(): Observable<any[]> {
     return this.http.get<any[]>(this.baseUrl+ '/creadas');
   }
