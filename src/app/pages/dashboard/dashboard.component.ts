@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
+import { EmpresaService } from '../../services/empresa.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,8 +12,10 @@ import Swal from 'sweetalert2'
 export class DashboardComponent {
   rol: string = '';
   usuario: string = '';
-  router = inject(Router);
+  idEmpresa: number = 0;
 
+  router = inject(Router);
+  empresaService = inject(EmpresaService);
 
   ngOnInit(): void {
     const usuarioJson = localStorage.getItem('usuario');
@@ -20,6 +23,22 @@ export class DashboardComponent {
       const usuario = JSON.parse(usuarioJson);
       this.rol = usuario.rol;
       this.usuario = usuario.nombre;
+      console.log(usuario)
+
+      if (usuario.rol == 'EMPRESA') {
+        const email = usuario.email;
+        console.log(email);
+
+        this.empresaService.buscarPorEmail(email).subscribe({
+          next: (empresa) => {
+            this.idEmpresa = empresa.idEmpresa;
+            console.log(this.idEmpresa);
+          },
+          error: (err) => {
+            console.error('Error al buscar empresa por email:', err);
+          }
+        });
+      }
     }
   }
 
@@ -36,7 +55,6 @@ export class DashboardComponent {
   });
 
   logout() {
-    // Toast de éxito
     this.toast.fire({
       icon: 'success',
       title: 'Se ha cerrado la sesión'

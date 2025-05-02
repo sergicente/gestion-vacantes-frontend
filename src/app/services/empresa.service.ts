@@ -85,4 +85,9 @@ export class EmpresaService {
       })
     );
   }
+
+
+  buscarPorEmail(email: string): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/email/${email}`);
+  }
 }

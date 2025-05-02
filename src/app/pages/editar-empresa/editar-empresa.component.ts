@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { Iempresa } from '../../interfaces/iempresa';
 import { EmpresaService } from '../../services/empresa.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-editar-empresa',
@@ -21,6 +22,18 @@ export class EditarEmpresaComponent implements OnInit {
     email: ''
   };
 
+    toast = Swal.mixin({
+      toast: true,
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.onmouseenter = Swal.stopTimer;
+        toast.onmouseleave = Swal.resumeTimer;
+      }
+    });
+
   empresaService = inject(EmpresaService);
   activatedRoute = inject(ActivatedRoute);
   router = inject(Router);
@@ -37,8 +50,12 @@ export class EditarEmpresaComponent implements OnInit {
   submitForm() {
     this.empresaService.modificar(this.empresa.idEmpresa.toString(), this.empresa).subscribe({
       next: () => {
-        console.log('Empresa actualizada correctamente');
-        this.router.navigate(['/empresas']);
+            // Toast de éxito
+      this.toast.fire({
+        icon: 'success',
+        title: 'Empresa editada correctamente'
+      });
+        this.router.navigate(['/dashboard']);
       },
       error: (error) => {
         console.error('Error al actualizar la empresa:', error);
