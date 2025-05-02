@@ -34,7 +34,7 @@
 
             <!-- Imagen -->
             <div class="flex justify-center md:justify-start">
-                <img [src]="'http://localhost:9001/uploads/' + vacante.imagen" [alt]="vacante.nombre"
+                <img [src]="vacante.imagen" [alt]="vacante.nombre"
                     class="w-48 h-48 object-cover rounded-md" (error)="imagenError($event)" />
             </div>
 
@@ -93,7 +93,7 @@
             @if(yaHaAplicado){
                 <div class="flex justify-center mt-8">
                     <a [routerLink]="['/solicitudes']"><button type="button"
-                        class="cursor-pointer bg-orange-400 text-white font-semibold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out">
+                        class="cursor-pointer bg-gray-400 text-white font-semibold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out  opacity-50">
                         Vacante ya solicitada
                     </button></a>
                 </div>
@@ -110,7 +110,7 @@
         <!-- Botón Aplicar -->
         <div class="flex justify-center mt-8">
             <a href="login"><button type="button"
-                    class="bg-orange-400 hover:bg-orange-600 text-white font-semibold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out cursor-pointer">
+                    class="bg-orange-400 hover:bg-orange-600 text-white font-semibold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out cursor-pointer ">
                     Aplicar a este empleo
                 </button></a>
         </div>

@@ -36,7 +36,6 @@ export class VacanteDetalleComponent {
       const id: string = params.id;
       this.vacanteServicio.getById(id).subscribe((peticion) => {
         this.vacante = peticion;
-
         this.servicioSolicitud.verificarAplicacion(this.usuario, this.vacante.idVacante).subscribe((aplicado) => {
           this.yaHaAplicado = aplicado;
         });

@@ -6,7 +6,7 @@ import { EmpresaListaComponent } from './pages/empresa-lista/empresa-lista.compo
 import { EmpresaListaVacantesComponent } from './pages/empresa-lista-vacantes/empresa-lista-vacantes.component';
 import { FormLoginComponent } from './pages/form-login/form-login.component';
 import { CategoriaListaVacantesComponent } from './pages/categoria-lista-vacantes/categoria-lista-vacantes.component';
-import { FormComponent } from './pages/form/form.component';
+import { FormVacanteComponent } from './pages/form-vacante/form-vacante.component';
 import { FormRegisterComponent } from './pages/form-register/form-register.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { FormAplicarVacanteComponent } from './pages/form-aplicar-vacante/form-aplicar-vacante.component';
@@ -18,6 +18,8 @@ import { CategoriaListaComponent } from './pages/categoria-lista/categoria-lista
 import { UsuariosListComponent } from './pages/usuarios-list/usuarios-list.component';
 import { AdministradoresListComponent } from './pages/administradores-list/administradores-list.component';
 import { AdministradorDetalleComponent } from './pages/administrador-detalle/administrador-detalle.component';
+import { MisVacantesComponent } from './pages/mis-vacantes/mis-vacantes.component';
+import { MisSolicitudesEmpresaComponent } from './pages/mis-solicitudes-empresa/mis-solicitudes-empresa.component';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
@@ -29,12 +31,9 @@ export const routes: Routes = [
   { path: 'login', component: FormLoginComponent },
   { path: 'register', component: FormRegisterComponent },
   { path: 'categoria/:id', component: CategoriaListaVacantesComponent },
-  { path: 'vacante/modificar/:id', component: FormComponent },
-  { path: 'formulario', component: FormComponent },
-  { path: 'actualizarOferta', component: FormComponent },
+  { path: 'vacantes/nueva', component: FormVacanteComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'aplicar/:id', component: FormAplicarVacanteComponent },
-  { path: 'solicitudes', component: MisSolicitudesComponent },
   { path: 'perfil', component: FormRegisterComponent },
   { path: 'empresas/nueva', component: AltaEmpresaComponent},
   { path: 'dashboard-categorias', component: DashboardCategoriasComponent },
@@ -42,6 +41,10 @@ export const routes: Routes = [
   { path: 'usuarios', component: UsuariosListComponent },
   { path: 'administradores', component: AdministradoresListComponent },
   { path: 'administrador/:email', component: AdministradorDetalleComponent },
+  { path: 'mis-vacantes', component: MisVacantesComponent },
+  { path: 'solicitudes', component: MisSolicitudesEmpresaComponent },
+
+
   { path: '**', component: Pagina404Component },
   { path: "**", redirectTo: "home" }
 

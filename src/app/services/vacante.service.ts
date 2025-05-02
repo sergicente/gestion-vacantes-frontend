@@ -8,6 +8,7 @@ import { Ivacante } from '../interfaces/ivacante';
 })
 export class VacanteService {
 
+
   http = inject(HttpClient);
   private baseUrl: string = 'http://localhost:9001/api/vacantes'
   
@@ -24,6 +25,12 @@ export class VacanteService {
 
   getAllCreadas(): Observable<any[]> {
     return this.http.get<any[]>(this.baseUrl+ '/creadas');
+  }
+
+
+
+  getAllEmpresa(id: number): Observable<any[]> {
+    return this.http.get<any[]>(this.baseUrl+ '/empresa/' + id);
   }
 
   getById(id: String): Observable<Ivacante> {

@@ -27,8 +27,16 @@ export class SolicitudService {
     return this.http.put<void>(`${this.baseUrl}/${idSolicitud}/cancelar`, {});
   }
 
+  asignarSolicitud(idVacante: number, idSolicitud: number): Observable<void> {
+    return this.http.put<void>(`${this.baseUrl}/${idVacante}/asignar/${idSolicitud}`, {});
+  }
+
   getById(id: String): Observable<Ivacante> {
     return this.http.get<any>(this.baseUrl + '/' + id);
+  }
+  
+  getSolicitudesByVacante(idVacante: any) {
+    return this.http.get<any>(this.baseUrl + '/vacante/' + idVacante);
   }
 
   verificarAplicacion(idUsuario: string, idVacante: number) {

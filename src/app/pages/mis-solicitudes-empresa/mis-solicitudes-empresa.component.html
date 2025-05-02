@@ -1,0 +1,72 @@
+<div class="container mx-auto px-4 py-8">
+  
+    <!-- Volver -->
+    <a href="/dashboard" class="mb-5 flex text-blue-500 items-center gap-2">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+          class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-left">
+          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+          <path d="M15 6l-6 6l6 6" />
+      </svg>
+      Volver al Dashboard
+  </a>
+
+@if (solicitudes.length === 0) {
+  <div class="text-center text-gray-500">
+    Aún no has enviado ninguna solicitud.
+  </div>
+} @else {
+  <h1 class="text-2xl font-semibold mb-6 text-gray-600">Mis Solicitudes</h1>
+
+  <div class="overflow-x-auto">
+    <table class="min-w-full bg-white shadow-md border border-gray-300">
+      <thead class="bg-gray-100">
+        <tr class="">
+          <th class="py-3 px-4 text-left text-sm font-medium text-gray-700">Fecha</th>
+          <th class="py-3 px-4 text-left text-sm font-medium text-gray-700">Vacante</th>
+          <th class="py-3 px-4 text-left text-sm font-medium text-gray-700">Estado</th>
+          <th class="py-3 px-4 text-left text-sm font-medium text-gray-700">Comentarios</th>
+          <th class="py-3 px-4 text-left text-sm font-medium text-gray-700">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (solicitud of solicitudes; track solicitud.idSolicitud) {
+          <tr class="border-t border-gray-300">
+            <td class="py-3 px-4 text-sm text-gray-800">{{ formatearFecha(solicitud.fecha) }}</td>
+            <td class="py-3 px-4 text-sm text-gray-800">
+                <a 
+                  [routerLink]="['/vacante', solicitud.idVacante]"
+                  class="text-blue-600 hover:underline"
+                >
+                  {{ solicitud.nombreVacante }}
+                </a>
+              </td>
+            <td class="py-3 px-4 text-sm text-gray-800">
+              <span [ngClass]="{
+                'text-green-600': solicitud.estado === 1,
+                'text-red-600': solicitud.estado === 2,
+                'text-gray-500': solicitud.estado === 0
+              }">
+                {{ obtenerTextoEstado(solicitud.estado) }}
+              </span>
+            </td>
+            <td class="py-3 px-4 text-sm text-gray-800">{{ solicitud.comentarios || '—' }}</td>
+            <td class="py-3 px-4 text-sm text-gray-800">
+              <a [href]="'http://localhost:9001/api/solicitudes/archivo/' + solicitud.archivo" target="_blank"><button class="bg-blue-500 hover:bg-blue-600 text-white py-1 px-3 rounded text-sm disabled:opacity-50 me-2 cursor-pointer">Ver PDF</button>
+              </a>
+              <button 
+                class="bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded text-sm cursor-pointer disabled:opacity-20 disabled:cursor-not-allowed"
+                (click)="cancelarSolicitud(solicitud.idSolicitud)"
+                [disabled]="solicitud.estado !== 0"
+              >
+                Cancelar
+              </button>
+
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+}
+</div>

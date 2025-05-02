@@ -1,0 +1,88 @@
+<section class="flex justify-center max-w-7xl mx-auto px-4 mt-24">
+  <div class="w-full max-w-md">
+    <!-- Volver -->
+  <a href="/dashboard" class="mb-5 flex text-blue-500 items-center gap-2">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+        class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-left">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+        <path d="M15 6l-6 6l6 6" />
+    </svg>
+    Volver al Dashboard
+</a>
+    <div class=" bg-white rounded-sm shadow-sm border border-gray-200 p-12 space-y-6">
+      <h3 class="text-2xl font-semibold text-center mb-4">{{tipo}} vacante</h3>
+  
+      <form [formGroup]="form" (ngSubmit)="submitVacante()" class="space-y-4">
+  
+        <input type="hidden" formControlName="idVacante" />
+  
+        <div>
+          <label for="nombre" class="block font-medium mb-1">Nombre:</label>
+          <input id="nombre" type="text" formControlName="nombre" class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-sm focus:outline-none focus:ring-2 focus:ring-blue-600" />
+          @if(checkControl('nombre', 'required')) {
+            <p class="text-sm text-red-500 mt-1">Campo requerido</p>
+          }
+        </div>
+  
+        <div>
+          <label for="descripcion" class="block font-medium mb-1">Descripción:</label>
+          <input id="descripcion" type="text" formControlName="descripcion" class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-sm focus:outline-none focus:ring-2 focus:ring-blue-600" />
+        </div>
+
+        <div>
+            <label class="block font-medium mb-1">Destacado:</label>
+            <div class="flex items-center gap-6 mt-2">
+              <label class="inline-flex items-center">
+                <input
+                  type="radio"
+                  class="form-radio text-blue-600"
+                  formControlName="destacado"
+                  [value]="1"
+                />
+                <span class="ml-2">Sí</span>
+              </label>
+              <label class="inline-flex items-center">
+                <input
+                  type="radio"
+                  class="form-radio text-blue-600"
+                  formControlName="destacado"
+                  [value]="0"
+                />
+                <span class="ml-2">No</span>
+              </label>
+            </div>
+          </div>
+  
+        <div>
+          <label for="salario" class="block font-medium mb-1">Salario:</label>
+          <input id="salario" type="number" formControlName="salario" class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-sm focus:outline-none focus:ring-2 focus:ring-blue-600" />
+        </div>
+  
+        <div>
+          <label for="detalles" class="block font-medium mb-1">Detalles:</label>
+          <input id="detalles" type="text" formControlName="detalles" class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-sm focus:outline-none focus:ring-2 focus:ring-blue-600" />
+        </div>
+
+        <div>
+          <label for="idCategoria" class="block font-medium mb-1">Categoría:</label>
+          <select id="idCategoria" formControlName="idCategoria" class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-sm focus:outline-none focus:ring-2 focus:ring-blue-600">
+            <option value="">Seleccione una categoría</option>
+            <option *ngFor="let cat of arrCategorias" [value]="cat.idCategoria">{{ cat.nombre }}</option>
+          </select>
+        </div>
+  
+        <div>
+          <label for="imagen" class="block font-medium mb-1">Imagen:</label>
+          <input type="text" formControlName="imagen" placeholder="https://" class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-sm focus:outline-none focus:ring-2 focus:ring-blue-600" />
+        </div>
+  
+        <div class="pt-4">
+          <button type="submit" [disabled]="!form.valid" class="w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition">
+            {{tipo}}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  </section>

@@ -1,5 +1,6 @@
-import { EmpresaService } from './../../services/empresa.service';
-import { VacanteService } from './../../services/vacante.service';
+import { Iempresa } from './../../interfaces/iempresa';
+import { EmpresaService } from '../../services/empresa.service';
+import { VacanteService } from '../../services/vacante.service';
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Ivacante } from '../../interfaces/ivacante';
@@ -7,16 +8,15 @@ import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { CategoriaService } from '../../services/categoria.service';
 import { Icategoria } from '../../interfaces/icategoria';
 import { NgForOf } from '@angular/common';
-import { Iempresa } from '../../interfaces/iempresa';
 
 
 @Component({
   selector: 'app-form',
   imports: [ReactiveFormsModule, NgForOf],
-  templateUrl: './form.component.html',
-  styleUrl: './form.component.css'
+  templateUrl: './form-vacante.component.html',
+  styleUrl: './form-vacante.component.css'
 })
-export class FormComponent {
+export class FormVacanteComponent {
 
   router = inject(Router);
   vacanteService = inject(VacanteService);
@@ -28,11 +28,12 @@ export class FormComponent {
   tipo: string;
   arrCategorias: Icategoria[];
   arrEmpresa: Iempresa[];
-
+  empresa:any = {};
   isNewObject: boolean = true;
 
   constructor() {
     this.arrCategorias = [];
+    
     this.categoriaService.getAll().subscribe((data: any) => {
       console.log(data);
       this.arrCategorias = data;
@@ -42,6 +43,17 @@ export class FormComponent {
     this.empresaService.getAll().subscribe((data: any) => {
       console.log(data);
       this.arrEmpresa = data;
+      
+
+      const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
+      const empresaUsuario = this.arrEmpresa.find((emp) => emp.email === usuario.email);
+      console.log(empresaUsuario);
+
+      if (empresaUsuario) {
+        this.form.get('idEmpresa')?.setValue(empresaUsuario.idEmpresa);
+        this.form.get('idEmpresa')?.disable();
+      }
+
     });
 
     this.tipo = "Insertar";
@@ -49,10 +61,10 @@ export class FormComponent {
       idVacante: new FormControl(null, []),
       nombre: new FormControl(null, [Validators.required]),
       descripcion: new FormControl(null, [Validators.required, Validators.minLength(3), Validators.maxLength(130)]),
-      fecha: new FormControl(null, [Validators.required]),
+      fecha: new FormControl(new Date().toISOString().split('T')[0], [Validators.required]),
       salario: new FormControl(null, [Validators.required]),
       estado: new FormControl(null,),
-      destacado: new FormControl(null, [Validators.required]),
+      destacado: new FormControl('', [Validators.required]),
       detalles: new FormControl(null, [Validators.required, Validators.minLength(3), Validators.maxLength(130)]),
       imagen: new FormControl(null, [Validators.required, Validators.pattern(/(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z]{2,}(\.[a-zA-Z]{2,})(\.[a-zA-Z]{2,})?\/[a-zA-Z0-9]{2,}|((https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z]{2,}(\.[a-zA-Z]{2,})(\.[a-zA-Z]{2,})?)|(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}(\.[a-zA-Z0-9]{2,})?/)]),
       idCategoria: new FormControl(null, [Validators.required]),
@@ -87,7 +99,7 @@ export class FormComponent {
   }
 
   submitVacante() {
-    let vacante: Ivacante = this.form.value;
+    let vacante: Ivacante = this.form.getRawValue();
     console.log('Formulario antes de la actualización:', vacante);
 
     console.log(this.form.valid);
