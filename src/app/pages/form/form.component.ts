@@ -77,7 +77,7 @@ export class FormComponent {
             estado: new FormControl(vacanteResponse.estado, [Validators.required]),
             destacado: new FormControl(vacanteResponse.destacado, [Validators.required]),
             detalles: new FormControl(vacanteResponse.detalles, [Validators.required, Validators.minLength(3), Validators.maxLength(130)]),
-            // imagen: new FormControl(vacanteResponse.imagen, [Validators.required, Validators.pattern(/(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z]{2,}(\.[a-zA-Z]{2,})(\.[a-zA-Z]{2,})?\/[a-zA-Z0-9]{2,}|((https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z]{2,}(\.[a-zA-Z]{2,})(\.[a-zA-Z]{2,})?)|(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}(\.[a-zA-Z0-9]{2,})?/)]),
+             imagen: new FormControl(vacanteResponse.imagen, [Validators.required, Validators.pattern(/(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z]{2,}(\.[a-zA-Z]{2,})(\.[a-zA-Z]{2,})?\/[a-zA-Z0-9]{2,}|((https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z]{2,}(\.[a-zA-Z]{2,})(\.[a-zA-Z]{2,})?)|(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}(\.[a-zA-Z0-9]{2,})?/)]),
             idCategoria: new FormControl(vacanteResponse.idCategoria, [Validators.required]),
             idEmpresa: new FormControl(vacanteResponse.idEmpresa, [Validators.required])
           }, {});
@@ -87,29 +87,47 @@ export class FormComponent {
   }
 
   submitVacante() {
-    let vacante: Ivacante = this.form.value;
-    console.log('Formulario antes de la actualización:', vacante);
-  
     if (this.form.valid) {
+      console.log("Enviando formulario");
+  
+      const formValue = this.form.value;
+  
+      // Construye el objeto como lo espera el backend
+      const vacante: Ivacante = {
+        idVacante: formValue.idVacante,
+        nombre: formValue.nombre,
+        descripcion: formValue.descripcion,
+        fecha: formValue.fecha,
+        salario: formValue.salario,
+        estado: formValue.estado, // <- este campo se llama "estatus" en el backend
+        destacado: formValue.destacado,
+        detalles: formValue.detalles,
+        imagen: formValue.imagen,
+        idCategoria: formValue.idCategoria,
+        idEmpresa: formValue.idEmpresa
+      };
+  
+      console.log("Vacante final a enviar:", vacante);
+  
       if (this.tipo === "Actualizar") {
         this.vacanteService.updateVacante(vacante).subscribe({
-          next: (response: Ivacante) => {
-            alert(`La vacante ${response.idVacante} ha sido actualizada`);
+          next: (response) => {
+            alert(`Vacante ${response.idVacante} actualizada`);
             this.router.navigate(['/home']);
           },
-          error: (err: any) => {
-            alert('Error actualizando la vacante');
+          error: (err) => {
+            alert('Error al actualizar');
             console.error(err);
           }
         });
       } else {
         this.vacanteService.insertVacante(vacante).subscribe({
-          next: (response: Ivacante) => {
-            alert(`La vacante ${response.idVacante} ha sido añadida`);
+          next: (response) => {
+            alert(`Vacante ${response.idVacante} añadida`);
             this.router.navigate(['/home']);
           },
-          error: (err: any) => {
-            alert('Error insertando la vacante');
+          error: (err) => {
+            alert('Error al insertar la vacante');
             console.error(err);
           }
         });
@@ -123,4 +141,15 @@ export class FormComponent {
   checkControl(FormControlName: string, validators: string): boolean | undefined {
     return this.form.get(FormControlName)?.hasError(validators) && this.form.get(FormControlName)?.touched;
   }
+
+  selectedFile: File | null = null;
+
+  onFileChange(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      this.selectedFile = file;
+    }
+  }
+  
+
 }

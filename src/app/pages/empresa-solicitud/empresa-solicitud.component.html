@@ -16,6 +16,7 @@
           <th class="py-2 px-4 text-left">📄 CV</th>
           <th class="py-2 px-4 text-left">⚙️ Estado</th>
           <th class="py-2 px-4 text-left">📧 Email</th>
+          <th class="py-2 px-4 text-left">✅ Acción</th>
         </tr>
       </thead>
       <tbody>
@@ -46,6 +47,15 @@
             </span>
           </td>
           <td class="py-2 px-4">{{ solicitud.email || solicitud.emailUsuario }}</td>
+          <td class="py-2 px-4">
+            <button 
+              class="bg-green-500 hover:bg-green-600 text-white text-sm px-3 py-1 rounded disabled:opacity-50"
+              (click)="aceptarSolicitud(solicitud.idSolicitud)"
+              [disabled]="solicitud.estado !== 0">
+              Aceptar
+            </button>
+          </td>
+          
         </tr>
       </tbody>
     </table>

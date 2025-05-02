@@ -3,6 +3,8 @@ import { SolicitudService } from '../../services/solicitud.service';
 import { AuthService } from '../../services/auth.service';
 import { ISolicitud } from '../../interfaces/isolicitud';
 import { CommonModule } from '@angular/common';
+import  Swal  from 'sweetalert2';
+
 
 @Component({
   standalone: true,
@@ -12,6 +14,7 @@ import { CommonModule } from '@angular/common';
 })
 export class EmpresaSolicitudesComponent implements OnInit {
   solicitudes: ISolicitud[] = [];
+  router: any;
 
   constructor(private solicitudService: SolicitudService, private auth: AuthService) {}
 
@@ -25,6 +28,34 @@ export class EmpresaSolicitudesComponent implements OnInit {
       });
     } else {
       console.warn('⚠️ No se encontró empresaId en localStorage');
+      alert('Debes iniciar sesión como empresa para ver las solicitudes.');
+      this.router.navigate(['/login-empresa']);
     }
   }
-}
+
+  aceptarSolicitud(idSolicitud: number): void {
+    Swal.fire({
+      title: '¿Aceptar esta solicitud?',
+      text: 'Esto asignará la vacante y cancelará el resto de solicitudes.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, aceptar',
+      cancelButtonText: 'No'
+    }).then(result => {
+      if (result.isConfirmed) {
+        this.solicitudService.adjudicarSolicitud(idSolicitud).subscribe(() => {
+          Swal.fire('✅ Vacante adjudicada', '', 'success');
+  
+          // 🔁 Cambia el estado en la lista local
+          this.solicitudes.forEach(solicitud => {
+            if (solicitud.idSolicitud === idSolicitud) {
+              solicitud.estado = 1; // Aceptada
+            } else {
+              solicitud.estado = 2; // Cancelada
+            }
+          });
+        });
+      }
+    });
+  }
+}  

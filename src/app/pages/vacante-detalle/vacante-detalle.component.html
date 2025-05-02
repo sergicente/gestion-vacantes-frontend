@@ -118,7 +118,7 @@
     </div>
 
     <!-- Botones Modificar / Eliminar -->
-    @if(rol=='ADMON'){
+    @if(rol == 'ADMON' || rol == 'EMPRESA'){
     <div class="flex flex-col md:flex-row justify-between mt-10 gap-4">
         <a [routerLink]="['/vacante/modificar', vacante.idVacante]">
             <button type="button"
