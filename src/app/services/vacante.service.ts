@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { catchError, lastValueFrom, Observable, throwError } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
 import { Ivacante } from '../interfaces/ivacante';
 
 @Injectable({
@@ -83,5 +83,10 @@ export class VacanteService {
   updateVacante(vacante: Ivacante): Observable<Ivacante> {
     return this.http.put<Ivacante>(`${this.baseUrl}/${vacante.idVacante}`, vacante);
   }
+
+  deleteById(id: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/${id}`);
+  }
+  
 
 }
