@@ -32,7 +32,7 @@ export class CategoriaListaVacantesComponent {
         this.categoria = peticion;
         console.log(this.categoria);
       })
-      this.serviceVacantes.getAll().subscribe((peticion) => {
+      this.serviceVacantes.getAllCreadas().subscribe((peticion) => {
         this.array = peticion.filter((vacante: any) => vacante.categoria?.idCategoria == id);
         this.totalPaginas = Math.ceil(this.array.length / this.itemsPorPagina);
         console.log(this.array);

@@ -88,6 +88,10 @@
             <p class="mt-2 text-gray-700">{{ vacante.detalles }}</p>
         </div>
 
+        @if(rol=='EMPRESA'){
+
+        }
+
         @if(rol=='CLIENTE'){
 
             @if(yaHaAplicado){
@@ -106,8 +110,16 @@
                 </div>
             }
 
-        }@else {
+        }@else if(rol=='EMPRESA'){
         <!-- Botón Aplicar -->
+        <div class="flex justify-center mt-8">
+            <button type="button"
+                    class="bg-gray-500  text-white font-semibold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out cursor-not-allowed opacity-50">
+                    No puedes solicitar vacantes desde un perfil de empresa
+                </button>
+        </div>
+        }@else {
+                    <!-- Botón Aplicar -->
         <div class="flex justify-center mt-8">
             <a href="login"><button type="button"
                     class="bg-orange-400 hover:bg-orange-600 text-white font-semibold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out cursor-pointer ">

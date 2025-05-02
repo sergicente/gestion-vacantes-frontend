@@ -1,8 +1,7 @@
-<div class="rounded-sm shadow-sm border p-4 flex flex-col sm:flex-row gap-4 md:items-center h-full"
+<div class="p-10 rounded-sm shadow-sm border flex flex-col sm:flex-row gap-4 md:items-center h-full"
   [ngClass]="{
-    'bg-blue-50 border-blue-500': item.estatus === 'CUBIERTA',
-    'bg-lime-50 border-lime-500': item.destacado && item.estatus !== 'CUBIERTA',
-    'bg-white border-gray-200': !item.destacado && item.estatus !== 'CUBIERTA'
+    'bg-green-50 border-green-500': item.estatus === 'CUBIERTA',
+    'bg-white border-gray-200': item.estatus === 'CREADA'
   }">
 
   <!-- Imagen -->
@@ -16,31 +15,26 @@
 
   <!-- Contenido -->
   <div class="flex flex-col justify-between flex-grow">
-    <div class="flex justify-between items-start mb-2">
-      <span class="text-sm text-gray-500">{{ formatearFecha(item.fecha) }}</span>
-      <a href="/categoria/{{item.categoria.idCategoria}}"><span
-          class="bg-blue-100 hover:bg-blue-200 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-sm border border-blue-400">
-          {{ item.categoria.nombre }}
-        </span></a>
-    </div>
+
 
     <!-- Nombre -->
     <a href="vacante/{{item.idVacante}}" class=" ">
-      <h3 class="text-lg font-medium mb-1 text-blue-600">{{ item.nombre }}</h3>
+      <h3 class="text-lg font-medium mb-1 text-blue-600">{{ item.nombre }}     <span
+        class="text-xs font-semibold border me-2 ms-5 px-2.5 py-0.5 rounded-sm"
+        [ngClass]="{
+          'bg-green-100 text-green-700': item.estatus === 'CUBIERTA',
+          'bg-yellow-100 text-yellow-700': item.estatus === 'CREADA',
+          'bg-red-100 text-red-700': item.estatus === 'CANCELADA',
+          'bg-gray-100 text-gray-700': item.estatus !== 'CUBIERTA' && item.estatus !== 'ABIERTA' && item.estatus !== 'CANCELADA'
+        }"
+      >
+        {{ item.estatus }}
+      </span></h3> 
     </a>
-
-    <h4 class="text-lg font-medium mb-1 text-gray-600">{{ item.estatus }}</h4>
-
-
-    <!-- Descripción -->
-    <p class="text-sm text-gray-600 mb-2 line-clamp-2">
-      {{ item.descripcion }}
-    </p>
 
     <!-- Solicitudes -->
     @if (arraySolicitudes.length > 0) {
     <div class="mt-2 text-sm text-gray-700 overflow-x-auto">
-      <strong>Solicitudes: {{ arraySolicitudes.length }}</strong>
       <table class="min-w-full text-sm text-left mt-2 border border-gray-300 rounded">
         <thead class="bg-gray-100 text-gray-700">
           <tr class="">

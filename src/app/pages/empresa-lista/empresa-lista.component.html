@@ -29,7 +29,7 @@
   <!-- Lista de Empresas -->
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
     @for (empresa of array; track empresa.idEmpresa) {
-      <div class="bg-white rounded-lg shadow-md p-6">
+      <div class="bg-white rounded-sm shadow-sm border border-gray-200 p-12 ">
         <h2 class="text-xl font-semibold mb-2">{{ empresa.nombreEmpresa }}</h2>
         <p class="text-gray-600 mb-2">CIF: {{ empresa.cif }}</p>
         <p class="text-gray-600 mb-2">País: {{ empresa.pais }}</p>
@@ -38,42 +38,25 @@
         <div class="flex space-x-2">
           @if (rol === 'ADMON') {
             <button (click)="verDetalles(empresa.idEmpresa)"
-                    class="px-3 py-1 bg-blue-100 text-blue-700 rounded-md hover:bg-blue-200">
-              Ver Detalles
+                    class="px-3 py-1 cursor-pointer bg-blue-100 text-blue-700 rounded-md hover:bg-blue-200">
+              Detalles
             </button>
             <button (click)="editarEmpresa(empresa)"
-                    class="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-md hover:bg-yellow-200">
+                    class="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-md hover:bg-yellow-200 cursor-pointer">
               Editar
             </button>
             <button (click)="eliminarEmpresa(empresa.idEmpresa)"
-                    class="px-3 py-1 bg-red-100 text-red-700 rounded-md hover:bg-red-200">
+                    class="px-3 py-1 bg-red-100 text-red-700 rounded-md hover:bg-red-200 cursor-pointer">
               Eliminar
             </button>
           }
-          @else if (rol === 'CLIENTE') {
-            <button (click)="enviarCV(empresa.idEmpresa)"
-                    class="px-3 py-1 bg-blue-100 text-blue-700 rounded-md hover:bg-blue-200">
-              Enviar CV
-            </button>
-            <button (click)="verEstadoSolicitud(empresa.idEmpresa)"
-                    class="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-md hover:bg-yellow-200">
-              Ver Estado de Solicitud
-            </button>
-            <button (click)="cancelarSolicitud(empresa.idEmpresa)"
-                    class="px-3 py-1 bg-red-100 text-red-700 rounded-md hover:bg-red-200">
-              Cancelar Solicitud
-            </button>
+          @else {
+            <a [routerLink]="['/empresa', empresa.idEmpresa]"><button
+                    class="px-3 py-1 bg-blue-100 text-blue-700 rounded-md hover:bg-blue-200 cursor-pointer">
+              Ver vacantes disponibles
+            </button></a>
           }
-          @else if (rol === 'EMPRESA') {
-            <button (click)="verDetalles(empresa.idEmpresa)"
-                    class="px-3 py-1 bg-blue-100 text-blue-700 rounded-md hover:bg-blue-200">
-              Ver Detalles
-            </button>
-            <button (click)="modificarDatos(empresa.idEmpresa)"
-                    class="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-md hover:bg-yellow-200">
-              Modificar Datos
-            </button>
-        }
+        
         </div>
       </div>
     }
