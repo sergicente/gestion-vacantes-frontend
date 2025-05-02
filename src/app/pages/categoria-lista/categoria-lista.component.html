@@ -12,7 +12,7 @@
   <!-- Formulario de Categoría -->
   @if (showForm && rol === 'ADMON') {
     <div class="mb-8">
-      <div class="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md">
+      <div class="max-w-2xl mx-auto bg-white rounded-sm shadow-sm border border-gray-200 p-12">
         <h2 class="text-2xl font-bold mb-6">
           {{ categoriaSeleccionada.idCategoria !== 0 ? 'Editar Categoría' : 'Alta de Nueva Categoría' }}
         </h2>
@@ -21,13 +21,13 @@
           <div>
             <label for="nombre" class="block text-sm font-medium text-gray-700">Nombre</label>
             <input type="text" id="nombre" name="nombre" [(ngModel)]="categoriaSeleccionada.nombre" 
-                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" required>
+                   class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-sm focus:outline-none focus:ring-2 focus:ring-blue-600" required>
           </div>
 
           <div>
             <label for="descripcion" class="block text-sm font-medium text-gray-700">Descripción</label>
             <textarea id="descripcion" name="descripcion" [(ngModel)]="categoriaSeleccionada.descripcion"
-                      class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" rows="4"></textarea>
+                      class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-sm focus:outline-none focus:ring-2 focus:ring-blue-600" rows="4"></textarea>
           </div>
 
           <div class="flex justify-end space-x-4 mt-6">
@@ -43,12 +43,12 @@
         </form>
       </div>
     </div>
-  }
+  }@else {
 
   <!-- Lista de Categorías -->
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
     @for (categoria of categorias; track categoria.idCategoria) {
-      <div class="bg-white rounded-lg shadow-md p-6">
+      <div class="bg-white rounded-sm shadow-sm border border-gray-200 p-12">
         <h2 class="text-xl font-semibold mb-2">{{ categoria.nombre }}</h2>
         <p class="text-gray-600 mb-4">{{ categoria.descripcion }}</p>
         
@@ -67,4 +67,5 @@
       </div>
     }
   </div>
+}
 </div> 
