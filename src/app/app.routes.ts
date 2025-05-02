@@ -19,7 +19,6 @@ import { UsuariosListComponent } from './pages/usuarios-list/usuarios-list.compo
 import { AdministradoresListComponent } from './pages/administradores-list/administradores-list.component';
 import { AdministradorDetalleComponent } from './pages/administrador-detalle/administrador-detalle.component';
 import { MisVacantesComponent } from './pages/mis-vacantes/mis-vacantes.component';
-import { MisSolicitudesEmpresaComponent } from './pages/mis-solicitudes-empresa/mis-solicitudes-empresa.component';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
@@ -42,7 +41,6 @@ export const routes: Routes = [
   { path: 'administradores', component: AdministradoresListComponent },
   { path: 'administrador/:email', component: AdministradorDetalleComponent },
   { path: 'mis-vacantes', component: MisVacantesComponent },
-  { path: 'solicitudes', component: MisSolicitudesEmpresaComponent },
 
 
   { path: '**', component: Pagina404Component },
