@@ -70,4 +70,14 @@ export class SolicitudService {
   getSolicitudesPorEmpresa(idEmpresa: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.baseUrl}/empresa/${idEmpresa}`);
   }
+
+  adjudicarSolicitud(idSolicitud: number): Observable<any> {
+    return this.http.put(`${this.baseUrl}/aceptar/${idSolicitud}`, {});
+  }
+  
+  
+
+
+  
+
 }

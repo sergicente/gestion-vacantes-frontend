@@ -1,7 +1,6 @@
 <a [routerLink]="['/vacante', item.idVacante]" class="block">
-    <div 
-      class="rounded-sm shadow-sm border p-4 flex flex-col sm:flex-row gap-4 md:items-center transition-transform transform hover:scale-102 h-full hover:shadow-md"
-      [ngClass]="item.destacado ? 'bg-lime-50 border-lime-500' : 'bg-white border-gray-200'">
+    <div class="rounded-sm shadow-sm border p-4 flex flex-col sm:flex-row gap-4 md:items-center transition-transform transform hover:scale-102 h-full hover:shadow-md"
+        [ngClass]="item.destacado ? 'bg-lime-50 border-lime-500' : 'bg-white border-gray-200'">
 
         <!-- Imagen -->
         <!-- <div class="flex-shrink-0 flex justify-center md:justify-start">
@@ -16,29 +15,34 @@
         <div class="flex flex-col justify-between flex-grow">
             <div class="flex gap-2 mt-2">
                 <button (click)="editar(item.idVacante)" class="text-blue-600 hover:underline text-sm">Editar</button>
-                <button (click)="eliminar(item.idVacante)" class="text-red-600 hover:underline text-sm">Eliminar</button>
-              </div>
-              
+                <button (click)="eliminar(item.idVacante)"
+                    class="text-red-600 hover:underline text-sm">Eliminar</button>
+            </div>
+
             <div class="flex justify-between items-start mb-2">
                 <span class="text-sm text-gray-500">{{ formatearFecha(item.fecha) }}</span>
-                <a href="/categoria/{{item.categoria.idCategoria}}"><span class="bg-blue-100 hover:bg-blue-200 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-sm border border-blue-400">
-                    {{ item.categoria.nombre }}
-                </span></a>
+                <a href="/categoria/{{item.categoria.idCategoria}}"><span
+                        class="bg-blue-100 hover:bg-blue-200 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-sm border border-blue-400">
+                        {{ item.categoria.nombre }}
+                    </span></a>
             </div>
 
             <!-- Nombre -->
             <h3 class="text-lg font-semibold mb-1 text-gray-800">{{ item.nombre }}</h3>
 
             <!-- Empresa -->
-            
+
             <span class="font-medium text-blue-500 mb-2">{{ item.empresa.nombreEmpresa }}</span>
-            
+
 
             <!-- Descripción -->
             <p class="text-sm text-gray-600 mb-2 line-clamp-2">
                 {{ item.descripcion }}
             </p>
         </div>
+
+
+
 
     </div>
 </a>

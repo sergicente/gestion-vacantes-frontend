@@ -9,7 +9,7 @@ import { UsuarioService } from '../../services/usuario.service';
   standalone: true,
   imports: [FormsModule],
   templateUrl: './form-login.component.html',
-  styleUrls: ['./form-login.component.css']
+  styleUrls: ['./form-login.component.css'],
 })
 export class FormLoginComponent {
   updateField(arg0: string, $event: Event) {
@@ -30,14 +30,14 @@ export class FormLoginComponent {
 
   toast = Swal.mixin({
     toast: true,
-    position: "top-end",
+    position: 'top-end',
     showConfirmButton: false,
     timer: 3000,
     timerProgressBar: true,
     didOpen: (toast) => {
       toast.onmouseenter = Swal.stopTimer;
       toast.onmouseleave = Swal.resumeTimer;
-    }
+    },
   });
 
   async login(loginForm: NgForm) {
@@ -48,22 +48,31 @@ export class FormLoginComponent {
 
     try {
       const usuario = await this.usuarioService.login(this.credentials);
+      console.log('Usuario recibido:', usuario);
 
       // Guardamos el usuario en localStorage
       localStorage.setItem('usuario', JSON.stringify(usuario));
+      const empresaId = usuario.idEmpresa?.toString();
+
+      if (empresaId) {
+        localStorage.setItem('empresaId', empresaId);
+      } else {
+        console.warn('⚠️ No se pudo obtener el idEmpresa del usuario');
+      }
+
       loginForm.reset();
       this.router.navigate(['/dashboard']);
 
       // Toast de éxito
       this.toast.fire({
         icon: 'success',
-        title: 'Has iniciado sesión'
+        title: 'Has iniciado sesión',
       });
     } catch (error) {
       // Toast de error
       this.toast.fire({
         icon: 'error',
-        title: 'Email o contraseña incorrectos'
+        title: 'Email o contraseña incorrectos',
       });
     }
   }
