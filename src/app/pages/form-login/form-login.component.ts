@@ -1,9 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule, NgForm } from '@angular/forms';
+import Swal from 'sweetalert2';
 import { UsuarioService } from '../../services/usuario.service';
-import { IUsuario } from '../../interfaces/iusuario';
-import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-form-login',
@@ -27,8 +26,6 @@ export class FormLoginComponent {
     if (usuarioGuardado) {
       this.router.navigate(['/dashboard']);
     }
-
-
   }
 
   toast = Swal.mixin({
@@ -50,7 +47,7 @@ export class FormLoginComponent {
     }
 
     try {
-      const usuario = await this.usuarioService.login(datosUsuario);
+      const usuario = await this.usuarioService.login(this.credentials);
 
       // Guardamos el usuario en localStorage
       localStorage.setItem('usuario', JSON.stringify(usuario));
