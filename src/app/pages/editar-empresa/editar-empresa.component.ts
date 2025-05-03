@@ -10,7 +10,6 @@ import Swal from 'sweetalert2'
   standalone: true,
   imports: [FormsModule],
   templateUrl: './editar-empresa.component.html',
-  styleUrls: ['./editar-empresa.component.css']
 })
 export class EditarEmpresaComponent implements OnInit {
   empresa: Iempresa = {

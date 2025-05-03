@@ -18,7 +18,6 @@ import { UsuariosListComponent } from './pages/usuarios-list/usuarios-list.compo
 import { AdministradoresListComponent } from './pages/administradores-list/administradores-list.component';
 import { AdministradorDetalleComponent } from './pages/administrador-detalle/administrador-detalle.component';
 import { MisVacantesComponent } from './pages/mis-vacantes/mis-vacantes.component';
-import { FormEmpresaComponent } from './pages/form-empresa/form-empresa.component';
 import { MisSolicitudesComponent } from './pages/mis-solicitudes/mis-solicitudes.component';
 
 export const routes: Routes = [
