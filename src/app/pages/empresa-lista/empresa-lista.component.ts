@@ -1,9 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { EmpresaService } from '../../services/empresa.service';
-import { FormEmpresaComponent } from '../form-empresa/form-empresa.component';
 import { Router, RouterLink } from '@angular/router';
 import { Iempresa } from '../../interfaces/iempresa';
-import { IUsuario } from '../../interfaces/iusuario';
+import Swal from 'sweetalert2'
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
 import { AltaEmpresaComponent } from "../alta-empresa/alta-empresa.component";
@@ -26,6 +25,19 @@ export class EmpresaListaComponent {
   showForm: boolean = false;
   empresaSeleccionada: Iempresa | null = null;
   rol: string = '';
+
+
+  toast = Swal.mixin({
+    toast: true,
+    position: "top-end",
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.onmouseenter = Swal.stopTimer;
+      toast.onmouseleave = Swal.resumeTimer;
+    }
+  });
 
   constructor() {
     this.array = [];
@@ -55,25 +67,48 @@ export class EmpresaListaComponent {
   }
 
   eliminarEmpresa(id: number) {
-    if (confirm('¿Estás seguro de que deseas eliminar esta empresa? Esta acción no se puede deshacer.')) {
-      this.empresaService.borrar(id.toString()).subscribe({
-        next: () => {
-          this.array = this.array.filter(empresa => empresa.idEmpresa !== id);
-          console.log('Empresa eliminada correctamente');
-          alert('Empresa eliminada correctamente');
-        },
-        error: (error) => {
-          console.error('Error al eliminar la empresa:', error);
-          if (error.status === 404) {
-            alert('La empresa no existe o ya ha sido eliminada');
-          } else if (error.status === 409) {
-            alert('No se puede eliminar la empresa porque tiene vacantes asociadas');
-          } else {
-            alert('Error al eliminar la empresa. Por favor, inténtelo de nuevo.');
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: 'Esta acción no se puede deshacer.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.empresaService.borrar(id.toString()).subscribe({
+          next: () => {
+            this.array = this.array.filter(empresa => empresa.idEmpresa !== id);
+            console.log('Empresa eliminada correctamente');
+            this.toast.fire({
+              icon: 'success',
+              title: 'Empresa eliminada correctamente'
+            });
+          },
+          error: (error) => {
+            console.error('Error al eliminar la empresa:', error);
+            if (error.status === 404) {
+              this.toast.fire({
+                icon: 'error',
+                title: 'La empresa no existe o ya ha sido eliminada'
+              });
+            } else if (error.status === 409) {
+              this.toast.fire({
+                icon: 'error',
+                title: 'No se puede eliminar la empresa porque tiene vacantes asociadas'
+              });
+            } else {
+              this.toast.fire({
+                icon: 'error',
+                title: 'Error al eliminar la empresa. Por favor, inténtelo de nuevo.'
+              });
+            }
           }
-        }
-      });
-    }
+        });
+      }
+    });
   }
 
   verDetalles(id: number) {
@@ -111,10 +146,17 @@ export class EmpresaListaComponent {
           }
           this.resetForm();
           console.log('Empresa actualizada correctamente');
+          this.toast.fire({
+            icon: 'success',
+            title: 'Empresa actualizada correctamente'
+          });
         },
         error: (error) => {
           console.error('Error al modificar la empresa:', error);
-          alert('Error al modificar la empresa. Por favor, inténtelo de nuevo.');
+          this.toast.fire({
+            icon: 'error',
+            title: 'Error al modificar la empresa. Por favor, inténtelo de nuevo.'
+          });
         }
       });
     } else {
@@ -123,16 +165,27 @@ export class EmpresaListaComponent {
         next: (response) => {
           this.array.push(response.empresa); // si el backend responde con {empresa, password}
           this.resetForm();
-          console.log('Empresa creada correctamente');
+          console.log(response);
+            Swal.fire({
+              icon: 'success',
+              title: 'Empresa creada correctamente',
+              html: `Usuario:  <strong> ${response.usuarioEmail}</strong><br>Contraseña : <strong> ${response.passwordGenerada}</strong>`
+            });
+          
+
         },
         error: (error) => {
           console.error('Error al crear la empresa:', error);
+          this.toast.fire({
+            icon: 'error',
+            title: 'Error al crear la empresa. Por favor, inténtelo de nuevo.'
+          });
           // el catchError del servicio ya muestra alerta
         }
       });
     }
   }
-  
+
   resetForm() {
     this.showForm = false;
     this.empresaSeleccionada = null;
@@ -141,5 +194,9 @@ export class EmpresaListaComponent {
   cancelarEdicion() {
     this.showForm = false;
     this.empresaSeleccionada = null;
+    this.toast.fire({
+      icon: 'info',
+      title: 'Edición cancelada'
+    });
   }
 }
