@@ -155,6 +155,14 @@ export class AdministradoresListComponent implements OnInit {
       this.usuarioService.nuevo(nuevoAdministrador).subscribe({
         next: () => {
           this.loadAdministradores();
+          this.administradorForm = { 
+            email: '',
+            password: '',
+            nombre: '',
+            apellidos: '',
+            rol: 'ADMON',
+            enabled: true
+          };
           this.toggleForm();
           this.toast.fire({ icon: 'success', title: 'Administrador creado correctamente' });
         },
