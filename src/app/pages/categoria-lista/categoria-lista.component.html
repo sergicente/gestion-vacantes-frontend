@@ -11,23 +11,15 @@
 
 <div class="container mx-auto px-4 py-8">
 
-  <div class="flex justify-between items-center mb-6">
+    <div class="flex justify-between items-center mb-6">
+      <h2 class="text-xl font-semibold text-gray-800">Gestión de categorías</h2>
+    </div>
 
-    <h1 class="text-3xl font-bold">Gestión de Categorías</h1>
-    @if (rol === 'ADMON') {
-    <button (click)="toggleForm()"
-      class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-      {{ showForm ? 'Cancelar' : 'Nueva Categoría' }}
-    </button>
-    }
-  </div>
 
-  <!-- Formulario de Categoría -->
-  @if (showForm && rol === 'ADMON') {
-  <div class="mb-8">
-    <div class="max-w-2xl mx-auto bg-white rounded-sm shadow-sm border border-gray-200 p-12">
+  <div class="mt-15 flex justify-center">
+    <div class="mw-full max-w-md bg-white rounded-sm shadow-sm border border-gray-200 p-12 space-y-6">
       <h2 class="text-2xl font-bold mb-6">
-        {{ categoriaSeleccionada.idCategoria !== 0 ? 'Editar Categoría' : 'Alta de Nueva Categoría' }}
+        {{ categoriaSeleccionada.idCategoria !== 0 ? 'Editar Categoría' : 'Nueva Categoría' }}
       </h2>
 
       <form (ngSubmit)="handleSubmit(categoriaSeleccionada || { idCategoria: 0, nombre: '', descripcion: '' })"
@@ -47,21 +39,24 @@
         </div>
 
         <div class="flex justify-end space-x-4 mt-6">
+          @if(categoriaSeleccionada.idCategoria !== 0){
+
           <button type="button" (click)="toggleForm()"
             class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300">
             Cancelar
           </button>
+                      
+        }
           <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
-            {{ categoriaSeleccionada ? 'Guardar Cambios' : 'Crear Categoría' }}
+            {{ categoriaSeleccionada.idCategoria !== 0  ? 'Guardar Cambios' : 'Crear Categoría' }}
           </button>
         </div>
       </form>
     </div>
   </div>
-  }@else {
 
   <!-- Lista de Categorías -->
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-20">
     @for (categoria of categorias; track categoria.idCategoria) {
     <div class="bg-white rounded-sm shadow-sm border border-gray-200 p-12">
       <h2 class="text-xl font-semibold mb-2">{{ categoria.nombre }}</h2>
@@ -82,5 +77,5 @@
     </div>
     }
   </div>
-  }
+  
 </div>

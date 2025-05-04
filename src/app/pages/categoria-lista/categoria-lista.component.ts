@@ -52,6 +52,7 @@ export class CategoriaListaComponent implements OnInit {
   editarCategoria(categoria: Icategoria) {
     this.categoriaSeleccionada = categoria;
     this.showForm = true;
+    this.categoriaSeleccionada
   }
 
   eliminarCategoria(id: number) {

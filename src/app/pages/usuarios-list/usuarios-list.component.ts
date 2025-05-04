@@ -25,10 +25,24 @@ export class UsuariosListComponent implements OnInit {
   loadUsuarios() {
     this.usuarioService.getAll().subscribe({
       next: (response) => {
-        this.usuarios = response;
+        this.usuarios = response.filter((user: any) => user.rol === 'CLIENTE');
+        // Habilitar administradores deshabilitados
+        this.usuarios.forEach(admin => {
+          if (!admin.enabled) {
+            this.usuarioService.habilitarUsuario(admin).subscribe({
+              next: () => {
+                admin.enabled = true;
+                console.log(`Administrador ${admin.email} habilitado`);
+              },
+              error: (error) => {
+                console.error(`Error al habilitar administrador ${admin.email}:`, error);
+              }
+            });
+          }
+        });
       },
       error: (error) => {
-        console.error('Error al cargar usuarios:', error);
+        console.error('Error al cargar administradores:', error);
       }
     });
   }
