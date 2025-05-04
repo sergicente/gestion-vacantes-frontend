@@ -46,11 +46,11 @@
 
     @if (empresaSeleccionada) {
     <button type="button" (click)="onCancelarEdicion.emit()"
-      class="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500 ml-2">
+      class="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500 ml-2 cursor-pointer">
       Cancelar edición
     </button>
     }
-    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+    <button type="submit" [disabled]="formularioInvalido()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-20 disabled:cursor-auto cursor-pointer">
       @if (empresaSeleccionada) {
       Actualizar Empresa
       } @else {

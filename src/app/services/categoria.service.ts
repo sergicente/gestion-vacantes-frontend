@@ -51,11 +51,8 @@ export class CategoriaService {
         return this.http.delete<any>(`${this.baseUrl}/${id}`).pipe(
             catchError((error) => {
                 if (error.status === 404) {
-                    alert('La categoría no existe o ya ha sido eliminada');
                 } else if (error.status === 409) {
-                    alert('No se puede eliminar la categoría porque tiene vacantes asociadas');
                 } else {
-                    alert('Error al eliminar la categoría');
                 }
                 return throwError(error);
             })

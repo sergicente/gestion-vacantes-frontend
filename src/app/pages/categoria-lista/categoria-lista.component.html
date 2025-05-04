@@ -47,7 +47,10 @@
           </button>
                       
         }
-          <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+        <button 
+  type="submit" 
+  [disabled]="!categoriaSeleccionada.nombre || !categoriaSeleccionada.descripcion"
+  class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-20 disabled:cursor-auto">
             {{ categoriaSeleccionada.idCategoria !== 0  ? 'Guardar Cambios' : 'Crear Categoría' }}
           </button>
         </div>

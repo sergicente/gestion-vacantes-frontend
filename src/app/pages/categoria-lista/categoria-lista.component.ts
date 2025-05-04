@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { Icategoria } from '../../interfaces/icategoria';
 import { FormsModule } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-categoria-lista',
@@ -22,6 +23,14 @@ export class CategoriaListaComponent implements OnInit {
     nombre: '',
     descripcion: ''
   };
+
+  toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true
+  });
 
   categoriaService = inject(CategoriaService);
   router = inject(Router);
@@ -41,33 +50,67 @@ export class CategoriaListaComponent implements OnInit {
   toggleForm() {
     this.showForm = !this.showForm;
     if (!this.showForm) {
-      this.categoriaSeleccionada = {
-        idCategoria: 0,
-        nombre: '',
-        descripcion: ''
-      };
+      this.resetFormularioCategoria();
     }
+  }
+
+  resetFormularioCategoria() {
+    this.categoriaSeleccionada = {
+      idCategoria: 0,
+      nombre: '',
+      descripcion: ''
+    };
   }
 
   editarCategoria(categoria: Icategoria) {
-    this.categoriaSeleccionada = categoria;
+    this.categoriaSeleccionada = { ...categoria }; // ← clonado por spread
     this.showForm = true;
-    this.categoriaSeleccionada
   }
 
   eliminarCategoria(id: number) {
-    if (confirm('¿Estás seguro de que deseas eliminar esta categoría? Esta acción no se puede deshacer.')) {
-      this.categoriaService.borrar(id.toString()).subscribe({
-        next: () => {
-          this.categorias = this.categorias.filter(cat => cat.idCategoria !== id);
-          console.log('Categoría eliminada correctamente');
-          alert('Categoría eliminada correctamente');
-        },
-        error: (error) => {
-          console.error('Error al eliminar la categoría:', error);
-        }
-      });
-    }
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: 'Esta acción no se puede deshacer.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.categoriaService.borrar(id.toString()).subscribe({
+          next: () => {
+            this.categorias = this.categorias.filter(cat => cat.idCategoria !== id);
+            this.toast.fire({
+              icon: 'success',
+              title: 'Categoría borrada correctamente'
+            });
+          },
+          error: (error) => {
+            console.error('Error al eliminar la categoría:', error);
+            if (error.status === 409) {
+              this.toast.fire({
+                icon: 'error',
+                title: 'No se puede eliminar',
+                text: 'Esta categoría tiene vacantes asociadas.'
+              });
+            } else if (error.status === 404) {
+              this.toast.fire({
+                icon: 'error',
+                title: 'No encontrada',
+                text: 'La categoría no existe o ya ha sido eliminada.'
+              });
+            } else {
+              this.toast.fire({
+                icon: 'error',
+                title: 'Error al eliminar la categoría'
+              });
+            }
+          }
+        });
+      }
+    });
   }
 
   handleSubmit(categoria: Icategoria) {
@@ -80,6 +123,11 @@ export class CategoriaListaComponent implements OnInit {
             this.categorias[index] = { ...this.categorias[index], ...categoria };
           }
           this.toggleForm();
+          this.resetFormularioCategoria();
+          this.toast.fire({
+            icon: 'success',
+            title: 'Categoría actualizada correctamente'
+          });
           console.log('Categoría actualizada correctamente');
         },
         error: (error) => {
@@ -92,6 +140,11 @@ export class CategoriaListaComponent implements OnInit {
         next: (response) => {
           this.categorias.push(response);
           this.toggleForm();
+          this.resetFormularioCategoria();
+          this.toast.fire({
+            icon: 'success',
+            title: 'Categoría creada correctamente'
+          });
           console.log('Categoría creada correctamente');
         },
         error: (error) => {
@@ -100,4 +153,4 @@ export class CategoriaListaComponent implements OnInit {
       });
     }
   }
-} 
+}

@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import Swal from 'sweetalert2';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Iempresa } from '../../interfaces/iempresa';
 
@@ -39,8 +40,30 @@ export class AltaEmpresaComponent implements OnChanges {
     }
   }
 
+  resetFormulario() {
+    this.empresa = {
+      idEmpresa: 0,
+      cif: '',
+      nombreEmpresa: '',
+      direccionFiscal: '',
+      pais: '',
+      email: ''
+    };
+  }
+
+  formularioInvalido(): boolean {
+    const { cif, nombreEmpresa, direccionFiscal, pais, email } = this.empresa;
+    return !cif || !nombreEmpresa || !direccionFiscal || !pais || !email;
+  }
+
   onSubmit(): void {
     this.onSubmitForm.emit(this.empresa);
     this.passwordGenerada = null;
+  
+    if (!this.empresaSeleccionada) {
+      this.resetFormulario();
+    }
   }
+
+  
 }
