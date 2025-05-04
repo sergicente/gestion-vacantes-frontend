@@ -12,6 +12,9 @@ import Swal from 'sweetalert2'
   styleUrl: './card-vacante-empresa.component.css'
 })
 export class CardVacanteEmpresaComponent {
+editarVacante(arg0: any) {
+throw new Error('Method not implemented.');
+}
 
   @Input() item!: any;
   fechaService = inject(FechaService);
