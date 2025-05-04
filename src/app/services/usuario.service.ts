@@ -28,7 +28,7 @@ export class UsuarioService {
   }
 
   modificar(id: string, item: any): Observable<any> {
-    return this.http.put<any>(`${this.baseUrl}/modificar`, item).pipe(
+    return this.http.put<any>(`${this.baseUrl}/modificar/${id}`, item).pipe(
       catchError((error) => {
         if (error.status === 400) {
           alert('Error: El ID en la URL y en el body no coinciden.');

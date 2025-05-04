@@ -46,10 +46,12 @@
         </div>
 
         <div>
-          <label for="password" class="block text-sm font-medium text-gray-700">Contraseña</label>
-          <input type="password" id="password" name="password" [(ngModel)]="administradorForm.password"
+          <label for="password" class="block text-sm font-medium text-gray-700">
+            Contraseña
+            <span *ngIf="administradorSeleccionado">(opcional)</span>
+          </label>          <input type="password" id="password" name="password" [(ngModel)]="administradorForm.password"
             class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
-            required>
+            [required]="!administradorSeleccionado">
         </div>
 
         <div class="flex justify-end space-x-4 mt-6">
