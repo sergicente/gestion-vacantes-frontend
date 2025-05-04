@@ -1,16 +1,17 @@
-<div class="p-6 max-w-6xl mx-auto">
+<div class="p-6 max-w-7xl mx-auto">
   <h2 class="text-2xl font-semibold mb-4 text-gray-800">📩 Solicitudes Recibidas</h2>
 
   <div *ngIf="solicitudes.length === 0" class="text-blue-700 bg-blue-100 p-4 rounded shadow">
     No hay solicitudes registradas para esta empresa.
   </div>
 
-  <div *ngIf="solicitudes.length > 0" class="overflow-x-auto">
-    <table class="min-w-full bg-white shadow rounded border border-gray-200">
+  <div *ngIf="solicitudes.length > 0" class="w-full">
+    <table class="w-full bg-white shadow rounded border border-gray-200">
       <thead class="bg-gray-100 text-gray-700 text-sm">
         <tr>
           <th class="py-2 px-4 text-left">👤 Nombre</th>
           <th class="py-2 px-4 text-left">📅 Fecha</th>
+          <th class="py-2 px-4 text-left">💼 Vacante</th>
           <th class="py-2 px-4 text-left">📎 Archivo</th>
           <th class="py-2 px-4 text-left">📝 Comentarios</th>
           <th class="py-2 px-4 text-left">📄 CV</th>
@@ -23,6 +24,7 @@
         <tr *ngFor="let solicitud of solicitudes" class="border-t border-gray-200 hover:bg-gray-50">
           <td class="py-2 px-4">{{ solicitud.nombreUsuario }}</td>
           <td class="py-2 px-4">{{ solicitud.fecha }}</td>
+          <td class="py-2 px-4">{{ solicitud.nombreVacante }}</td>
           <td class="py-2 px-4">{{ solicitud.archivo }}</td>
           <td class="py-2 px-4">{{ solicitud.comentarios }}</td>
           <td class="py-2 px-4">
@@ -32,30 +34,31 @@
           </td>
           <td class="py-2 px-4">
             <span
-              class="text-xs font-medium px-2 py-1 rounded-full"
-              [ngClass]="{
-                'bg-green-100 text-green-800': solicitud.estado === 1,
-                'bg-yellow-100 text-yellow-800': solicitud.estado === 0,
-                'bg-red-100 text-red-800': solicitud.estado === 2
-              }"
-            >
-              {{
-                solicitud.estado === 1 ? 'Aceptada' :
-                solicitud.estado === 2 ? 'Cancelada' :
-                'Pendiente'
-              }}
-            </span>
+  class="text-xs font-medium px-2 py-1 rounded-full"
+  [ngClass]="{
+    'bg-green-100 text-green-800': solicitud.estado === 1,
+    'bg-yellow-100 text-yellow-800': solicitud.estado === 0,
+    'bg-red-100 text-red-800': solicitud.estado === 2
+  }"
+>
+  {{
+    solicitud.estado === 1 ? 'Adjudicada' :
+    solicitud.estado === 2 ? 'Cancelada' :
+    'Pendiente'
+  }}
+</span>
+
           </td>
           <td class="py-2 px-4">{{ solicitud.email || solicitud.emailUsuario }}</td>
           <td class="py-2 px-4">
             <button 
-              class="bg-green-500 hover:bg-green-600 text-white text-sm px-3 py-1 rounded disabled:opacity-50"
-              (click)="aceptarSolicitud(solicitud.idSolicitud)"
-              [disabled]="solicitud.estado !== 0">
-              Aceptar
-            </button>
-          </td>
+            class="bg-green-500 hover:bg-green-600 text-white text-sm px-3 py-1 rounded disabled:opacity-50"
+            (click)="aceptarSolicitud(solicitud.idSolicitud, solicitud.idVacante)"
+            [disabled]="solicitud.estado !== 0">
+            Aceptar
+          </button>
           
+          </td>
         </tr>
       </tbody>
     </table>

@@ -5,9 +5,9 @@
 
     <div>
       <label class="block text-sm font-medium text-gray-700">CIF</label>
-      <input [(ngModel)]="empresa.cif" name="cif" type="text"
-        class="mt-1 block w-full rounded-xl border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500"
-        required>
+      <input type="text" id="cif" name="cif" [(ngModel)]="empresa.cif"
+       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-gray-100 text-gray-600 cursor-not-allowed select-none pointer-events-none"
+       readonly disabled>
     </div>
 
     <div>
@@ -31,8 +31,9 @@
 
     <div>
       <label class="block text-sm font-medium text-gray-700">Email</label>
-      <input [(ngModel)]="empresa.email" name="email" type="email"
-        class="mt-1 block w-full rounded-xl border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500">
+      <input type="email" id="emailEmpresa" name="emailEmpresa" [(ngModel)]="empresa.email"
+       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-gray-100 text-gray-600 cursor-not-allowed select-none pointer-events-none"
+       readonly disabled>
     </div>
 
     <div class="text-center">

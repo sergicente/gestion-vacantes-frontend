@@ -13,4 +13,5 @@ export interface Ivacante {
     imagen: string;
     idCategoria: number;
     idEmpresa: number;
+
 }

@@ -44,4 +44,5 @@ export class DashboardComponent {
     localStorage.removeItem('usuario');
     this.router.navigate(['/login']);
   }
+  
 }

@@ -52,13 +52,12 @@ export class FormLoginComponent {
 
       // Guardamos el usuario en localStorage
       localStorage.setItem('usuario', JSON.stringify(usuario));
-      const empresaId = usuario.idEmpresa?.toString();
-
-      if (empresaId) {
-        localStorage.setItem('empresaId', empresaId);
+      if (usuario.rol !== 'ADMON' && usuario.idEmpresa) {
+        localStorage.setItem('empresaId', usuario.idEmpresa.toString());
       } else {
-        console.warn('⚠️ No se pudo obtener el idEmpresa del usuario');
+        console.warn('ℹ️ Usuario sin idEmpresa o rol ADMON, no se guarda empresaId');
       }
+      
 
       loginForm.reset();
       this.router.navigate(['/dashboard']);
