@@ -1,7 +1,5 @@
-import { Component } from '@angular/core';
-import { EmpresaService } from '../../services/empresa.service';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
 import { Iempresa } from '../../interfaces/iempresa';
 
 @Component({
@@ -10,31 +8,39 @@ import { Iempresa } from '../../interfaces/iempresa';
   templateUrl: './alta-empresa.component.html',
   styleUrl: './alta-empresa.component.css'
 })
-export class AltaEmpresaComponent {
-[x: string]: any;
-  empresa = {
+export class AltaEmpresaComponent implements OnChanges {
+  @Input() empresaSeleccionada: Iempresa | null = null;
+  @Output() onSubmitForm = new EventEmitter<Iempresa>();
+  @Output() onCancelarEdicion = new EventEmitter<void>();
+
+  empresa: Iempresa = {
+    idEmpresa: 0,
     cif: '',
     nombreEmpresa: '',
     direccionFiscal: '',
     pais: '',
     email: ''
   };
-  passwordGenerada: string | null = null;
-  
- 
-  constructor(private empresaService: EmpresaService) {}
 
-  // Método para enviar la solicitud y crear la empresa
+  passwordGenerada: string | null = null;
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['empresaSeleccionada'] && this.empresaSeleccionada) {
+      this.empresa = { ...this.empresaSeleccionada };
+    } else {
+      this.empresa = {
+        idEmpresa: 0,
+        cif: '',
+        nombreEmpresa: '',
+        direccionFiscal: '',
+        pais: '',
+        email: ''
+      };
+    }
+  }
+
   onSubmit(): void {
-    this.empresaService.crearEmpresaConUsuario(this.empresa).subscribe(
-      response => {
-        console.log('Empresa creada:', response);
-        this.passwordGenerada = response.password;  // Asumiendo que el backend responde con un campo 'password'
-      },
-      error => {
-        console.error('Error al crear la empresa:', error);
-        alert('Hubo un error al crear la empresa. Por favor, inténtelo de nuevo.');
-      }
-    );
+    this.onSubmitForm.emit(this.empresa);
+    this.passwordGenerada = null;
   }
 }

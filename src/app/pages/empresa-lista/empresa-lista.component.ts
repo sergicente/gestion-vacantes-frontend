@@ -6,16 +6,19 @@ import { Iempresa } from '../../interfaces/iempresa';
 import { IUsuario } from '../../interfaces/iusuario';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
+import { AltaEmpresaComponent } from "../alta-empresa/alta-empresa.component";
+import { UsuarioService } from '../../services/usuario.service';
 
 @Component({
   selector: 'app-empresa-lista',
   standalone: true,
-  imports: [CommonModule, FormEmpresaComponent, RouterLink],
+  imports: [CommonModule, RouterLink, AltaEmpresaComponent],
   templateUrl: './empresa-lista.component.html',
   styleUrl: './empresa-lista.component.css'
 })
 export class EmpresaListaComponent {
-  service = inject(EmpresaService);
+  empresaService = inject(EmpresaService);
+  usuarioService = inject(UsuarioService);
   router = inject(Router);
   authService = inject(AuthService);
 
@@ -34,7 +37,7 @@ export class EmpresaListaComponent {
   }
 
   loadEmpresas() {
-    this.service.getAll().subscribe((response) => {
+    this.empresaService.getAll().subscribe((response) => {
       this.array = response;
     });
   }
@@ -47,12 +50,13 @@ export class EmpresaListaComponent {
   }
 
   editarEmpresa(empresa: Iempresa) {
-    this.router.navigate(['/empresas', empresa.idEmpresa, 'editar']);
+    this.empresaSeleccionada = empresa;
+    this.showForm = true;
   }
 
   eliminarEmpresa(id: number) {
     if (confirm('¿Estás seguro de que deseas eliminar esta empresa? Esta acción no se puede deshacer.')) {
-      this.service.borrar(id.toString()).subscribe({
+      this.empresaService.borrar(id.toString()).subscribe({
         next: () => {
           this.array = this.array.filter(empresa => empresa.idEmpresa !== id);
           console.log('Empresa eliminada correctamente');
@@ -96,16 +100,16 @@ export class EmpresaListaComponent {
     console.log('Modificando datos de la empresa:', empresaId);
   }
 
-  handleSubmit(data: { empresa: Iempresa, usuario: IUsuario }) {
+  handleSubmit(empresa: Iempresa) {
     if (this.empresaSeleccionada) {
-      // Modificar empresa existente
-      this.service.modificar(this.empresaSeleccionada.idEmpresa.toString(), data.empresa).subscribe({
-        next: (response) => {
+      // EDITAR empresa existente
+      this.empresaService.modificar(this.empresaSeleccionada.idEmpresa.toString(), empresa).subscribe({
+        next: () => {
           const index = this.array.findIndex(e => e.idEmpresa === this.empresaSeleccionada?.idEmpresa);
           if (index !== -1) {
-            this.array[index] = { ...this.array[index], ...data.empresa };
+            this.array[index] = { ...this.array[index], ...empresa };
           }
-          this.toggleForm();
+          this.resetForm();
           console.log('Empresa actualizada correctamente');
         },
         error: (error) => {
@@ -114,18 +118,28 @@ export class EmpresaListaComponent {
         }
       });
     } else {
-      // Crear nueva empresa
-      this.service.nuevo(data).subscribe({
+      // CREAR empresa nueva
+      this.empresaService.crearEmpresaConUsuario(empresa).subscribe({
         next: (response) => {
-          this.array.push(response);
-          this.toggleForm();
+          this.array.push(response.empresa); // si el backend responde con {empresa, password}
+          this.resetForm();
           console.log('Empresa creada correctamente');
         },
         error: (error) => {
           console.error('Error al crear la empresa:', error);
-          alert('Error al crear la empresa. Por favor, inténtelo de nuevo.');
+          // el catchError del servicio ya muestra alerta
         }
       });
     }
+  }
+  
+  resetForm() {
+    this.showForm = false;
+    this.empresaSeleccionada = null;
+  }
+
+  cancelarEdicion() {
+    this.showForm = false;
+    this.empresaSeleccionada = null;
   }
 }

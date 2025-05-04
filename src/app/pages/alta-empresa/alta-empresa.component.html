@@ -1,39 +1,57 @@
-
 <div class="max-w-lg mx-auto bg-white rounded-sm shadow-sm border border-gray-200 p-12 mt-15">
-  <h2 class="text-2xl font-bold mb-4">Registrar Empresa</h2>
+  <h2 class="text-2xl font-bold mb-4">
+    @if (empresaSeleccionada) {
+    Editar Empresa
+    } @else {
+    Registrar Empresa
+    }
+  </h2>
 
   <form (ngSubmit)="onSubmit()" #empresaForm="ngForm" class="space-y-4">
     <div>
       <label for="cif" class="block font-medium mb-1">CIF</label>
-      <input type="text" id="cif" [(ngModel)]="empresa.cif" name="cif" required class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-sm focus:outline-none focus:ring-2 focus:ring-blue-600" />
+      <input type="text" id="cif" [(ngModel)]="empresa.cif" name="cif" required
+        class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-sm focus:outline-none focus:ring-2 focus:ring-blue-600" />
     </div>
     <div>
       <label for="nombreEmpresa" class="block font-medium mb-1">Nombre de la Empresa</label>
-      <input type="text" id="nombreEmpresa" [(ngModel)]="empresa.nombreEmpresa" name="nombreEmpresa" required class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-sm focus:outline-none focus:ring-2 focus:ring-blue-600" />
+      <input type="text" id="nombreEmpresa" [(ngModel)]="empresa.nombreEmpresa" name="nombreEmpresa" required
+        class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-sm focus:outline-none focus:ring-2 focus:ring-blue-600" />
     </div>
     <div>
       <label for="direccionFiscal" class="block font-medium mb-1">Dirección Fiscal</label>
-      <input type="text" id="direccionFiscal" [(ngModel)]="empresa.direccionFiscal" name="direccionFiscal" required class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-sm focus:outline-none focus:ring-2 focus:ring-blue-600" />
+      <input type="text" id="direccionFiscal" [(ngModel)]="empresa.direccionFiscal" name="direccionFiscal" required
+        class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-sm focus:outline-none focus:ring-2 focus:ring-blue-600" />
     </div>
     <div>
       <label for="pais" class="block font-medium mb-1">País</label>
-      <input type="text" id="pais" [(ngModel)]="empresa.pais" name="pais" required class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-sm focus:outline-none focus:ring-2 focus:ring-blue-600" />
+      <input type="text" id="pais" [(ngModel)]="empresa.pais" name="pais" required
+        class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-sm focus:outline-none focus:ring-2 focus:ring-blue-600" />
     </div>
     <div>
       <label for="email" class="block font-medium mb-1">Email</label>
-      <input type="email" id="email" [(ngModel)]="empresa.email" name="email" required class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-sm focus:outline-none focus:ring-2 focus:ring-blue-600" />
+      <input type="email" id="email" [(ngModel)]="empresa.email" name="email" required
+        class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-sm focus:outline-none focus:ring-2 focus:ring-blue-600" />
     </div>
 
-    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-      Crear Empresa
+    @if (empresaSeleccionada) {
+    <button type="button" (click)="onCancelarEdicion.emit()"
+      class="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500 ml-2">
+      Cancelar edición
     </button>
+    }
+    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 ms-5">
+      @if (empresaSeleccionada) {
+      Actualizar Empresa
+      } @else {
+      Crear Empresa
+      }
+    </button>
+
   </form>
-   @if(passwordGenerada){
-  <div  class="mt-4 text-green-600 font-semibold">
+  @if(passwordGenerada){
+  <div class="mt-4 text-green-600 font-semibold">
     <h3>La contraseña generada es: {{ passwordGenerada }}</h3>
   </div>
-}
+  }
 </div>
-
-  
-  

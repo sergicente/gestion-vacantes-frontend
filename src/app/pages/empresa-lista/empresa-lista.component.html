@@ -1,33 +1,31 @@
+<!-- Volver -->
+<a href="/dashboard" class="mb-5 flex text-blue-500 items-center gap-2">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+    class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-left">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+    <path d="M15 6l-6 6l6 6" />
+  </svg>
+  Volver al Dashboard
+</a>
+
 <div class="container mx-auto px-4 py-8">
+
     <div class="flex justify-between items-center mb-6">
-    <h1 class="text-3xl font-bold">Listado de Empresas</h1>
-    @if (rol === 'ADMON') {
-      <button [routerLink]="['/empresas/nueva']"
-      class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-{{ showForm ? 'Cancelar' : 'Nueva Empresa' }}
-</button>
-    }
-  </div>
+      <h2 class="text-xl font-semibold text-gray-800">Gestión de empresas</h2>
+    </div>
 
   <!-- Formulario de Empresa -->
-  @if (showForm && rol === 'ADMON') {
     <div class="mb-8">
-      <app-form-empresa 
-        [empresa]="empresaSeleccionada || {
-          idEmpresa: 0,
-          cif: '',
-          nombreEmpresa: '',
-          pais: '',
-          email: '',
-          direccionFiscal: ''
-        }"
-        (onSubmit)="handleSubmit($event)">
-      </app-form-empresa>
-    </div>
-  }
+      <app-alta-empresa 
+      [empresaSeleccionada]="empresaSeleccionada" 
+      (onSubmitForm)="handleSubmit($event)"
+      (onCancelarEdicion)="cancelarEdicion()">
+    </app-alta-empresa>   </div>
+  
 
   <!-- Lista de Empresas -->
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-20">
     @for (empresa of array; track empresa.idEmpresa) {
       <div class="bg-white rounded-sm shadow-sm border border-gray-200 p-12 ">
         <h2 class="text-xl font-semibold mb-2">{{ empresa.nombreEmpresa }}</h2>
