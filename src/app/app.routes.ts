@@ -28,7 +28,7 @@ export const routes: Routes = [
   { path: 'empresas', component: EmpresaListaComponent },
   { path: 'empresa/:id', component: EmpresaListaVacantesComponent },
   { path: 'perfil', component: EmpresaEditarComponent},
-  { path: 'solicitudes', component: EmpresaSolicitudesComponent },
+  { path: 'solicitudes', component: MisSolicitudesComponent },
   { path: 'empresas/:id/editar', component: EditarEmpresaComponent },
   { path: 'login', component: FormLoginComponent },
   { path: 'register', component: FormRegisterComponent },
@@ -39,13 +39,8 @@ export const routes: Routes = [
   { path: 'formulario', component: FormComponent },
   { path: 'actualizarOferta', component: FormComponent },
   { path: 'dashboard', component: DashboardComponent },
-
-  { path: '**', component: Pagina404Component },
-
-
-
   { path: 'aplicar/:id', component: FormAplicarVacanteComponent },
-  { path: 'solicitudes', component: MisSolicitudesComponent },
+  { path: 'solicitudes/empresa', component: EmpresaSolicitudesComponent },
   { path: 'perfil', component: FormRegisterComponent },
   { path: 'empresas/nueva', component: AltaEmpresaComponent},
   { path: 'dashboard-categorias', component: DashboardCategoriasComponent },
@@ -54,7 +49,6 @@ export const routes: Routes = [
   { path: 'administradores', component: AdministradoresListComponent },
   { path: 'administrador/:email', component: AdministradorDetalleComponent },
   { path: '**', component: Pagina404Component },
-  { path: "**", redirectTo: "home" }
 
   // {path:"vacante/:id", component: ViewComponent},
   // {path:"actualizar/:id", component: },

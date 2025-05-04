@@ -1,127 +1,58 @@
 <section class="max-w-3xl mx-auto p-4">
-    <h3 class="text-2xl font-bold mb-4">{{ tipo }} vacante</h3>
-    <hr class="mb-6" />
-  
-    <form
-      class="bg-white shadow-md rounded-lg p-6 space-y-4"
-      [formGroup]="form"
-      (ngSubmit)="submitVacante()"
-    >
-      <!-- Campo oculto ID -->
-      <div class="hidden">
-        <label for="idVacante" class="block text-sm font-medium text-gray-700">ID:</label>
-        <input
-          type="text"
-          id="idVacante"
-          class="w-full rounded-md border-gray-300 shadow-sm focus:ring focus:ring-blue-200"
-          formControlName="idVacante"
-        />
-      </div>
-  
-      <div>
-        <label for="nombre" class="block text-sm font-medium text-gray-700">Nombre:</label>
-        <input
-          type="text"
-          id="nombre"
-          class="w-full rounded-md border-gray-300 shadow-sm focus:ring focus:ring-blue-200"
-          formControlName="nombre"
-        />
-      </div>
-  
-      <div>
-        <label for="descripcion" class="block text-sm font-medium text-gray-700">Descripción:</label>
-        <input
-          type="text"
-          id="descripcion"
-          class="w-full rounded-md border-gray-300 shadow-sm focus:ring focus:ring-blue-200"
-          formControlName="descripcion"
-        />
-      </div>
-  
-      <div>
-        <label for="fecha" class="block text-sm font-medium text-gray-700">Fecha:</label>
-        <input
-          type="date"
-          id="fecha"
-          class="w-full rounded-md border-gray-300 shadow-sm focus:ring focus:ring-blue-200"
-          formControlName="fecha"
-        />
-      </div>
-  
-      <div>
-        <label for="salario" class="block text-sm font-medium text-gray-700">Salario:</label>
-        <input
-          type="text"
-          id="salario"
-          class="w-full rounded-md border-gray-300 shadow-sm focus:ring focus:ring-blue-200"
-          formControlName="salario"
-        />
-      </div>
-  
-      <div>
-        <label for="detalles" class="block text-sm font-medium text-gray-700">Detalles:</label>
-        <input
-          type="text"
-          id="detalles"
-          class="w-full rounded-md border-gray-300 shadow-sm focus:ring focus:ring-blue-200"
-          formControlName="detalles"
-        />
-      </div>
-  
-      <div>
-        <label for="destacado" class="block text-sm font-medium text-gray-700">Destacado:</label>
-        <input
-          type="text"
-          id="destacado"
-          class="w-full rounded-md border-gray-300 shadow-sm focus:ring focus:ring-blue-200"
-          formControlName="destacado"
-        />
-      </div>
-  
-      <div>
-        <label for="idCategoria" class="block text-sm font-medium text-gray-700">Categoría:</label>
-        <select
-          id="idCategoria"
-          class="w-full rounded-md border-gray-300 shadow-sm focus:ring focus:ring-blue-200"
-          formControlName="idCategoria"
-        >
-          <option value="">Seleccione una categoría</option>
-          <option *ngFor="let cat of arrCategorias" [value]="cat.idCategoria">{{ cat.nombre }}</option>
-        </select>
-      </div>
-  
-      <div>
-        <label for="idEmpresa" class="block text-sm font-medium text-gray-700">Empresa:</label>
-        <select
-          id="idEmpresa"
-          class="w-full rounded-md border-gray-300 shadow-sm focus:ring focus:ring-blue-200"
-          formControlName="idEmpresa"
-        >
-          <option value="">Seleccione una empresa</option>
-          <option *ngFor="let emp of arrEmpresa" [value]="emp.idEmpresa">{{ emp.nombreEmpresa }}</option>
-        </select>
-      </div>
-  
-      <div>
-        <label for="imagen" class="block text-sm font-medium text-gray-700">Imagen:</label>
-        <input
-          type="file"
-          id="imagen"
-          class="w-full rounded-md border-gray-300 shadow-sm focus:ring focus:ring-blue-200"
-          (change)="onFileChange($event)"
+  <h3 class="text-2xl font-bold mb-4">{{ tipo }} vacante</h3>
+  <hr class="mb-6" />
 
-          formControlName="imagen"
-          accept="image/*"
-        />
-      </div>
-  
-      <div class="flex justify-end">
-        <button
-          type="submit"
-          class="bg-red-600 hover:bg-red-700 text-white font-semibold px-6 py-2 rounded-md transition"        >
-          {{ tipo }}
-        </button>
-      </div>
-    </form>
-  </section>
-  
+  <form [formGroup]="form" (ngSubmit)="submitVacante()" class="bg-white shadow-md rounded-lg p-6 space-y-4">
+    <input type="hidden" formControlName="idVacante" />
+    <input type="hidden" formControlName="idEmpresa" />
+
+    <div>
+      <label for="nombre" class="block text-sm font-medium text-gray-700">Nombre:</label>
+      <input id="nombre" type="text" formControlName="nombre" class="w-full rounded-md border-gray-300 shadow-sm" />
+    </div>
+
+    <div>
+      <label for="descripcion" class="block text-sm font-medium text-gray-700">Descripción:</label>
+      <input id="descripcion" type="text" formControlName="descripcion" class="w-full rounded-md border-gray-300 shadow-sm" />
+    </div>
+
+    <div>
+      <label for="fecha" class="block text-sm font-medium text-gray-700">Fecha (automática):</label>
+      <input id="fecha" type="date" formControlName="fecha" class="w-full rounded-md border-gray-300 shadow-sm" [disabled]="true" />
+    </div>
+
+    <div>
+      <label for="salario" class="block text-sm font-medium text-gray-700">Salario:</label>
+      <input id="salario" type="number" formControlName="salario" class="w-full rounded-md border-gray-300 shadow-sm" />
+    </div>
+
+    <div>
+      <label for="detalles" class="block text-sm font-medium text-gray-700">Detalles:</label>
+      <input id="detalles" type="text" formControlName="detalles" class="w-full rounded-md border-gray-300 shadow-sm" />
+    </div>
+
+    <div>
+      <label for="destacado" class="block text-sm font-medium text-gray-700">¿Destacado?</label>
+      <input id="destacado" type="checkbox" formControlName="destacado" class="rounded text-blue-600" />
+    </div>
+
+    <div>
+      <label for="idCategoria" class="block text-sm font-medium text-gray-700">Categoría:</label>
+      <select id="idCategoria" formControlName="idCategoria" class="w-full rounded-md border-gray-300 shadow-sm">
+        <option [value]="null" disabled selected>Seleccione una categoría</option>
+        <option *ngFor="let cat of arrCategorias" [value]="cat.idCategoria">{{ cat.nombre }}</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="imagen" class="block text-sm font-medium text-gray-700">URL de la Imagen:</label>
+      <input id="imagen" type="text" formControlName="imagen" class="w-full rounded-md border-gray-300 shadow-sm" />
+    </div>
+
+    <div class="flex justify-end">
+      <button type="submit" class="bg-red-600 hover:bg-red-700 text-white font-semibold px-6 py-2 rounded-md transition">
+        {{ tipo }}
+      </button>
+    </div>
+  </form>
+</section>

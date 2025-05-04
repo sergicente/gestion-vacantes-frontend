@@ -10,5 +10,8 @@ emailUsuario: string;
     fecha: string;
     estado: number;
     idVacante: number;
+    nombreVacante: string;  // ✅ Este campo debe existir
+
+
   }
   

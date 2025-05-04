@@ -87,6 +87,6 @@ export class VacanteService {
   deleteById(id: number): Observable<any> {
     return this.http.delete(`${this.baseUrl}/${id}`);
   }
+}
   
 
-}

@@ -33,29 +33,26 @@ export class EmpresaSolicitudesComponent implements OnInit {
     }
   }
 
-  aceptarSolicitud(idSolicitud: number): void {
+  aceptarSolicitud(idSolicitud: number, idVacante: number): void {
     Swal.fire({
       title: '¿Aceptar esta solicitud?',
-      text: 'Esto asignará la vacante y cancelará el resto de solicitudes.',
+      text: 'Esto adjudicará la vacante y eliminará las demás solicitudes.',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Sí, aceptar',
       cancelButtonText: 'No'
     }).then(result => {
       if (result.isConfirmed) {
-        this.solicitudService.adjudicarSolicitud(idSolicitud).subscribe(() => {
+        this.solicitudService.asignarVacante(idVacante, idSolicitud).subscribe(() => {
           Swal.fire('✅ Vacante adjudicada', '', 'success');
-  
-          // 🔁 Cambia el estado en la lista local
+          this.solicitudes = this.solicitudes.filter(s => s.idVacante !== idVacante || s.idSolicitud === idSolicitud);
           this.solicitudes.forEach(solicitud => {
             if (solicitud.idSolicitud === idSolicitud) {
-              solicitud.estado = 1; // Aceptada
-            } else {
-              solicitud.estado = 2; // Cancelada
+              solicitud.estado = 1;
             }
           });
         });
       }
     });
   }
-}  
+}

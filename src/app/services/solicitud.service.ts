@@ -75,7 +75,12 @@ export class SolicitudService {
     return this.http.put(`${this.baseUrl}/aceptar/${idSolicitud}`, {});
   }
   
-  
+  asignarVacante(idSolicitud: number, idVacante: number) {
+    return this.http.post(
+      `http://localhost:9001/api/vacantes/${idVacante}/asignar/${idSolicitud}`,
+      {}
+    );
+  }
 
 
   
