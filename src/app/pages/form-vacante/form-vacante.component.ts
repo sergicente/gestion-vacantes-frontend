@@ -8,6 +8,7 @@ import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { CategoriaService } from '../../services/categoria.service';
 import { Icategoria } from '../../interfaces/icategoria';
 import { NgForOf } from '@angular/common';
+import Swal from 'sweetalert2'
 
 
 @Component({
@@ -28,32 +29,39 @@ export class FormVacanteComponent {
   tipo: string;
   arrCategorias: Icategoria[];
   arrEmpresa: Iempresa[];
-  empresa:any = {};
+  empresa: any = {};
   isNewObject: boolean = true;
+
+
+  toast = Swal.mixin({
+    toast: true,
+    position: "top-end",
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.onmouseenter = Swal.stopTimer;
+      toast.onmouseleave = Swal.resumeTimer;
+    }
+  });
 
   constructor() {
     this.arrCategorias = [];
-    
+
     this.categoriaService.getAll().subscribe((data: any) => {
-      console.log(data);
       this.arrCategorias = data;
     });
 
     this.arrEmpresa = [];
     this.empresaService.getAll().subscribe((data: any) => {
-      console.log(data);
       this.arrEmpresa = data;
-      
 
       const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
       const empresaUsuario = this.arrEmpresa.find((emp) => emp.email === usuario.email);
-      console.log(empresaUsuario);
 
       if (empresaUsuario) {
         this.form.get('idEmpresa')?.setValue(empresaUsuario.idEmpresa);
-        this.form.get('idEmpresa')?.disable();
       }
-
     });
 
     this.tipo = "Insertar";
@@ -63,7 +71,7 @@ export class FormVacanteComponent {
       descripcion: new FormControl(null, [Validators.required, Validators.minLength(3), Validators.maxLength(130)]),
       fecha: new FormControl(new Date().toISOString().split('T')[0], [Validators.required]),
       salario: new FormControl(null, [Validators.required]),
-      estado: new FormControl(null,),
+      estatus: new FormControl(null,),
       destacado: new FormControl('', [Validators.required]),
       detalles: new FormControl(null, [Validators.required, Validators.minLength(3), Validators.maxLength(130)]),
       imagen: new FormControl(null, [Validators.required, Validators.pattern(/(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z]{2,}(\.[a-zA-Z]{2,})(\.[a-zA-Z]{2,})?\/[a-zA-Z0-9]{2,}|((https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z]{2,}(\.[a-zA-Z]{2,})(\.[a-zA-Z]{2,})?)|(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}(\.[a-zA-Z0-9]{2,})?/)]),
@@ -74,45 +82,60 @@ export class FormVacanteComponent {
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(async (params: any) => {
-      console.log(params)
       if (params.id) {
         this.tipo = "Actualizar"
         this.vacanteService.getById(params.id).subscribe((response) => {
-          const vacanteResponse: Ivacante = response;
+          const vacanteResponse: any = response;
 
-          this.form = new FormGroup({
-            idVacante: new FormControl(vacanteResponse.idVacante, [Validators.required, Validators.minLength(3), Validators.maxLength(80)]),
-            nombre: new FormControl(vacanteResponse.nombre, [Validators.required]),
-            descripcion: new FormControl(vacanteResponse.descripcion, [Validators.required, Validators.minLength(3), Validators.maxLength(130)]),
-            fecha: new FormControl(vacanteResponse.fecha, [Validators.required]),
-            salario: new FormControl(vacanteResponse.salario, [Validators.required]),
-            estado: new FormControl(vacanteResponse.estado, [Validators.required]),
-            destacado: new FormControl(vacanteResponse.destacado, [Validators.required]),
-            detalles: new FormControl(vacanteResponse.detalles, [Validators.required, Validators.minLength(3), Validators.maxLength(130)]),
-            imagen: new FormControl(vacanteResponse.imagen, [Validators.required, Validators.pattern(/(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z]{2,}(\.[a-zA-Z]{2,})(\.[a-zA-Z]{2,})?\/[a-zA-Z0-9]{2,}|((https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z]{2,}(\.[a-zA-Z]{2,})(\.[a-zA-Z]{2,})?)|(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}(\.[a-zA-Z0-9]{2,})?/)]),
-            idCategoria: new FormControl(vacanteResponse.idCategoria, [Validators.required]),
-            idEmpresa: new FormControl(vacanteResponse.idEmpresa, [Validators.required])
-          }, {});
+          this.form.patchValue({
+            idVacante: vacanteResponse.idVacante,
+            nombre: vacanteResponse.nombre,
+            descripcion: vacanteResponse.descripcion,
+            fecha: vacanteResponse.fecha,
+            salario: vacanteResponse.salario,
+            destacado: vacanteResponse.destacado ? 1 : 0,
+            detalles: vacanteResponse.detalles,
+            imagen: vacanteResponse.imagen,
+            idCategoria: vacanteResponse.categoria.idCategoria,
+            // idEmpresa: vacanteResponse.idEmpresa,
+            estatus: 'CREADA'
+          });
         });
       }
     });
   }
 
   submitVacante() {
+    // Obtén el valor real del idEmpresa, aunque esté deshabilitado
+    const idEmpresa = this.form.get('idEmpresa')?.value;
+
+    // Usa getRawValue() para obtener todo el formulario
     let vacante: Ivacante = this.form.getRawValue();
+
+    // Asegúrate de añadir idEmpresa manualmente si no está
+    vacante.idEmpresa = idEmpresa;
+
     console.log('Formulario antes de la actualización:', vacante);
 
-    console.log(this.form.valid);
     if (this.form.valid) {
       if (this.tipo === "Actualizar") {
         console.log('Actualizando');
         this.vacanteService.updateVacante(vacante)
           .then((_response: any): void => {
-            alert(`La vacante ${_response.idVacante} ha sido actualizada`);
-            this.router.navigate(['/home']);
+            // Toast de éxito
+            this.toast.fire({
+              icon: 'success',
+              title: 'Vacante actualizada con éxito'
+            });
+            this.router.navigate(['/mis-vacantes']);
           })
           .catch((error: any): void => {
-            alert(`Error updating the user`);
+            console.error(error);
+            // Toast de error
+            this.toast.fire({
+              icon: 'error',
+              title: 'Error al actualizar la vacante'
+            });
           });
       } else {
         console.log('Insertando');

@@ -2,12 +2,12 @@ import { Component, inject, Input } from '@angular/core';
 import { FechaService } from '../../services/fecha.service';
 import { NgClass } from '@angular/common';
 import { SolicitudService } from '../../services/solicitud.service';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-card-vacante-empresa',
-  imports: [NgClass],
+  imports: [NgClass, RouterLink],
   templateUrl: './card-vacante-empresa.component.html',
   styleUrl: './card-vacante-empresa.component.css'
 })
@@ -20,6 +20,7 @@ throw new Error('Method not implemented.');
   fechaService = inject(FechaService);
   solicitudService = inject(SolicitudService);
   arraySolicitudes: any[] = [];
+  router = inject(Router)
 
   toast = Swal.mixin({
     toast: true,

@@ -31,6 +31,7 @@ export const routes: Routes = [
   { path: 'register', component: FormRegisterComponent },
   { path: 'categoria/:id', component: CategoriaListaVacantesComponent },
   { path: 'vacantes/nueva', component: FormVacanteComponent },
+  { path: 'vacantes/editar/:id', component: FormVacanteComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'aplicar/:id', component: FormAplicarVacanteComponent },
   { path: 'editar-perfil', component: EditarEmpresaComponent },
