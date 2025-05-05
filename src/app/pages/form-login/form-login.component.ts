@@ -57,12 +57,23 @@ export class FormLoginComponent {
         icon: 'success',
         title: 'Has iniciado sesión'
       });
-    } catch (error) {
-      // Toast de error
-      this.toast.fire({
-        icon: 'error',
-        title: 'Email o contraseña incorrectos'
-      });
+    }  catch (error: any) {
+      if (error.status === 403) {
+        this.toast.fire({
+          icon: 'error',
+          title: 'Tu usuario está deshabilitado'
+        });
+      } else if (error.status === 401) {
+        this.toast.fire({
+          icon: 'error',
+          title: 'Email o contraseña incorrectos'
+        });
+      } else {
+        this.toast.fire({
+          icon: 'error',
+          title: 'Error inesperado al iniciar sesión'
+        });
+      }
     }
   }
 }

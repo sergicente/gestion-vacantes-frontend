@@ -2,6 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UsuarioService } from '../../services/usuario.service';
 import { AuthService } from '../../services/auth.service';
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-usuarios-list',
@@ -14,6 +15,18 @@ export class UsuariosListComponent implements OnInit {
   rol: string = '';
   usuarioService = inject(UsuarioService);
   authService = inject(AuthService);
+  toast = Swal.mixin({
+    toast: true,
+    position: "top-end",
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.onmouseenter = Swal.stopTimer;
+      toast.onmouseleave = Swal.resumeTimer;
+    }
+  });
+
 
   ngOnInit() {
     this.rol = this.authService.getRol();
@@ -26,47 +39,44 @@ export class UsuariosListComponent implements OnInit {
     this.usuarioService.getAll().subscribe({
       next: (response) => {
         this.usuarios = response.filter((user: any) => user.rol === 'CLIENTE');
-        // Habilitar administradores deshabilitados
-        this.usuarios.forEach(admin => {
-          if (!admin.enabled) {
-            this.usuarioService.habilitarUsuario(admin).subscribe({
-              next: () => {
-                admin.enabled = true;
-                console.log(`Administrador ${admin.email} habilitado`);
-              },
-              error: (error) => {
-                console.error(`Error al habilitar administrador ${admin.email}:`, error);
-              }
-            });
-          }
-        });
       },
       error: (error) => {
-        console.error('Error al cargar administradores:', error);
+        console.error('Error al cargar usuarios:', error);
       }
     });
   }
 
   toggleEstadoUsuario(usuario: any) {
-    const confirmMessage = usuario.enabled ? 
-      '¿Estás seguro de que deseas deshabilitar este usuario?' : 
-      '¿Estás seguro de que deseas habilitar este usuario?';
-
-    if (confirm(confirmMessage)) {
-      const action = usuario.enabled ? 
-        this.usuarioService.deshabilitarUsuario(usuario) : 
-        this.usuarioService.habilitarUsuario(usuario);
-
-      action.subscribe({
-        next: () => {
-          usuario.enabled = !usuario.enabled;
-          const estado = usuario.enabled ? 'habilitado' : 'deshabilitado';
-          alert(`Usuario ${estado} correctamente`);
-        },
-        error: (error) => {
-          console.error('Error al cambiar estado del usuario:', error);
-        }
-      });
-    }
+    const accion = usuario.enabled ? 'Deshabilitar' : 'Habilitar';
+  
+    Swal.fire({
+      title: `¿${accion} a ${usuario.nombre}?`,
+      showCancelButton: true,
+      confirmButtonText: accion,
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const action = usuario.enabled
+          ? this.usuarioService.deshabilitarUsuario(usuario)
+          : this.usuarioService.habilitarUsuario(usuario);
+  
+        action.subscribe({
+          next: () => {
+            usuario.enabled = !usuario.enabled;
+            this.toast.fire({
+              icon: 'success',
+              title: `Usuario ${usuario.enabled ? 'habilitado' : 'deshabilitado'}`
+            });
+          },
+          error: (error) => {
+            console.error('Error al cambiar estado del usuario:', error);
+            this.toast.fire({
+              icon: 'error',
+              title: 'Error al cambiar estado'
+            });
+          }
+        });
+      }
+    });
   }
 } 

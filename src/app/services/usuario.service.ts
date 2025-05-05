@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { catchError, firstValueFrom, lastValueFrom, Observable, throwError } from 'rxjs';
+import { catchError, firstValueFrom, Observable, throwError } from 'rxjs';
 import { IUsuario } from '../interfaces/iusuario';
 
 @Injectable({
@@ -81,9 +81,9 @@ export class UsuarioService {
       })
     );
   }
-
+  
   habilitarUsuario(usuario: any): Observable<any> {
-    return this.http.put<any>(`${this.baseUrl}/deshabilitar/${usuario.email}`, {}).pipe(
+    return this.http.put<any>(`${this.baseUrl}/habilitar/${usuario.email}`, {}).pipe(
       catchError((error) => {
         if (error.status === 404) {
           alert('El usuario no existe');

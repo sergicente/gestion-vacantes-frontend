@@ -38,13 +38,13 @@
 
       <div>
         <label for="password" class="block text-sm font-medium mb-1">Contraseña</label>
-        <input type="password" id="password" name="password" required minlength="5" [(ngModel)]="user.password"
+        <input type="password" id="password" name="password" required minlength="4" [(ngModel)]="user.password"
           class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
           [ngClass]="{'border-red-500': password.invalid && password.touched}" #password="ngModel" />
         @if (password.errors?.['required'] && password.touched) {
           <div class="text-red-500 text-sm">La contraseña es obligatoria.</div>
         } @else if (password.errors?.['minlength'] && password.touched) {
-          <div class="text-red-500 text-sm">La contraseña debe tener al menos 5 caracteres.</div>
+          <div class="text-red-500 text-sm">La contraseña debe tener al menos 4 caracteres.</div>
         }
       </div>
 
