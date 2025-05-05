@@ -141,11 +141,19 @@ export class FormVacanteComponent {
         console.log('Insertando');
         this.vacanteService.insertVacante(vacante)
           .then((_response: any): void => {
-            alert(`La vacante ${_response.idVacante} ha sido añadida`);
-            this.router.navigate(['/home']);
+                        // Toast de éxito
+                        this.toast.fire({
+                          icon: 'success',
+                          title: 'Vacante creada con éxito'
+                        });
+            this.router.navigate(['/mis-vacantes']);
           })
           .catch((error: any): void => {
-            alert(`Error procesando la vacante: ${error}`);
+            // Toast de error
+            this.toast.fire({
+              icon: 'error',
+              title: 'Error al crear la vacante'
+            });
           });
       }
     }
