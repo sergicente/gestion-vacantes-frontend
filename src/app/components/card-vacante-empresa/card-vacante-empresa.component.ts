@@ -1,3 +1,4 @@
+import { VacanteService } from './../../services/vacante.service';
 import { Component, inject, Input } from '@angular/core';
 import { FechaService } from '../../services/fecha.service';
 import { NgClass } from '@angular/common';
@@ -12,15 +13,14 @@ import Swal from 'sweetalert2'
   styleUrl: './card-vacante-empresa.component.css'
 })
 export class CardVacanteEmpresaComponent {
-editarVacante(arg0: any) {
-throw new Error('Method not implemented.');
-}
+
 
   @Input() item!: any;
   fechaService = inject(FechaService);
   solicitudService = inject(SolicitudService);
   arraySolicitudes: any[] = [];
-  router = inject(Router)
+  router = inject(Router);
+  vacanteService = inject(VacanteService);
 
   toast = Swal.mixin({
     toast: true,
@@ -44,14 +44,12 @@ throw new Error('Method not implemented.');
 
   ngOnInit() {
     this.getSolicitudesDeVacante();
-    console.log(this.item);
   }
 
   getSolicitudesDeVacante() {
     this.solicitudService.getSolicitudesByVacante(this.item.idVacante).subscribe(
       (solicitudes) => {
         this.arraySolicitudes = solicitudes;
-        console.log('Solicitudes:', this.arraySolicitudes);
       },
       (error) => {
         console.error('Error al obtener solicitudes:', error);
@@ -84,13 +82,8 @@ throw new Error('Method not implemented.');
   
       this.toast.fire({
         icon: 'success',
-        title: 'Solicitud asignada y otras canceladas'
+        title: 'Vacante asignada'
       });
-  
-      // ✅ También podrías hacer una recarga si quieres forzar refresco:
-      // this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-      //   this.router.navigate([this.router.url]);
-      // });
     });
   }
 
@@ -104,5 +97,37 @@ throw new Error('Method not implemented.');
               title: 'Solicitud cancelada'
             });
     });
+  }
+
+  cambiarEstado(id: number, nuevoEstado: string) {
+    Swal.fire({
+      title: 'Cambiar estado',
+      text: `¿Quieres cambiar la vacante a ${nuevoEstado}?`,
+      // icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, cambiar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.vacanteService.cambiarEstadoVacante(id, nuevoEstado).subscribe({
+          next: () => {
+            // Actualiza el estado de la vacante directamente en el array
+            this.item.estatus = nuevoEstado;
+  
+            this.toast.fire({
+              icon: 'success',
+              title: `Estado cambiado a ${nuevoEstado}`
+            });
+          },
+          error: () => {
+            this.toast.fire({
+              icon: 'error',
+              title: 'Error al cambiar el estado'
+            });
+          }
+        });
+      }
+    });
+  
   }
 }

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { catchError, lastValueFrom, Observable, throwError } from 'rxjs';
+import { catchError, lastValueFrom, Observable, tap, throwError } from 'rxjs';
 import { Ivacante } from '../interfaces/ivacante';
 
 @Injectable({
@@ -86,5 +86,18 @@ export class VacanteService {
 
   deleteById(idVacante: string): Promise<Ivacante> {
     return lastValueFrom(this.http.delete<Ivacante>(`${this.baseUrl}/${idVacante}`));
+  }
+
+  cambiarEstadoVacante(idVacante: number, nuevoEstado: string): Observable<any> {
+    const url = `${this.baseUrl}/${idVacante}/estado?nuevoEstado=${nuevoEstado}`;
+    return this.http.put(url, null, { observe: 'response', responseType: 'text' }).pipe(
+      tap((response) => {
+        console.log(`Respuesta del servidor: ${response.status}`);
+      }),
+      catchError((error) => {
+        console.error('Error real al cambiar el estado:', error);
+        return throwError(() => error);
+      })
+    );
   }
 }

@@ -1,6 +1,6 @@
 <div class="p-10 rounded-sm shadow-sm border flex flex-col sm:flex-row gap-4 md:items-center h-full relative" [ngClass]="{
     'bg-red-50 border-red-300': item.estatus === 'CANCELADA',
-    'bg-green-50 border-green-500': item.estatus === 'CUBIERTA',
+    'bg-blue-50 border-blue-500': item.estatus === 'CUBIERTA',
     'bg-white border-gray-200': item.estatus === 'CREADA',
   }">
 
@@ -20,7 +20,7 @@
             }
 
   <!-- Imagen -->
-  <div class="flex-shrink-0 flex justify-center md:justify-start">
+  <div class="hidden lg:flex flex-shrink-0 justify-center md:justify-start">
     <img [src]="item.imagen" [alt]="item.nombre" class="w-32 h-32 object-cover rounded me-5"
       (error)="imagenError($event)" />
   </div>
@@ -34,8 +34,8 @@
         <h3 class="text-lg font-medium text-blue-600">
           {{ item.nombre }}
           <span class="text-xs font-semibold border ms-4 px-2.5 py-0.5 rounded-sm" [ngClass]="{
-            'bg-green-100 text-green-700': item.estatus === 'CUBIERTA',
-            'bg-yellow-100 text-yellow-700': item.estatus === 'CREADA',
+            'bg-blue-100 text-blue-700 ': item.estatus === 'CUBIERTA',
+            'bg-green-100 text-green-700': item.estatus === 'CREADA',
             'bg-red-100 text-red-700': item.estatus === 'CANCELADA',
             'bg-gray-100 text-gray-700': item.estatus !== 'CUBIERTA' && item.estatus !== 'ABIERTA' && item.estatus !== 'CANCELADA'
           }">
@@ -47,20 +47,22 @@
 
     </div>
 
-    <div class="flex gap-2 mt-0">
+    <div class="mt-0">
       @if(item.estatus === 'CREADA'){
 
-      <a [routerLink]="['/vacantes/editar/', item.idVacante]"><button class="bg-blue-400 hover:bg-blue-500 text-white py-1 px-3 rounded text-xs">
+      <a [routerLink]="['/vacantes/editar/', item.idVacante]">
+        <button class="bg-blue-400 hover:bg-blue-500 text-white py-1 px-3 rounded text-sm">
         Editar
-      </button></a>
-        <button class="bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded text-xs">
+      </button>
+    </a>
+        <button (click)="cambiarEstado(item.idVacante, 'CANCELADA')" class="bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded text-sm ms-2">
           Cancelar
         </button>
       }
       @if(item.estatus === 'CANCELADA'){
 
-          <button class="bg-green-500 hover:bg-green-600 text-white py-1 px-3 rounded text-xs">
-            ACTIVAR
+          <button (click)="cambiarEstado(item.idVacante, 'CREADA')" class="bg-green-500 hover:bg-green-600 text-white py-1 px-3 rounded text-sm">
+            Habilitar
           </button>
         }
 
@@ -69,35 +71,29 @@
     <!-- Solicitudes -->
     @if (arraySolicitudes.length > 0) {
     <div class="mt-2 text-sm text-gray-700 overflow-x-auto">
-      <table class="min-w-full text-sm text-left mt-2 border border-gray-300 rounded">
+      <table class="min-w-full text-left mt-2 border border-gray-300 rounded">
         <thead class="bg-gray-100 text-gray-700">
-          <tr class="">
-            <th class="py-3 px-4 text-left text-sm font-medium text-gray-700">Email</th>
-            <th class="py-3 px-4 text-left text-sm font-medium text-gray-700">Comentarios</th>
-            <th class="py-3 px-4 text-left text-sm font-medium text-gray-700">Estado</th>
-            <th class="py-3 px-4 text-left text-sm font-medium text-gray-700">Currículum</th>
-
-            <th class="py-3 px-4 text-left text-sm font-medium text-gray-700">Acciones</th>
+          <tr>
+            <th class="py-3 px-4 text-left text-sm font-medium text-gray-700 w-30">Email</th>
+            <th class="py-3 px-4 text-left text-sm font-medium text-gray-700 w-60">Comentarios</th>
+            <th class="py-3 px-4 text-left text-sm font-medium text-gray-700 w-20">Currículum</th>
+            <th class="py-3 px-4 text-left text-sm font-medium text-gray-700 w-24">Estado</th>
+            <th class="py-3 px-4 text-left text-sm font-medium text-gray-700 w-30">Acciones</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody class="bg-white">
           @for (solicitud of arraySolicitudes; track solicitud.idSolicitud) {
-          <tr class="border-t border-gray-300">
+            <tr class="border-t border-gray-300"
+            [ngClass]="{
+              'bg-green-50': solicitud.estado === 1,
+              'bg-red-50': solicitud.estado === 2,
+              'bg-white': solicitud.estado === 0
+            }">
 
-            <td class="py-3 px-4 text-sm text-gray-800">{{ solicitud.email || '—' }}</td>
+            <td class="py-3 px-4 text-sm text-gray-800 w-30">{{ solicitud.email || '—' }}</td>
 
-            <td class="py-3 px-4 text-sm text-gray-800">{{ solicitud.comentarios }}</td>
-            <td class="py-3 px-4 text-sm text-gray-800">
-              <span [ngClass]="{
-                              'text-green-600': solicitud.estado === 1,
-                              'text-red-600': solicitud.estado === 2,
-                              'text-gray-500': solicitud.estado === 0
-                            }">
-                {{ obtenerTextoEstado(solicitud.estado) }}
-              </span>
-            </td>
-
-            <td class="py-3 px-4 text-sm text-gray-800">
+            <td class="py-3 px-4 text-sm text-gray-800 w-60">{{ solicitud.comentarios }}</td>
+            <td class="py-3 px-4 text-sm text-gray-800  w-20">
               <a [href]="'http://localhost:9001/api/solicitudes/archivo/' + solicitud.archivo" target="_blank"><button
                   class="bg-blue-500 hover:bg-blue-600 text-white py-1 px-3 rounded text-sm disabled:hidden me-2 cursor-pointer">Ver</button>
               </a>
@@ -105,20 +101,44 @@
 
 
             </td>
-            <td class="py-3 px-4 text-sm text-gray-800">
+            <td class="py-3 px-4 text-sm text-gray-800  w-24">
+              <span class=" py-1 px-2 text-xs rounded-md font-semibold" [ngClass]="{
+                              ' bg-green-600 text-green-50': solicitud.estado === 1,
+                              ' bg-red-400 text-red-50': solicitud.estado === 2,
+                              'bg-gray-200 text-gray-700': solicitud.estado === 0
+                            }">
+                {{ obtenerTextoEstado(solicitud.estado) }}
+              </span>
+            </td>
 
+
+            <td class="py-3 px-4 text-sm text-gray-800 flex gap-2 w-30">
+
+              @if(item.estatus == 'CREADA'){
               <button
-                class="bg-green-500 hover:bg-green-600 text-white py-1 px-3 rounded text-sm cursor-pointer disabled:hidden disabled:cursor-not-allowed"
+                class="bg-green-500 hover:bg-green-600 text-white py-1 px-1.5 rounded-md text-sm cursor-pointer disabled:hidden disabled:cursor-not-allowed"
                 (click)="asignarSolicitud(solicitud.idSolicitud, item.idVacante)" [disabled]="solicitud.estado !== 0">
-                Asignar
+                <svg  xmlns="http://www.w3.org/2000/svg"  width="20"  height="20"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="3"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-check"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10" /></svg>
               </button>
 
               <button
-                class="bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded text-sm cursor-pointer disabled:hidden disabled:cursor-not-allowed ms-3"
+                class="bg-red-500 hover:bg-red-600 text-white py-1 px-1.5 rounded-md text-sm cursor-pointer disabled:hidden disabled:cursor-not-allowed"
                 (click)="cancelarSolicitud(solicitud.idSolicitud)" [disabled]="solicitud.estado !== 0">
-                Cancelar
+                <svg  xmlns="http://www.w3.org/2000/svg"  width="20"  height="20"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="3"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-x"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M18 6l-12 12" /><path d="M6 6l12 12" /></svg>
               </button>
+            }@else {
+              <button
+              class="bg-green-500  text-white py-1 px-1.5 rounded-md text-sm cursor-pointer disabled:opacity-10 disabled:cursor-auto"
+              (click)="asignarSolicitud(solicitud.idSolicitud, item.idVacante)" [disabled]="item.estatus !== 0">
+              <svg  xmlns="http://www.w3.org/2000/svg"  width="20"  height="20"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="3"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-check"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10" /></svg>
+            </button>
 
+            <button
+              class="bg-red-500  text-white py-1 px-1.5 rounded-md text-sm cursor-pointer disabled:opacity-10 disabled:cursor-auto"
+              (click)="cancelarSolicitud(solicitud.idSolicitud)" [disabled]="item.estatus !== 0">
+              <svg  xmlns="http://www.w3.org/2000/svg"  width="20"  height="20"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="3"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-x"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M18 6l-12 12" /><path d="M6 6l12 12" /></svg>
+            </button>
+            }
             </td>
           </tr>
           }
