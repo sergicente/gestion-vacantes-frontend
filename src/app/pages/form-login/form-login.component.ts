@@ -43,6 +43,7 @@ export class FormLoginComponent {
 
   async login(loginForm: NgForm) {
     const datosUsuario: IUsuario = loginForm.value as IUsuario;
+    datosUsuario.email = datosUsuario.email.toLowerCase();
 
     try {
       const usuario = await this.usuarioService.login(datosUsuario);

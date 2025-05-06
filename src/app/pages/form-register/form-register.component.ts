@@ -44,6 +44,7 @@ export class FormRegisterComponent {
 
     const usuarioCompleto = {
       ...this.user,
+      email: this.user.email.toLowerCase(),
       enabled: 1,
       rol: 'CLIENTE',
       fechaRegistro: new Date().toISOString().slice(0, 10)

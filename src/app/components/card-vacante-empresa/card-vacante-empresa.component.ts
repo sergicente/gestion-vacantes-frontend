@@ -5,6 +5,7 @@ import { NgClass } from '@angular/common';
 import { SolicitudService } from '../../services/solicitud.service';
 import { Router, RouterLink } from '@angular/router';
 import Swal from 'sweetalert2'
+import { environment } from '../../../environments/environment.prod';
 
 @Component({
   selector: 'app-card-vacante-empresa',
@@ -21,6 +22,7 @@ export class CardVacanteEmpresaComponent {
   arraySolicitudes: any[] = [];
   router = inject(Router);
   vacanteService = inject(VacanteService);
+  apiUrl = environment.apiUrl;
 
   toast = Swal.mixin({
     toast: true,

@@ -34,11 +34,11 @@
             <span class="self-center text-2xl font-semibold whitespace-nowrap ">Dev Empleo</span>
         </a>
         <div class="flex ">
-            <button type="button" data-collapse-toggle="navbar-search" aria-controls="navbar-search"
+            <!-- <button type="button" data-collapse-toggle="navbar-search" aria-controls="navbar-search"
                 aria-expanded="false"
                 class="md:hidden text-gray-500  hover:bg-gray-100  focus:outline-none focus:ring-4 focus:ring-gray-200  rounded-lg text-sm p-2.5 me-1">
                 <span class="sr-only">Search</span>
-            </button>
+            </button> -->
             <div class="relative hidden md:block">
                 <form (ngSubmit)="enviarBusqueda()" class="inline-flex m-auto w-full">
                     <input [(ngModel)]="busqueda" name="busqueda" type="text" id="search-navbar"
@@ -60,10 +60,10 @@
             }
             @if(estaLogeado()){
             <a href="/dashboard"><button
-                    class="cursor-pointer block md:hidden  bg-blue-500 hover:bg-blue-600 text-white font-regular py-2 shadow-xs px-4 rounded me-4">Dashboard</button></a>
+                    class="cursor-pointer block md:hidden  bg-blue-500 hover:bg-blue-600 text-white font-regular py-2 shadow-xs px-3 rounded me-2">Dashboard</button></a>
             }@else {
                 <div class="md:hidden w-full">
-                    <a href="/login" class="cursor-pointer block md:hidden  bg-blue-500 hover:bg-blue-600 text-white font-regular py-2 shadow-xs px-4 rounded me-4">Login</a>
+                    <a href="/login" class="cursor-pointer block md:hidden  bg-blue-500 hover:bg-blue-600 text-white font-regular py-2 shadow-xs px-4 rounded  me-2">Login</a>
                   </div>
             }
 
