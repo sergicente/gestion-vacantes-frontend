@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { catchError, firstValueFrom, Observable, throwError } from 'rxjs';
 import { IUsuario } from '../interfaces/iusuario';
+import { environment } from '../../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,8 @@ import { IUsuario } from '../interfaces/iusuario';
 export class UsuarioService {
 
   http = inject(HttpClient);
-  private baseUrl: string = 'http://localhost:9001/api/usuarios';
+//  private baseUrl: string = 'http://localhost:9001/api/usuarios';
+  private baseUrl: string = `${environment.apiUrl}/usuarios`;
 
   constructor() { };
 

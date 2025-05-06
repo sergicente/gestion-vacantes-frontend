@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { catchError, lastValueFrom, map, Observable, throwError } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
 import { Ivacante } from '../interfaces/ivacante';
+import { environment } from '../../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,8 @@ export class SolicitudService {
 
 
   http = inject(HttpClient);
-  private baseUrl: string = 'http://localhost:9001/api/solicitudes'
+  //  private baseUrl: string = 'http://localhost:9001/api/solicitudes';
+private baseUrl: string = `${environment.apiUrl}/solicitudes`;
   
 
   constructor() { };

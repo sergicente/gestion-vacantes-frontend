@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { catchError, lastValueFrom, Observable, tap, throwError } from 'rxjs';
 import { Ivacante } from '../interfaces/ivacante';
+import { environment } from '../../environments/environment.prod';
+
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +12,8 @@ export class VacanteService {
 
 
   http = inject(HttpClient);
-  private baseUrl: string = 'http://localhost:9001/api/vacantes'
-  
+  //  private baseUrl: string = 'http://localhost:9001/api/vacantes';
+  private baseUrl: string = `${environment.apiUrl}/vacantes`;
 
   constructor() { };
 
