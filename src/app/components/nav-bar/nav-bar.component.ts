@@ -53,7 +53,7 @@ export class NavBarComponent {
     const termino = this.busqueda.trim();
     if (!termino) return;
   
-    this.router.navigate(['/home'], { queryParams: { busqueda: termino } });
+    this.router.navigate(['/'], { queryParams: { busqueda: termino } });
   }
 
   estaLogeado(): boolean {
