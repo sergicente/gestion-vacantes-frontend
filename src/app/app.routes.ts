@@ -21,7 +21,6 @@ import { MisVacantesComponent } from './pages/mis-vacantes/mis-vacantes.componen
 import { MisSolicitudesComponent } from './pages/mis-solicitudes/mis-solicitudes.component';
 
 export const routes: Routes = [
-  // { path: '', pathMatch: 'full', redirectTo: 'home' },
   { path: '', component: HomeComponent },
   { path: 'vacante/:id', component: VacanteDetalleComponent },
   { path: 'empresas', component: EmpresaListaComponent },
@@ -46,8 +45,5 @@ export const routes: Routes = [
 
   { path: '**', component: Pagina404Component },
   { path: "**", redirectTo: "home" }
-
-  // {path:"vacante/:id", component: ViewComponent},
-  // {path:"actualizar/:id", component: },
 
 ];
