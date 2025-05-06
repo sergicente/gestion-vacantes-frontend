@@ -60,10 +60,10 @@
             }
             @if(estaLogeado()){
             <a href="/dashboard"><button
-                    class="cursor-pointer block md:hidden bg-blue-500 hover:bg-blue-700 text-white text-sm font-bold py-3 px-4 me-4 rounded">Dashboard</button></a>
+                    class="cursor-pointer block md:hidden  bg-blue-500 hover:bg-blue-600 text-white font-regular py-2 shadow-xs px-4 rounded me-4">Dashboard</button></a>
             }@else {
                 <div class="md:hidden w-full">
-                    <a href="/login" class="bcursor-pointer block md:hidden bg-blue-500 hover:bg-blue-700 text-white text-sm font-bold py-3 px-4 me-4 rounded">Login</a>
+                    <a href="/login" class="cursor-pointer block md:hidden  bg-blue-500 hover:bg-blue-600 text-white font-regular py-2 shadow-xs px-4 rounded me-4">Login</a>
                   </div>
             }
 
@@ -106,11 +106,11 @@
                     
 
                     <a href="#"
-                        class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">
+                        class="block bg-gray-100 hover:bg-gray-200  text-gray-900 border-gray-300 border font-regular py-2 shadow-xs px-4 rounded">
                         Categoría
                     </a>
                     <div id="dropdownNavbar"
-                        class="absolute z-10 hidden group-hover:block border border-gray-300 font-normal bg-white divide-y divide-gray-100 rounded-sm shadow-sm w-44 ">
+                        class="absolute right-0 z-10 mt-0 hidden group-hover:block border border-gray-300 bg-white rounded-sm shadow-xs">
                         <ul class="py-2 text-sm text-gray-700 ">
                             @for(item of arrayCategorias; track item.idCategoria){
                             <li><a href="/categoria/{{item.idCategoria}}"
@@ -120,65 +120,59 @@
                         </ul>
                     </div>
                 </li>
-             <!--    @if (rol === 'ADMON') {
-                <li>
-                    <a href="/categorias"
-                        class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 ">Categorías</a>
-                </li>
-                }  -->
 
                 
 
                 @if(estaLogeado()){
                 <li class="relative group">
-                    <a href="dashboard" class="hidden md:block bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded">
+                    <a href="dashboard" class="hidden md:block bg-blue-500 hover:bg-blue-600 text-white font-regular py-2 shadow-xs px-4 rounded">
                         Dashboard
                     </a>
 
                     <div
-                        class="absolute right-0 z-10 mt-0 hidden group-hover:block border border-gray-300 bg-white rounded-sm shadow-sm w-48">
+                        class="absolute right-0 z-10 mt-0 hidden group-hover:block border border-gray-300 bg-white rounded-sm shadow-xs">
                         <ul class="py-2 text-sm text-gray-700">
 
                             <!-- CLIENTE -->
                             @if (rol === 'CLIENTE') {
                             <li><a routerLink="/solicitudes"
-                                    class="cursor-pointer hover:text-blue-500 block px-4 py-2 hover:bg-gray-100">📄 Mis Solicitudes</a>
+                                    class="cursor-pointer hover:text-blue-500 block px-4 py-2 hover:bg-gray-100">📄 <span class="ml-2">Mis Solicitudes</span></a>
                             </li>
                             }
 
                             <!-- EMPRESA -->
                             @else if (rol === 'EMPRESA') {
                             <li><a routerLink="/vacantes/nueva"
-                                    class="cursor-pointer hover:text-blue-500 block px-4 py-2 hover:bg-gray-100">➕ Publicar Vacante</a>
+                                    class="cursor-pointer hover:text-blue-500 block px-4 py-2 hover:bg-gray-100">➕ <span class="ml-2 whitespace-nowrap">Publicar Vacante</span></a>
                             </li>
                             <li><a routerLink="/mis-vacantes"
-                                    class="cursor-pointer hover:text-blue-500 block px-4 py-2 hover:bg-gray-100">📋 Mis Vacantes</a>
+                                    class="cursor-pointer hover:text-blue-500 block px-4 py-2 hover:bg-gray-100">📋 <span class="ml-2 whitespace-nowrap">Mis Vacantes</span></a>
                             </li>
                             <li><a [routerLink]="['/empresas', idEmpresa, 'editar']"
-                                    class="cursor-pointer hover:text-blue-500 block px-4 py-2 hover:bg-gray-100">🏢 Perfil Empresa</a>
+                                    class="cursor-pointer hover:text-blue-500 block px-4 py-2 hover:bg-gray-100">🏢 <span class="ml-2 whitespace-nowrap">Perfil Empresa</span></a>
                             </li>
                             }
 
                             <!-- ADMON -->
                             @else if (rol === 'ADMON') {
                             <li><a routerLink="/categorias"
-                                    class="cursor-pointer hover:text-blue-500 block px-4 py-2 hover:bg-gray-100">📂 Categorías</a>
+                                    class="cursor-pointer hover:text-blue-500 block px-4 py-2 hover:bg-gray-100">📂 <span class="ml-2 whitespace-nowrap">Categorías</span></a>
                             </li>
                             <li><a routerLink="/empresas"
-                                    class="cursor-pointer hover:text-blue-500 block px-4 py-2 hover:bg-gray-100">🏢 Gestión Empresas</a>
+                                    class="cursor-pointer hover:text-blue-500 block px-4 py-2 hover:bg-gray-100">🏢 <span class="ml-2 whitespace-nowrap">Gestión Empresas</span></a>
                             </li>
                             <li><a routerLink="/usuarios"
-                                    class="cursor-pointer hover:text-blue-500 block px-4 py-2 hover:bg-gray-100">👥 Usuarios</a>
+                                    class="cursor-pointer hover:text-blue-500 block px-4 py-2 hover:bg-gray-100">👥 <span class="ml-2 whitespace-nowrap">Usuarios</span></a>
                             </li>
                             <li><a routerLink="/administradores"
-                                    class="cursor-pointer hover:text-blue-500 block px-4 py-2 hover:bg-gray-100">🛠️ Administradores</a>
+                                    class="cursor-pointer hover:text-blue-500 block px-4 py-2 hover:bg-gray-100">🛠️ <span class="ml-2 whitespace-nowrap">Administradores</span></a>
                             </li>
                             }
 
                             <!-- Cerrar sesión (para cualquier rol) -->
                             @if (rol) {
                             <li><button (click)="logout()"
-                                    class="cursor-pointer block w-full text-left px-4 py-2 text-red-600 hover:bg-red-50">⏻ Cerrar Sesión</button>
+                                    class="cursor-pointer block w-full text-left px-4 py-2 text-red-600 hover:bg-red-50">⏻ <span class="ml-2 whitespace-nowrap">Cerrar Sesión</span></button>
                             </li>
                             }
                             @else {
@@ -192,15 +186,9 @@
 
                 @if(!estaLogeado()){
                 <a href="login"
-                    class="hidden md:block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Login</a>
+                    class="hidden md:block bg-blue-500 hover:bg-blue-600 text-white font-regular py-2 shadow-xs px-4 rounded">Login</a>
                 }
 
-                <!-- @if(estaLogeado()){
-                <button (click)="logout()"
-                    class="hidden md:block bg-red-500 hover:bg-red-700 text-white text-sm font-bold py-2 px-4 rounded cursor-pointer">
-                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-logout"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" /><path d="M9 12h12l-3 -3" /><path d="M18 15l3 -3" /></svg>
-                </button>
-                } -->
             </ul>
         </div>
     </div>
