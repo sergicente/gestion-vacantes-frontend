@@ -22,16 +22,21 @@
         <table class="min-w-full bg-white shadow-md border border-gray-300">
           <thead class="bg-gray-100">
             <tr class="">
-              <th class="py-3 px-4 text-left text-sm font-medium text-gray-700">Fecha</th>
-              <th class="py-3 px-4 text-left text-sm font-medium text-gray-700">Vacante</th>
+              <th class="py-3 px-4 text-left text-sm font-medium text-gray-700 w-40">Fecha</th>
+              <th class="py-3 px-4 text-left text-sm font-medium text-gray-700 w-40">Vacante</th>
               <th class="py-3 px-4 text-left text-sm font-medium text-gray-700">Estado</th>
               <th class="py-3 px-4 text-left text-sm font-medium text-gray-700">Comentarios</th>
+              <th class="py-3 px-4 text-left text-sm font-medium text-gray-700">Adjunto</th>
               <th class="py-3 px-4 text-left text-sm font-medium text-gray-700">Acciones</th>
             </tr>
           </thead>
           <tbody>
             @for (solicitud of solicitudes; track solicitud.idSolicitud) {
-              <tr class="border-t border-gray-300">
+              <tr class="border-t border-gray-300" [ngClass]="{
+                'bg-white text-gray-700 ': solicitud.estado === 0,
+                'bg-green-100 text-green-700': solicitud.estado === 1,
+                'bg-red-100 text-red-700': solicitud.estado === 2
+              }">
                 <td class="py-3 px-4 text-sm text-gray-800">{{ formatearFecha(solicitud.fecha) }}</td>
                 <td class="py-3 px-4 text-sm text-gray-800">
                     <a 
@@ -42,18 +47,24 @@
                     </a>
                   </td>
                 <td class="py-3 px-4 text-sm text-gray-800">
-                  <span [ngClass]="{
-                    'text-green-600': solicitud.estado === 1,
-                    'text-red-600': solicitud.estado === 2,
-                    'text-gray-500': solicitud.estado === 0
+  
+                  <span class=" py-1 px-2 text-xs rounded-md font-semibold" [ngClass]="{
+                    ' bg-green-600 text-green-50': solicitud.estado === 1,
+                    ' bg-red-400 text-red-50': solicitud.estado === 2,
+                    'bg-gray-200 text-gray-700': solicitud.estado === 0
                   }">
-                    {{ obtenerTextoEstado(solicitud.estado) }}
-                  </span>
+      {{ obtenerTextoEstado(solicitud.estado) }}
+    </span>
                 </td>
                 <td class="py-3 px-4 text-sm text-gray-800">{{ solicitud.comentarios || '—' }}</td>
                 <td class="py-3 px-4 text-sm text-gray-800">
-                  <a [href]="'http://localhost:9001/api/solicitudes/archivo/' + solicitud.archivo" target="_blank"><button class="bg-blue-500 hover:bg-blue-600 text-white py-1 px-3 rounded text-sm disabled:opacity-50 me-2 cursor-pointer">Ver PDF</button>
+                  <a [href]="'https://centellas.es/api/solicitudes/archivo/' + solicitud.archivo" target="_blank"><button class="bg-blue-500 hover:bg-blue-600 text-white py-1 px-3 rounded text-sm disabled:opacity-50 me-2 cursor-pointer">PDF</button>
                   </a>
+
+
+                </td>
+                <td class="py-3 px-4 text-sm text-gray-800">
+
                   <button 
                     class="bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded text-sm cursor-pointer disabled:opacity-20 disabled:cursor-not-allowed"
                     (click)="cancelarSolicitud(solicitud.idSolicitud)"

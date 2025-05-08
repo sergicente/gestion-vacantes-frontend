@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SolicitudService } from '../../services/solicitud.service';
 import Swal from 'sweetalert2'
+import { VacanteService } from '../../services/vacante.service';
 
 @Component({
   selector: 'app-form-aplicar-vacante',
@@ -15,6 +16,8 @@ import Swal from 'sweetalert2'
 export class FormAplicarVacanteComponent {
 
   router = inject(Router);
+  vacanteService = inject(VacanteService);
+  nombreVacante: string = '';
   solicitud = {
     email: '',
     comentarios: '',
@@ -39,6 +42,14 @@ export class FormAplicarVacanteComponent {
     if (id) {
       this.solicitud.idVacante = Number(id);
     }
+
+        // Obtener nombre de la vacante
+        this.vacanteService.getById(this.solicitud.idVacante.toString()).subscribe({
+          next: (vacante) => {
+            this.nombreVacante = vacante.nombre;
+          },
+          error: (err) => console.error('Error al cargar vacante:', err)
+        });
   }
 
   onFileChange(event: any) {
@@ -49,34 +60,7 @@ export class FormAplicarVacanteComponent {
     }
   }
 
-  // enviarSolicitud() {
-  //   if (!this.solicitud.comentarios) {
-  //     alert('Completa los comentarios antes de enviar');
-  //     return;
-  //   }
 
-  //   const usuarioJson = localStorage.getItem('usuario');
-  //   if (usuarioJson) {
-  //     const usuario = JSON.parse(usuarioJson);
-  //     this.solicitud.email = usuario.email; // Asegúrate que es el email
-  //   }
-
-  //   const solicitudPayload = {
-  //     email: this.solicitud.email,
-  //     comentarios: this.solicitud.comentarios,
-  //     curriculum: this.solicitud.curriculum,
-  //     archivo: this.solicitud.curriculum, // solo mandamos el nombre del archivo
-  //     idVacante: this.solicitud.idVacante
-  //   };
-
-  //   this.solicitudService.nuevo(solicitudPayload).subscribe(res => {
-  //     alert('Solicitud enviada con éxito');
-  //     this.router.navigate(['/vacante/'+ this.solicitud.idVacante]);
-
-  //   }, err => {
-  //     alert('Hubo un error al enviar la solicitud');
-  //   });
-  // }
   toast = Swal.mixin({
     toast: true,
     position: "top-end",

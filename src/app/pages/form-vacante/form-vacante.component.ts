@@ -72,9 +72,9 @@ export class FormVacanteComponent {
       fecha: new FormControl(new Date().toISOString().split('T')[0], [Validators.required]),
       salario: new FormControl(null, [Validators.required]),
       estatus: new FormControl(null,),
-      destacado: new FormControl('', [Validators.required]),
-      detalles: new FormControl(null, [Validators.required, Validators.minLength(3), Validators.maxLength(130)]),
-      imagen: new FormControl(null, [Validators.required, Validators.pattern(/(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z]{2,}(\.[a-zA-Z]{2,})(\.[a-zA-Z]{2,})?\/[a-zA-Z0-9]{2,}|((https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z]{2,}(\.[a-zA-Z]{2,})(\.[a-zA-Z]{2,})?)|(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}(\.[a-zA-Z0-9]{2,})?/)]),
+      destacado: new FormControl(0, [Validators.required]),
+      detalles: new FormControl(null, [Validators.required, Validators.minLength(3), Validators.maxLength(3000)]),
+      imagen: new FormControl(null, [Validators.required, Validators.maxLength(250), Validators.pattern(/(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z]{2,}(\.[a-zA-Z]{2,})(\.[a-zA-Z]{2,})?\/[a-zA-Z0-9]{2,}|((https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z]{2,}(\.[a-zA-Z]{2,})(\.[a-zA-Z]{2,})?)|(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}(\.[a-zA-Z0-9]{2,})?/)]),
       idCategoria: new FormControl(null, [Validators.required]),
       idEmpresa: new FormControl(null, [Validators.required])
     }, {});

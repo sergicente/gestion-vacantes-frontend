@@ -1,6 +1,6 @@
 <a href="vacante/{{item.idVacante}}" class=" ">
     <div 
-      class="rounded-sm shadow-sm border p-4 flex flex-col sm:flex-row gap-4 md:items-center transition-transform transform hover:scale-102 h-full hover:shadow-md"
+      class="rounded-sm shadow-sm border p-4 flex flex-row gap-4 md:items-center transition-transform transform hover:scale-102 h-full hover:shadow-md"
       [ngClass]="item.destacado ? 'bg-lime-50 border-lime-500' : 'bg-white border-gray-200'">
 
         <!-- Imagen -->
@@ -15,8 +15,8 @@
         <!-- Contenido -->
         <div class="flex flex-col justify-between flex-grow">
             <div class="flex justify-between items-start mb-2">
-                <span class="text-sm text-gray-500">{{ formatearFecha(item.fecha) }}</span>
-                <a href="/categoria/{{item.categoria.idCategoria}}"><span class="bg-blue-100 hover:bg-blue-200 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-sm border border-blue-400">
+                <span class="text-xs text-gray-500">{{ formatearFecha(item.fecha) }}</span>
+                <a href="/categoria/{{item.categoria.idCategoria}}"><span class="bg-blue-100 hover:bg-blue-200 text-blue-800 text-xs font-medium px-1 py-0.5 md:px-2.5 md:py-0.5 rounded-sm border border-blue-400">
                     {{ item.categoria.nombre }}
                 </span></a>
             </div>
@@ -26,11 +26,11 @@
 
             <!-- Empresa -->
             
-            <a href="/empresa/{{item.empresa.idEmpresa}}"><span class="font-medium text-blue-500 mb-2">{{ item.empresa.nombreEmpresa }}</span></a>
+            <span class="font-medium text-blue-500 text-sm hover:underline"><a href="/empresa/{{item.empresa.idEmpresa}}">{{ item.empresa.nombreEmpresa }}</a></span>
             
 
             <!-- Descripción -->
-            <p class="text-sm text-gray-600 mb-2 line-clamp-2">
+            <p class="text-sm text-gray-600 mb-2 line-clamp-2 mt-3">
                 {{ item.descripcion }}
             </p>
         </div>
